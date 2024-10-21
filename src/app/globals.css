@@ -9,19 +9,44 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #f5f5f5;
+    --foreground: #333333;
   }
 }
 
 body {
-  color: var(--foreground);
+  /* color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Arial, Helvetica, sans-serif; */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Poppins;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+/* .btn-custom {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  text-align: left;
+} */
+@media (min-width: 1536px) {
+  .container {
+    max-width: 1310px !important;
+  }
+}
+.container {
+  padding: 0 10px;
+}
+.item-navbar {
+  font-family: Poppins;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  text-align: left;
 }

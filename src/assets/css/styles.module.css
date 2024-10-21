@@ -1,0 +1,12 @@
+.left-hero-section {
+}
+.right-hero-section {
+}
+.hero {
+  display: flex;
+  align-items: center;
+  /* align-content: center; */
+  justify-content: space-around;
+}
+.home {
+}
