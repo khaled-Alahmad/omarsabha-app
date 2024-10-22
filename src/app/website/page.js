@@ -35,7 +35,7 @@ import {
   User,
 } from "@nextui-org/react";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { EyeSlashFilledIcon } from "@/components/ui/Icons/EyeSlashFilledIcon";
 import { EyeFilledIcon } from "@/components/ui/Icons/EyeFilledIcon";
 
@@ -193,21 +193,35 @@ export default function WebsiteHome() {
     setActiveIndex(activeIndex === index ? null : index);
   };
 
-  const [startIndex, setStartIndex] = useState(0); // Track the starting index
-  const testimonialsToShow = 3; // Number of testimonials to show at once
-
-  const handleNext = () => {
-    if (startIndex < dataThree.length - testimonialsToShow) {
-      setStartIndex(startIndex + 1); // Move right
-    }
-  };
+  const toggleVisibility = () => setIsVisible(!isVisible);
+  const [startIndex, setStartIndex] = useState(0);
+  const [testimonialsToShow, setTestimonialsToShow] = useState(1); // Default to 1 for mobile
 
   const handlePrev = () => {
-    if (startIndex > 0) {
-      setStartIndex(startIndex - 1); // Move left
-    }
+    setStartIndex((prev) => Math.max(prev - testimonialsToShow, 0));
   };
-  const toggleVisibility = () => setIsVisible(!isVisible);
+
+  const handleNext = () => {
+    setStartIndex((prev) =>
+      Math.min(prev + testimonialsToShow, dataThree.length - testimonialsToShow)
+    );
+  };
+
+  // Adjust testimonialsToShow based on screen size
+  useEffect(() => {
+    const updateTestimonialsToShow = () => {
+      if (window.innerWidth >= 768) {
+        setTestimonialsToShow(3); // Show 3 testimonials on larger screens
+      } else {
+        setTestimonialsToShow(1); // Show 1 testimonial on mobile
+      }
+    };
+
+    updateTestimonialsToShow(); // Set initial value
+    window.addEventListener("resize", updateTestimonialsToShow); // Update on resize
+
+    return () => window.removeEventListener("resize", updateTestimonialsToShow); // Clean up
+  }, []);
   return (
     <div className={styles.home}>
       <section
