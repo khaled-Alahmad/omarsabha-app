@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Link from "next/link";
 import bgImage from "@/assets/images/website/bg-02.png"; // Background image
 import ImageHero from "@/assets/images/website/image 159.png"; // Hero image
@@ -387,9 +387,9 @@ export default function WebsiteHome() {
             What Are You Waiting For, Get the App Now!
           </h2>
           <p className={styles.descAppDownload}>
-            Don't wait any longer to experience the convenience and reliability
-            of InstaHandi. Download our app today and take the first step
-            towards hassle-free home services
+            Don&apos;t wait any longer to experience the convenience and
+            reliability of InstaHandi. Download our app today and take the first
+            step towards hassle-free home services.
           </p>
           <div className="flex gap-4 mb-4">
             <Image src={google} alt="Frame Image" className="mb-2" />
