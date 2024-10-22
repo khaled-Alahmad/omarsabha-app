@@ -44,9 +44,35 @@ body {
   padding: 0 10px;
 }
 .item-navbar {
+  color: var(--Foundation-Black-Text-Color-B300, #262727);
   font-family: Poppins;
-  font-size: 16px;
+  font-size: 1rem;
+  font-style: normal;
   font-weight: 500;
-  line-height: 24px;
-  text-align: left;
+  line-height: normal;
+}
+.navbar {
+  border-radius: 2.5rem;
+  background: var(--Foundation-White-text-color-W300, #fff);
+  box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.12);
+  padding: 1rem 1.5rem;
+}
+.active-link {
+  color: var(--Foundation-Primary-color-P300, #fe8315);
+  font-family: Poppins;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.dropdown-item {
+  color: white; /* Set dropdown item color to white */
+  position: relative;
+  top: 30px; /* Position dropdown items 30px from the top */
+}
+.mobile-menu {
+  position: absolute;
+  top: 54px;
+  color: white;
 }

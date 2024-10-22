@@ -42,9 +42,8 @@ export default function NavBar() {
       onMenuOpenChange={setIsMenuOpen}
       maxWidth="1300"
       classNames={{
-        wrapper:
-          "bg-white-50 m-2 p-4 sm:my-5 sm:p-6 border-1 rounded-3xl shadow max-w-[1300px]", // Adjust styles as needed
-        base: "z-40 w-full h-auto items-center justify-center sticky top-0 backdrop-none", // Remove backdrop styles
+        wrapper: "bg-white-50 xl:mx-12 mx-6 mt-5 h-auto navbar max-w-[100%]",
+        base: "z-40 w-full h-auto items-center justify-center sticky top-0 backdrop-none",
       }}
       style={{ backdropFilter: "unset" }}
     >
@@ -63,8 +62,8 @@ export default function NavBar() {
               href={item.path}
               className={`item-navbar ${
                 isActive(item.path)
-                  ? "text-primary-300 underline underline-offset-4"
-                  : "text-black" // Change this to your desired default text color
+                  ? "active-link underline underline-offset-4" // Class for active link
+                  : "text-black"
               }`}
               aria-current={isActive(item.path) ? "page" : undefined}
             >
@@ -96,10 +95,18 @@ export default function NavBar() {
               </Button>
             </DropdownTrigger>
             <DropdownMenu aria-label="Link Actions">
-              <DropdownItem key="home" href="/home">
+              <DropdownItem
+                key="vendor"
+                // className="dropdown-item" // Class for dropdown item
+                href="/home"
+              >
                 As Vendor
               </DropdownItem>
-              <DropdownItem key="about" href="/about">
+              <DropdownItem
+                key="client"
+                // className="dropdown-item" // Class for dropdown item
+                href="/about"
+              >
                 As Client
               </DropdownItem>
             </DropdownMenu>
@@ -109,28 +116,28 @@ export default function NavBar() {
 
       {/* Responsive Mobile Menu */}
       <NavbarMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)}>
-        {menuItems.map((item) => (
-          <NavbarMenuItem key={item.name}>
-            <Link
-              className={`w-full ${
-                isActive(item.path) ? "text-primary-300 underline" : ""
-              }`}
-              href={item.path}
-              onClick={() => setIsMenuOpen(false)} // Close the menu when an item is clicked
+        <div className={`mobile-menu ${isMenuOpen ? "open" : ""}`}>
+          {menuItems.map((item) => (
+            <NavbarMenuItem key={item.name}>
+              <Link
+                className={`w-full ${isActive(item.path) ? "active-link" : ""}`}
+                href={item.path}
+                onClick={() => setIsMenuOpen(false)} // Close the menu when an item is clicked
+              >
+                {item.name}
+              </Link>
+            </NavbarMenuItem>
+          ))}
+          <NavbarMenuItem>
+            <Button
+              as={Link}
+              className="bg-primary-300 text-primary-50 shadow w-full"
+              href="#"
             >
-              {item.name}
-            </Link>
+              Register
+            </Button>
           </NavbarMenuItem>
-        ))}
-        <NavbarMenuItem>
-          <Button
-            as={Link}
-            className="bg-primary-300 text-primary-50 shadow w-full"
-            href="#"
-          >
-            Register
-          </Button>
-        </NavbarMenuItem>
+        </div>
       </NavbarMenu>
     </Navbar>
   );
