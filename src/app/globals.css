@@ -3,13 +3,13 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
+  --background: #fff;
   --foreground: #171717;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #f5f5f5;
+    --background: #fff;
     --foreground: #333333;
   }
 }
@@ -75,4 +75,25 @@ body {
   position: absolute;
   top: 54px;
   color: white;
+}
+.custom-input [data-slot="input-wrapper"] {
+  border-radius: 0.53669rem !important; /* Apply custom border radius */
+  border: 1.431px solid var(--Foundation-Black-Text-Color-B75, #a6a6a6) !important; /* Apply custom border */
+  background-color: #fff !important; /* Set the background color to white */
+  box-shadow: none !important; /* Remove any default shadow */
+  padding: 0.5rem !important; /* Adjust padding if needed */
+  color: var(--Foundation-Black-Text-Color-B75, #a6a6a6) !important;
+  font-family: Poppins !important;
+  font-size: 1.25rem !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  line-height: normal !important;
+}
+
+/* Target the actual input field inside the wrapper */
+.custom-input input {
+  background-color: transparent !important; /* Make input field itself transparent */
+  border: none !important; /* Remove inner border if any */
+  color: inherit !important; /* Ensure it uses the parent color */
+  padding: 0 !important; /* Adjust padding if necessary */
 }

@@ -9,7 +9,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 3rem; /* Padding for larger screens */
-  margin-top: -7rem;
+  margin-top: -7.5rem;
 }
 
 .heroText {
@@ -67,23 +67,597 @@
   font-weight: 600;
   width: fit-content;
   position: relative;
-  z-index: 100;
+  z-index: 10;
   padding: 1rem 1.5rem;
 }
+.nameAvatar {
+  color: var(--Foundation-Black-Text-Color-B300, #262727);
+  font-family: Poppins;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.875rem; /* 166.667% */
+}
+.descAvatar {
+  color: var(--Foundation-Black-Text-Color-B75, #a6a6a6);
+  font-family: Poppins;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.625rem; /* 162.5% */
+}
+.wrapperAvatar {
+  width: 3.75rem !important;
+  height: 3.75rem !important;
+  border-radius: 3.75rem;
+}
 
+.leftAppDownload {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-evenly;
+  /* height: 50%; */
+}
+.cutSection {
+  background: var(--Foundation-Secondary-color-S50, #fffbe6);
+  height: 2.125rem;
+}
 .bottom-wave {
   position: absolute;
-  bottom: 0;
+  bottom: -1px;
   left: 0;
   width: 100%;
   z-index: 10;
   overflow-x: hidden; /* Prevents horizontal scrolling */
 }
 
+.cardServiceAppointment {
+  border-radius: 1.43119rem;
+  margin: 1rem;
+  padding: 1.5rem 2rem;
+  height: auto;
+  background: var(--Foundation-White-text-color-W300, #fff);
+}
+.makeAppointment {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 3rem; /* Padding for larger screens */
+}
+
+.leftSection {
+  /* flex: 1; */
+  display: flex;
+  height: 40%;
+  flex-direction: column;
+  justify-content: space-around;
+  /* height: 100%; */
+  /* width: 400px; */
+}
+.rightSection {
+  display: flex;
+  /* height: 40%; */
+  flex-direction: column;
+  justify-content: space-around;
+  /* height: 100%; */
+  /* width: 400px; */
+}
+.serviceLine {
+  display: flex;
+  align-items: center;
+}
+.vendorLine {
+  display: flex;
+  margin: 1rem 0rem;
+  align-items: center;
+  color: var(--Foundation-Black-Text-Color-B300, #262727);
+  text-align: center;
+  /* font-family: "DM Sans"; */
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 0.875rem; /* 116.667% */
+}
+.ratingVendorCard {
+  color: var(--Foundation-Black-Text-Color-B200, #4b4c4c);
+  font-family: Poppins;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.bottomVendorCard {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.vendorCardButton {
+  color: var(--Foundation-Black-Text-Color-B100, #818282);
+  font-family: Poppins;
+  font-size: 0.75rem;
+  background-color: #fff;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  border-radius: 0.375rem;
+  border: 1px solid var(--Foundation-Black-Text-Color-B300, #262727);
+  box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.15);
+}
+.cardServiceAppointmentTitle {
+  color: #141414;
+  font-family: Poppins;
+  font-size: 1.75rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 2.86238rem; /* 163.565% */
+}
+/* Target the wrapper for the input field */
+.customLabelCheckBox {
+  color: var(--Foundation-Black-Text-Color-B75, #a6a6a6);
+  font-family: Poppins;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.signUpButton {
+  color: #fff;
+  text-align: center;
+  font-family: Poppins;
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 2.86238rem; /* 190.825% */
+  letter-spacing: -0.015rem;
+  border-radius: 0.71563rem;
+  background: var(--Foundation-Primary-color-P300, #fe8315);
+  padding: 1.5rem 0;
+  width: 100%;
+}
+.bottomTextCard {
+  color: var(--Foundation-Black-Text-Color-B300, #262727);
+  font-family: Poppins;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  text-align: center;
+  line-height: normal;
+}
+.bottomTextCardT {
+  color: var(--Foundation-Primary-color-P300, #fe8315);
+  font-family: Poppins;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 700;
+  margin-left: 0.5rem;
+  line-height: normal;
+}
+
+.customCheckBox {
+  background-color: #fe8315; /* Set the background color */
+  border: 1px solid #fe8315; /* Set the border color */
+}
+
+/* Optional: Change the checkbox indicator color when checked */
+.customCheckBox[data-state="checked"] {
+  background-color: #fe8315; /* Change background color when checked */
+  border-color: #fe8315; /* Change border color when checked */
+}
+.customCheckBox[data-state="checked"]::before {
+  background-color: #fe8315; /* Change checkmark color */
+}
+
 /* Mobile Responsive Styles (max-width: 768px) */
+.servicesSection {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+
+  padding: 2rem 3rem;
+  background: var(--Foundation-Secondary-color-S50, #fffbe6);
+}
+
+.vendorsSection {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+
+  padding: 2rem 3rem;
+  background: var(--Foundation-Secondary-color-S50, #fff);
+}
+.VendorItemsCard {
+  border-radius: 0.75rem;
+  background: var(--Foundation-White-text-color-W300, #fff);
+  box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.15);
+  padding: 1rem;
+}
+.titleVendor {
+  color: var(--Foundation-Black-Text-Color-B300, #262727);
+  font-family: Poppins;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.35rem; /* 120% */
+}
+.descVendor {
+  color: var(--Foundation-Black-Text-Color-B200, #4b4c4c);
+  font-family: Poppins;
+  font-size: 0.875rem !important;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.ImageVendor > img {
+  border-radius: 0.75rem;
+}
+.servicesTitle {
+  color: var(--Foundation-Black-Text-Color-B300, #262727);
+  font-family: Poppins;
+  font-size: 2.5rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 4rem; /* 160% */
+}
+.servicesItemsCard {
+  /* height: 200px; */
+  display: flex;
+  flex-direction: column;
+  align-items: self-start;
+  /* width: 250px; */
+}
+.servicesDesc {
+  color: var(--Foundation-Black-Text-Color-B200, #4b4c4c);
+  text-align: center;
+  font-feature-settings: "liga" off;
+  font-family: Poppins;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  width: 80%;
+  line-height: 1.75rem; /* 175% */
+}
+.titleService {
+  color: var(--Foundation-Black-Text-Color-B300, #262727);
+  /* font-feature-settings: "liga" off; */
+  font-family: Poppins;
+  font-size: 1.375rem;
+  font-style: normal;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  line-height: 2rem; /* 145.455% */
+}
+.descService {
+  color: var(--Foundation-Black-Text-Color-B200, #4b4c4c);
+  /* font-feature-settings: "liga" off; */
+
+  font-family: Poppins;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.75rem; /* 175% */
+}
+.titleAppDownload {
+  color: var(--Foundation-Black-Text-Color-B300, #262727);
+  font-family: Poppins;
+  font-size: 2.5rem;
+  font-style: normal;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  line-height: 3.5rem; /* 140% */
+}
+.descAppDownload {
+  color: var(--Foundation-Black-Text-Color-B200, #4b4c4c);
+  font-feature-settings: "liga" off;
+  font-family: Poppins;
+  font-size: 1rem;
+  font-style: normal;
+  margin-bottom: 1rem;
+  font-weight: 400;
+  line-height: 1.75rem; /* 175% */
+}
+.testimonialsWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 0 2rem;
+  width: 100%; /* تأكد من أن الحاوية تأخذ عرض الشاشة بالكامل */
+}
+
+.testimonialsItems {
+  display: flex;
+  transition: transform 0.3s ease-in-out;
+  overflow: hidden;
+  gap: 2rem;
+}
+
+.testimonialsItemsCard {
+  padding: 1rem;
+  display: flex;
+  /* width: 23.125rem; */
+  height: 22.625rem;
+  /* padding: 1.5rem; */
+  flex-direction: column;
+  justify-content: center;
+  justify-content: space-around;
+  align-items: flex-start;
+  background: var(--Foundation-White-text-color-W300, #fff);
+  box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.15);
+  border-radius: 0.875rem;
+  width: 100%; /* عرض البطاقة كاملاً في الجوال */
+  box-sizing: border-box; /* التأكد من حساب الحواف padding ضمن العرض */
+}
+
+.faqSection {
+  /* max-width: 800px; */
+  margin: 0 auto;
+  padding: 2rem 3rem;
+  /* padding: 2rem; */
+  font-family: Arial, sans-serif;
+}
+
+.faqTitle {
+  color: var(--Foundation-Black-Text-Color-B300, #262727);
+  font-family: Poppins;
+  text-align: center;
+  font-size: 2.5rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 4rem; /* 160% */
+  margin-bottom: 2rem;
+}
+
+.faqList {
+  border-top: 1px solid #e0e0e0;
+}
+
+.faqItem {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.faqQuestion {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--Foundation-Black-Text-Color-B300, #262727);
+  font-family: Poppins;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.875rem; /* 187.5% */
+  padding: 1rem 0;
+  cursor: pointer;
+}
+
+.faqAnswer {
+  padding: 1rem 0;
+  color: var(--Foundation-Black-Text-Color-B100, #818282);
+  font-family: Poppins;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.875rem; /* 166.667% */
+}
+
+.toggleIcon {
+  font-size: 1.5rem;
+  font-weight: bold;
+  transition: transform 0.2s ease;
+}
+
+/* Footer.module.css */
+
+.footer {
+  background-color: #fdf9ec; /* Light cream background */
+  padding: 2rem;
+  font-family: "Arial", sans-serif;
+  font-size: 0.875rem;
+  color: #333;
+}
+.footerBottomT {
+  text-align: center;
+  color: var(--Foundation-Black-Text-Color-B300, #262727);
+  font-family: Poppins;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.footerTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding-bottom: 1.5rem;
+  /* border-bottom: 1px solid #dcdcdc; */
+}
+
+.logoAndNav {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  margin-right: 2rem;
+  height: 4rem;
+  width: 5rem;
+}
+
+.nav {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav a {
+  color: var(--Foundation-Black-Text-Color-B300, #262727);
+  font-family: Poppins;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  text-decoration: none;
+  line-height: normal;
+}
+
+.nav a:hover {
+  text-decoration: underline;
+  color: #fe8315 !important;
+}
+
+.socialLinks {
+  display: flex;
+  gap: 1rem;
+}
+
+.socialLinks a img {
+  height: 24px;
+  width: 24px;
+}
+
+.footerBottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1.5rem;
+  font-size: 0.875rem;
+  color: #333;
+}
+
+.footerBottom p {
+  margin: 0;
+  color: var(--Foundation-Black-Text-Color-B300, #262727);
+  font-family: Poppins;
+  font-size: 1rem;
+  font-style: italic;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.footerBottom a {
+  color: #333;
+  text-decoration: none;
+  color: var(--Foundation-Black-Text-Color-B300, #262727);
+  font-family: Poppins;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.footerBottom a:hover {
+  text-decoration: underline;
+}
+
+.bottomRight {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .footerTop {
+    flex-direction: column;
+    align-items: self-start;
+  }
+
+  .footerBottom {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .bottomRight {
+    flex-direction: column;
+  }
+
+  .nav {
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+  .footer {
+    padding: 1rem;
+  }
+  .logo {
+    margin-right: unset;
+    margin-bottom: 2rem;
+  }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .faqSection {
+    padding: 1rem;
+  }
+
+  .faqTitle {
+    font-size: 1.5rem;
+  }
+
+  .faqQuestion {
+    font-size: 1.125rem;
+  }
+
+  .faqAnswer {
+    font-size: 0.875rem;
+  }
+}
+
+/* الشاشات الكبيرة (سطح المكتب) */
+@media (min-width: 1024px) {
+  .testimonialsItemsCard {
+    flex: 0 0 calc(33.333% - 1rem); /* عرض 3 بطاقات */
+    max-width: calc(
+      33.333% - 1rem
+    ); /* التأكد من أن البطاقات لا تتجاوز 3 في الصف */
+  }
+}
+
+/* الشاشات الصغيرة (الجوال) */
+@media (max-width: 768px) {
+  .testimonialsItems {
+    flex-direction: column; /* عرض البطاقات عموديًا في الجوال */
+  }
+
+  .testimonialsItemsCard {
+    flex: 0 0 90%; /* عرض بطاقة واحدة فقط في الجوال */
+    max-width: 100%; /* منع تجاوز البطاقة لحجم الشاشة */
+  }
+
+  .testimonialsWrapper {
+    padding: 0 1rem; /* تقليل المسافة الجانبية لمنع خروج الكارد */
+  }
+}
+
+.arrowButtonLeft,
+.arrowButtonRight {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  /* background-color: #fe8315; */
+  border: none;
+  /* padding: 0.5rem 1rem; */
+  color: white;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.arrowButtonLeft {
+  left: -2rem;
+}
+
+.arrowButtonRight {
+  right: -2rem;
+}
 
 @media (max-width: 768px) {
-  .hero {
+  .hero,
+  .makeAppointment {
     flex-direction: column; /* Stack hero text and image vertically */
     padding: 0; /* Remove padding */
     justify-content: center;
@@ -96,7 +670,9 @@
     text-align: start; /* Center align text */
     /* padding: 0 1.5rem; Add some padding for mobile */
   }
-
+  .leftSection {
+    margin-left: 1rem;
+  }
   .heroText h2 {
     font-size: 2rem; /* Smaller font size for mobile */
     width: 100%; /* Full width */
@@ -118,7 +694,9 @@
   .heroImage img {
     width: 80%; /* Scale down image for mobile */
   }
-
+  .testimonialsSection {
+    padding: 0 1rem;
+  }
   .ctaButton {
     font-size: 0.875rem; /* Adjust button font size */
     padding: 0.75rem 1.5rem;
