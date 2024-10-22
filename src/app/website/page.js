@@ -395,7 +395,7 @@ export default function WebsiteHome() {
           View All Services
         </Button>
       </section>
-      <section className="lg:flex align-middle justify-start lg:ps-12 lg:pt-8 pt-4 ps-4 ">
+      <section className="lg:flex align-middle justify-start lg:ps-12 lg:pt-8 pt-4  ps-8 ">
         <div className={styles.leftAppDownload}>
           <h2 className={styles.titleAppDownload}>
             What Are You Waiting For, Get the App Now!

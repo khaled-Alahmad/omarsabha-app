@@ -114,7 +114,7 @@
 
 .cardServiceAppointment {
   border-radius: 1.43119rem;
-  margin: 1rem;
+  /* margin: 1rem; */
   padding: 1.5rem 2rem;
   height: auto;
   background: var(--Foundation-White-text-color-W300, #fff);
@@ -378,10 +378,10 @@
 }
 
 .testimonialsItemsCard {
-  padding: 1rem;
+  padding: 1rem 2rem;
   display: flex;
   /* width: 23.125rem; */
-  height: 22.625rem;
+  height: 22.625rem !important;
   /* padding: 1.5rem; */
   flex-direction: column;
   justify-content: center;
@@ -565,7 +565,9 @@
     flex-direction: column;
     align-items: self-start;
   }
-
+  .cardServiceAppointment {
+    margin-top: 2rem;
+  }
   .footerBottom {
     flex-direction: column;
     text-align: center;
@@ -581,7 +583,7 @@
     margin-bottom: 1rem;
   }
   .footer {
-    padding: 1rem;
+    padding: 2rem;
   }
   .logo {
     margin-right: unset;
@@ -627,6 +629,8 @@
   .testimonialsItemsCard {
     flex: 0 0 90%; /* عرض بطاقة واحدة فقط في الجوال */
     max-width: 100%; /* منع تجاوز البطاقة لحجم الشاشة */
+    min-width: none;
+    min-height: 340px;
   }
 
   .testimonialsWrapper {
@@ -658,9 +662,11 @@
 @media (max-width: 768px) {
   .hero,
   .makeAppointment,
-  .servicesSection {
+  .servicesSection,
+  .vendorsSection,
+  .faqSection {
     flex-direction: column; /* Stack hero text and image vertically */
-    padding: 2rem 1rem; /* Remove padding */
+    padding: 2rem 2rem !important; /* Remove padding */
     justify-content: center;
     /* margin-top: 0; */
     /* height: auto; Let the content define height */
