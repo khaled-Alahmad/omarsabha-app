@@ -14,8 +14,8 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "@nextui-org/react";
-import { useSelectedLayoutSegment } from "next/navigation"; // For active route detection
-import { useState } from "react";
+import { useSelectedLayoutSegment } from "next/navigation";
+import { useState, useEffect } from "react";
 import { AcmeLogo } from "./AcmeLogo";
 
 export default function NavBar() {
@@ -23,18 +23,35 @@ export default function NavBar() {
   const activeSegment = useSelectedLayoutSegment();
 
   const menuItems = [
-    { name: "Home", path: "/" },
-    { name: "Service", path: "/service" },
-    { name: "About Us", path: "/about" },
-    { name: "Service Requests", path: "/requests" },
-    { name: "Vendors", path: "/vendors" },
+    { name: "Home", path: "/", title: "Home - InstaHandi" },
+    { name: "Service", path: "/service", title: "Our Services - InstaHandi" },
+    { name: "About Us", path: "/about", title: "About Us - InstaHandi" },
+    {
+      name: "Service Requests",
+      path: "/requests",
+      title: "Service Requests - InstaHandi",
+    },
+    { name: "Vendors", path: "/vendors", title: "Vendors - InstaHandi" },
   ];
 
   const isActive = (path) => {
-    return activeSegment === null && path === "/" // Handle the root path
+    return activeSegment === null && path === "/"
       ? true
-      : activeSegment && path.includes(activeSegment); // Check for active segments
+      : activeSegment && path.includes(activeSegment);
   };
+
+  const handleClick = (title) => {
+    document.title = title;
+    setIsMenuOpen(false); // Close the menu if in mobile view
+  };
+
+  useEffect(() => {
+    // Set default title based on the active route on initial load
+    const activeItem = menuItems.find(
+      (item) => item.path === `/${activeSegment || ""}`
+    );
+    if (activeItem) document.title = activeItem.title;
+  }, [activeSegment]);
 
   return (
     <Navbar
@@ -47,14 +64,12 @@ export default function NavBar() {
       }}
       style={{ backdropFilter: "unset" }}
     >
-      {/* Logo on the left */}
       <NavbarContent className="hidden lg:flex" justify="start">
         <NavbarBrand>
           <AcmeLogo />
         </NavbarBrand>
       </NavbarContent>
 
-      {/* Centered Nav Items for larger screens */}
       <NavbarContent className="hidden sm:flex flex-1 justify-center gap-6">
         {menuItems.map((item) => (
           <NavbarItem key={item.name}>
@@ -62,10 +77,11 @@ export default function NavBar() {
               href={item.path}
               className={`item-navbar ${
                 isActive(item.path)
-                  ? "active-link underline underline-offset-4" // Class for active link
+                  ? "active-link underline underline-offset-4"
                   : "text-black"
               }`}
               aria-current={isActive(item.path) ? "page" : undefined}
+              onClick={() => handleClick(item.title)}
             >
               {item.name}
             </Link>
@@ -73,14 +89,12 @@ export default function NavBar() {
         ))}
       </NavbarContent>
 
-      {/* Mobile Menu Toggle */}
       <NavbarContent className="sm:hidden justify-between w-full">
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
         />
       </NavbarContent>
 
-      {/* Button and Dropdown on the right */}
       <NavbarContent justify="end" className="sm:flex">
         <NavbarItem>
           <Dropdown>
@@ -95,18 +109,10 @@ export default function NavBar() {
               </Button>
             </DropdownTrigger>
             <DropdownMenu aria-label="Link Actions">
-              <DropdownItem
-                key="vendor"
-                // className="dropdown-item" // Class for dropdown item
-                href="/home"
-              >
+              <DropdownItem key="vendor" href="/home">
                 As Vendor
               </DropdownItem>
-              <DropdownItem
-                key="client"
-                // className="dropdown-item" // Class for dropdown item
-                href="/about"
-              >
+              <DropdownItem key="client" href="/about">
                 As Client
               </DropdownItem>
             </DropdownMenu>
@@ -114,7 +120,6 @@ export default function NavBar() {
         </NavbarItem>
       </NavbarContent>
 
-      {/* Responsive Mobile Menu */}
       <NavbarMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)}>
         <div className={`mobile-menu ${isMenuOpen ? "open" : ""}`}>
           {menuItems.map((item) => (
@@ -122,7 +127,7 @@ export default function NavBar() {
               <Link
                 className={`w-full ${isActive(item.path) ? "active-link" : ""}`}
                 href={item.path}
-                onClick={() => setIsMenuOpen(false)} // Close the menu when an item is clicked
+                onClick={() => handleClick(item.title)}
               >
                 {item.name}
               </Link>
