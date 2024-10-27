@@ -89,7 +89,7 @@ export default function NavBar() {
         ))}
       </NavbarContent>
 
-      <NavbarContent className="sm:hidden justify-between w-full">
+      <NavbarContent className="sm:hidden justify-between w-full" style={{height:"36px"}}>
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
         />

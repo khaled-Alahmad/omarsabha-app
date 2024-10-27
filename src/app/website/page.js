@@ -38,6 +38,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { EyeSlashFilledIcon } from "@/components/ui/Icons/EyeSlashFilledIcon";
 import { EyeFilledIcon } from "@/components/ui/Icons/EyeFilledIcon";
+import CardService from "@/components/CardService";
 
 export default function WebsiteHome() {
   const [isVisible, setIsVisible] = useState(false);
@@ -378,16 +379,17 @@ export default function WebsiteHome() {
         <div className={`${styles.servicesItems} grid my-8 gap-4 grid-cols-12`}>
           {data.map((item) => {
             return (
-              <div
-                key={item.id}
-                className={`${styles.servicesItemsCard} lg:col-span-3 col-span-6`}
-              >
-                <div className={styles.ImageService}>
-                  <Image src={service1} alt="Frame Image" className="mb-2" />
-                </div>
-                <div className={styles.titleService}>{item.title}</div>
-                <div className={styles.descService}>{item.desc}</div>
-              </div>
+              // <div
+              //   key={item.id}
+              //   className={`${styles.servicesItemsCard} lg:col-span-3 col-span-6`}
+              // >
+              //   <div className={styles.ImageService}>
+              //     <Image src={service1} alt="Frame Image" className="mb-2" />
+              //   </div>
+              //   <div className={styles.titleService}>{item.title}</div>
+              //   <div className={styles.descService}>{item.desc}</div>
+              // </div>
+              <CardService item={item} key={item.id} />
             );
           })}
         </div>
