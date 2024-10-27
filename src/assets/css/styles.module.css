@@ -896,13 +896,80 @@
   font-weight: 400;
   line-height: 2rem; /* 200% */
 }
+
+/* about us */
+.aboutUs {
+  background-size: cover;
+  background-position: center;
+  height: 110vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* justify-content: space-between; */
+  padding: 0 3rem; /* Padding for larger screens */
+  margin-top: -7.5rem;
+}
+.aboutUs::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(20, 20, 20, 0.8); /* اللون ودرجة الشفافية */
+  opacity: 0.7; /* الشفافية */
+  z-index: 1; /* يجعل التغطية خلف المحتوى */
+}
+.aboutUsFirst {
+  display: flex;
+  margin: 1rem 0rem;
+}
+.textSectionAboutUs {
+  padding: 2rem;
+  flex: 2;
+}
+.imageSectionAboutUs {
+  padding: 2rem;
+
+  flex: 1;
+}
+.descTextAboutUs {
+  color: var(--Foundation-Black-Text-Color-B200, #4b4c4c);
+  font-family: Poppins;
+  font-size: 1rem;
+  font-style: normal;
+  white-space: pre-wrap; /* css-3 */
+
+  font-weight: 400;
+  line-height: 1.875rem; /* 187.5% */
+  text-align: start;
+}
+.titleTextAboutUs {
+  color: var(--Foundation-Black-Text-Color-B300, #262727);
+  font-family: Poppins;
+  font-size: 2.5rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 3.5rem; /* 140% */
+  text-align: start;
+  margin-bottom: 2rem;
+}
 @media (max-width: 768px) {
+  .aboutUsFirst {
+    flex-direction: column;
+  }
   .ourService,
+  .aboutUs,
   .servicesSectionSearch {
     padding: 2rem 2rem !important; /* Remove padding */
   }
   .ourServiceText p {
     max-width: 100%;
+  }
+  .aboutUsFirst:last-child {
+    flex-direction: column-reverse;
   }
   .septsGetOurService {
     flex-direction: column;
@@ -924,6 +991,15 @@
     justify-content: center;
     /* margin-top: 0; */
     /* height: auto; Let the content define height */
+  }
+  .textSectionAboutUs {
+    padding: 2rem;
+    flex: 1;
+  }
+  .imageSectionAboutUs {
+    padding: 2rem;
+
+    flex: 1;
   }
   .servicesItemsCard {
     /* height: 200px; */
