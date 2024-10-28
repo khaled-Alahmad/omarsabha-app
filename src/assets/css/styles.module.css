@@ -978,6 +978,25 @@
     margin-top: 2rem;
   }
 }
+.customInput2 [data-slot="input-wrapper"] {
+  color: var(--Foundation-Black-Text-Color-B50, #e9e9e9) !important;
+  text-align: center;
+  font-family: Poppins;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  background-color: transparent !important;
+  line-height: 1.875rem; /* 187.5% */
+  letter-spacing: -0.01rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--Foundation-Black-Text-Color-B50, #e9e9e9) !important;
+}
+.customInput2 input {
+  background-color: transparent !important; /* Make input field itself transparent */
+  border: none !important; /* Remove inner border if any */
+  color: #e9e9e9 !important; /* Ensure it uses the parent color */
+  padding: 0 !important; /* Adjust padding if necessary */
+}
 
 @media (max-width: 768px) {
   .hero,

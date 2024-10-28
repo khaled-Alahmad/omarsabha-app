@@ -5,6 +5,8 @@ import bgImage from "@/assets/images/website/bg-about-us.png"; // Background ima
 import Image1 from "@/assets/images/website/about-us-first.png"; // Bottom wave image
 import Image2 from "@/assets/images/website/about-us-second.png"; // Bottom wave image
 import Image3 from "@/assets/images/website/about-us-third.png"; // Bottom wave image
+import { Button, Input } from "@nextui-org/react";
+import Link from "next/link";
 
 // app/website/about/page.js
 export default function AboutPage() {
@@ -126,7 +128,7 @@ export default function AboutPage() {
             <Image
               src={Image3}
               alt="Bottom Wave Image"
-              // layout="responsive"  
+              // layout="responsive"
               // objectFit="cover"
             />
           </div>
@@ -158,6 +160,30 @@ export default function AboutPage() {
           </div>
         </section>
       </section>
+
+      <section
+        className={`lg:flex lg:flex-row flex-col align-middle items-center justify-center lg:px-12  text-center lg:py-20 py-8  px-8 ${styles.sellSection}`}
+      >
+        <div className={styles.containerSell}>
+          <h2 className={styles.sellTitle}>Get the latest Updates</h2>
+        </div>
+        <div className={`${styles.sellButton} flex items-stretch   `}>
+          <Input
+            type="email"
+            label="Enter your email"
+            className={` ${styles.customInput2} me-2`}
+          />
+          <Button
+            as={Link}
+            href="#"
+            className={`${styles.ctaButton} h-auto`}
+            // style={{ flex: "1" }}
+          >
+            Subscribe
+          </Button>
+        </div>
+      </section>
+      <section className={styles.cutSectionTow}></section>
     </>
   );
 }
