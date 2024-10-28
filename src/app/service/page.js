@@ -179,7 +179,7 @@ export default function ServicesPage() {
           <h3 className={styles.titleGetOurService}>How To Get Our Service</h3>
           <p className={styles.descOurService}>
             Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
+            industry. Lorem Ipsum has been the industry&apos;s standard dummy text
             ever since the 1500s,
           </p>
         </div>
@@ -224,12 +224,12 @@ export default function ServicesPage() {
           <h2 className={styles.sellTitle}>Start Selling your Service N0w!</h2>
           <p className={styles.sellDesc}>
             Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
+            industry. Lorem Ipsum has been the industry&apos;s standard dummy text
             ever since tLorem Ipsum is simply dummy text of the printing and
-            typesetting industry. Lorem Ipsum has been the industry's standard
+            typesetting industry. Lorem Ipsum has been the industry&apos;s standard
             dummy text ever since tLorem Ipsum is simply dummy text of the
             printing and typesetting industry. Lorem Ipsum has been the
-            industry's standard dummy text ever since t
+            industry&apos;s standard dummy text ever since t
           </p>
         </div>
         <div className={styles.sellButton}>

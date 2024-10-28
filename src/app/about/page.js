@@ -59,8 +59,8 @@ export default function AboutPage() {
               platform where homeowners can easily connect with skilled
               professionals for all their service needs. We understand that
               finding reliable service providers can be a daunting task, whether
-              it's for a small home repair, a major renovation, or regular
-              maintenance tasks. That's why we've built a platform that
+              it&apos;s for a small home repair, a major renovation, or regular
+              maintenance tasks. That&apos;s why we&apos;ve built a platform that
               prioritizes convenience, quality, and transparency.
               <br /> <br /> For homeowners, InstaHandi offers a way to quickly
               find and compare bids from pre-vetted professionals, ensuring that
@@ -71,9 +71,9 @@ export default function AboutPage() {
               our mission is to create a seamless and trustworthy platform where
               homeowners can easily connect with skilled professionals for all
               their service needs. We understand that finding reliable service
-              providers can be a daunting task, whether it's for a small home
-              repair, a major renovation, or regular maintenance tasks. That's
-              why we've built a platform that prioritizes convenience, quality,
+              providers can be a daunting task, whether it&apos;s for a small home
+              repair, a major renovation, or regular maintenance tasks. That&apos;s
+              why we&apos;ve built a platform that prioritizes convenience, quality,
               and transparency.
               <br />
               <br /> For homeowners, InstaHandi offers a way to quickly find and
@@ -93,8 +93,8 @@ export default function AboutPage() {
               platform where homeowners can easily connect with skilled
               professionals for all their service needs. We understand that
               finding reliable service providers can be a daunting task, whether
-              it's for a small home repair, a major renovation, or regular
-              maintenance tasks. That's why we've built a platform that
+              it&apos;s for a small home repair, a major renovation, or regular
+              maintenance tasks. That&apos;s why we&apos;ve built a platform that
               prioritizes convenience, quality, and transparency. <br />
               <br />
               For homeowners, InstaHandi offers a way to quickly find and
@@ -106,9 +106,9 @@ export default function AboutPage() {
               our mission is to create a seamless and trustworthy platform where
               homeowners can easily connect with skilled professionals for all
               their service needs. We understand that finding reliable service
-              providers can be a daunting task, whether it's for a small home
-              repair, a major renovation, or regular maintenance tasks. That's
-              why we've built a platform that prioritizes convenience, quality,
+              providers can be a daunting task, whether it&apos;s for a small home
+              repair, a major renovation, or regular maintenance tasks. That&apos;s
+              why we&apos;ve built a platform that prioritizes convenience, quality,
               and transparency.
             </p>
           </div>
@@ -139,8 +139,8 @@ export default function AboutPage() {
               platform where homeowners can easily connect with skilled
               professionals for all their service needs. We understand that
               finding reliable service providers can be a daunting task, whether
-              it's for a small home repair, a major renovation, or regular
-              maintenance tasks. That's why we've built a platform that
+              it&apos;s for a small home repair, a major renovation, or regular
+              maintenance tasks. That&apos;s why we&apos;ve built a platform that
               prioritizes convenience, quality, and transparency.
               <br />
               <br /> For homeowners, InstaHandi offers a way to quickly find and
@@ -152,9 +152,9 @@ export default function AboutPage() {
               our mission is to create a seamless and trustworthy platform where
               homeowners can easily connect with skilled professionals for all
               their service needs. We understand that finding reliable service
-              providers can be a daunting task, whether it's for a small home
-              repair, a major renovation, or regular maintenance tasks. That's
-              why we've built a platform that prioritizes convenience, quality,
+              providers can be a daunting task, whether it&apos;s for a small home
+              repair, a major renovation, or regular maintenance tasks. That&apos;s
+              why we&apos;ve built a platform that prioritizes convenience, quality,
               and transparency.
             </p>
           </div>
