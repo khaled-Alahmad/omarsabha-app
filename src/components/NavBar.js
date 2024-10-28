@@ -17,9 +17,11 @@ import {
 import { useSelectedLayoutSegment } from "next/navigation";
 import { useState, useEffect } from "react";
 import { AcmeLogo } from "./AcmeLogo";
+import ServiceRequestClient from "./ServiceRequestClient";
 
 export default function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal visibility
   const activeSegment = useSelectedLayoutSegment();
 
   const menuItems = [
@@ -28,7 +30,7 @@ export default function NavBar() {
     { name: "About Us", path: "/about", title: "About Us - InstaHandi" },
     {
       name: "Service Requests",
-      path: "/requests",
+      path: "/service-request",
       title: "Service Requests - InstaHandi",
     },
     { name: "Vendors", path: "/vendors", title: "Vendors - InstaHandi" },
@@ -40,9 +42,12 @@ export default function NavBar() {
       : activeSegment && path.includes(activeSegment);
   };
 
-  const handleClick = (title) => {
+  const handleClick = (title, path) => {
     document.title = title;
     setIsMenuOpen(false); // Close the menu if in mobile view
+    if (path === "/service-request") {
+      setIsModalOpen(true); // Open the modal when clicking "Service Requests"
+    }
   };
 
   useEffect(() => {
@@ -54,96 +59,107 @@ export default function NavBar() {
   }, [activeSegment]);
 
   return (
-    <Navbar
-      isMenuOpen={isMenuOpen}
-      onMenuOpenChange={setIsMenuOpen}
-      maxWidth="1300"
-      classNames={{
-        wrapper: "bg-white-50 xl:mx-12 mx-6 mt-5 h-auto navbar max-w-[100%]",
-        base: "z-40 w-full h-auto items-center justify-center sticky top-0 backdrop-none",
-      }}
-      style={{ backdropFilter: "unset" }}
-    >
-      <NavbarContent className="hidden lg:flex" justify="start">
-        <NavbarBrand>
-          <AcmeLogo />
-        </NavbarBrand>
-      </NavbarContent>
+    <>
+      <Navbar
+        isMenuOpen={isMenuOpen}
+        onMenuOpenChange={setIsMenuOpen}
+        maxWidth="1300"
+        classNames={{
+          wrapper: "bg-white-50 xl:mx-12 mx-6 mt-5 h-auto navbar max-w-[100%]",
+          base: "z-40 w-full h-auto items-center justify-center sticky top-0 backdrop-none",
+        }}
+        style={{ backdropFilter: "unset" }}
+      >
+        <NavbarContent className="hidden lg:flex" justify="start">
+          <NavbarBrand>
+            <AcmeLogo />
+          </NavbarBrand>
+        </NavbarContent>
 
-      <NavbarContent className="hidden sm:flex flex-1 justify-center gap-6">
-        {menuItems.map((item) => (
-          <NavbarItem key={item.name}>
-            <Link
-              href={item.path}
-              className={`item-navbar ${
-                isActive(item.path)
-                  ? "active-link underline underline-offset-4"
-                  : "text-black"
-              }`}
-              aria-current={isActive(item.path) ? "page" : undefined}
-              onClick={() => handleClick(item.title)}
-            >
-              {item.name}
-            </Link>
-          </NavbarItem>
-        ))}
-      </NavbarContent>
-
-      <NavbarContent className="sm:hidden justify-between w-full" style={{height:"36px"}}>
-        <NavbarMenuToggle
-          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-        />
-      </NavbarContent>
-
-      <NavbarContent justify="end" className="sm:flex">
-        <NavbarItem>
-          <Dropdown>
-            <DropdownTrigger>
-              <Button
-                as={Link}
-                className="bg-primary-300 text-primary-50 shadow"
-                href="#"
-                variant="flat"
-              >
-                Register
-              </Button>
-            </DropdownTrigger>
-            <DropdownMenu aria-label="Link Actions">
-              <DropdownItem key="vendor" href="/home">
-                As Vendor
-              </DropdownItem>
-              <DropdownItem key="client" href="/about">
-                As Client
-              </DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
-        </NavbarItem>
-      </NavbarContent>
-
-      <NavbarMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)}>
-        <div className={`mobile-menu ${isMenuOpen ? "open" : ""}`}>
+        <NavbarContent className="hidden sm:flex flex-1 justify-center gap-6">
           {menuItems.map((item) => (
-            <NavbarMenuItem key={item.name}>
+            <NavbarItem key={item.name}>
               <Link
-                className={`w-full ${isActive(item.path) ? "active-link" : ""}`}
-                href={item.path}
-                onClick={() => handleClick(item.title)}
+                href={item.path === "/service-request" ? "#" : item.path}
+                className={`item-navbar ${
+                  isActive(item.path)
+                    ? "active-link underline underline-offset-4"
+                    : "text-black"
+                }`}
+                aria-current={isActive(item.path) ? "page" : undefined}
+                onClick={() => handleClick(item.title, item.path)}
               >
                 {item.name}
               </Link>
-            </NavbarMenuItem>
+            </NavbarItem>
           ))}
-          <NavbarMenuItem>
-            <Button
-              as={Link}
-              className="bg-primary-300 text-primary-50 shadow w-full"
-              href="#"
-            >
-              Register
-            </Button>
-          </NavbarMenuItem>
-        </div>
-      </NavbarMenu>
-    </Navbar>
+        </NavbarContent>
+
+        <NavbarContent
+          className="sm:hidden justify-between w-full"
+          style={{ height: "36px" }}
+        >
+          <NavbarMenuToggle
+            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          />
+        </NavbarContent>
+
+        <NavbarContent justify="end" className="sm:flex">
+          <NavbarItem>
+            <Dropdown>
+              <DropdownTrigger>
+                <Button
+                  as={Link}
+                  className="bg-primary-300 text-primary-50 shadow"
+                  href="#"
+                  variant="flat"
+                >
+                  Register
+                </Button>
+              </DropdownTrigger>
+              <DropdownMenu aria-label="Link Actions">
+                <DropdownItem key="vendor" href="/home">
+                  As Vendor
+                </DropdownItem>
+                <DropdownItem key="client" href="/about">
+                  As Client
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+          </NavbarItem>
+        </NavbarContent>
+
+        <NavbarMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)}>
+          <div className={`mobile-menu ${isMenuOpen ? "open" : ""}`}>
+            {menuItems.map((item) => (
+              <NavbarMenuItem key={item.name}>
+                <Link
+                  className={`w-full ${
+                    isActive(item.path) ? "active-link" : ""
+                  }`}
+                  href={item.path}
+                  onClick={() => handleClick(item.title, item.path)}
+                >
+                  {item.name}
+                </Link>
+              </NavbarMenuItem>
+            ))}
+            <NavbarMenuItem>
+              <Button
+                as={Link}
+                className="bg-primary-300 text-primary-50 shadow w-full"
+                href="#"
+              >
+                Register
+              </Button>
+            </NavbarMenuItem>
+          </div>
+        </NavbarMenu>
+      </Navbar>
+      <ServiceRequestClient
+        isOpen={isModalOpen}
+        onOpenChange={setIsModalOpen} // Pass the state handler to manage the modal
+      />
+    </>
   );
 }
