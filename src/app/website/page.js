@@ -39,10 +39,16 @@ import { useEffect, useState } from "react";
 import { EyeSlashFilledIcon } from "@/components/ui/Icons/EyeSlashFilledIcon";
 import { EyeFilledIcon } from "@/components/ui/Icons/EyeFilledIcon";
 import CardService from "@/components/CardService";
+import FloatingButton from "@/components/ui/website/FloatingButton";
+import ChatComponent from "@/components/ui/website/ChatComponent";
 
 export default function WebsiteHome() {
   const [isVisible, setIsVisible] = useState(false);
   const [isSelected, setIsSelected] = useState(false);
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const toggleChat = () => {
+    setIsChatOpen(!isChatOpen);
+  };
   const data = [
     {
       id: 1,
@@ -393,7 +399,7 @@ export default function WebsiteHome() {
             );
           })}
         </div>
-        <Button as={Link} href="#" className={styles.ctaButton}>
+        <Button as={Link} href="/service" className={styles.ctaButton}>
           View All Services
         </Button>
       </section>
@@ -471,7 +477,7 @@ export default function WebsiteHome() {
             );
           })}
         </div>
-        <Button as={Link} href="#" className={styles.ctaButton}>
+        <Button as={Link} href="/vendors" className={styles.ctaButton}>
           View All Vendors
         </Button>
       </section>
@@ -553,6 +559,15 @@ export default function WebsiteHome() {
       </section>
       {/* Other components */}
       {/* <Link href="/service">Go to Services</Link> */}
+      <FloatingButton onClick={toggleChat} />
+      {isChatOpen && (
+        <div
+          style={{ zIndex: "9999", height: "400px" }}
+          className="fixed bottom-20 right-4 bg-white-50 shadow-lg rounded-lg  w-80 transition-transform transform duration-300 ease-in-out"
+        >
+          <ChatComponent />
+        </div>
+      )}
     </div>
   );
 }

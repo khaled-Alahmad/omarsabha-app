@@ -124,7 +124,7 @@ export default function ArticlesPage() {
             </p>
             <Button
               as={Link}
-              href="#"
+              href="/articles/1"
               className={styles.redMoreButton}
               endContent={<ArrowIcon />}
             >
@@ -160,7 +160,7 @@ export default function ArticlesPage() {
                 <div className={styles.bottomVendorCard}>
                   <Button
                     as={Link}
-                    href="#"
+                    href="/articles/1"
                     className={styles.redMoreButton}
                     endContent={<ArrowIcon />}
                   >

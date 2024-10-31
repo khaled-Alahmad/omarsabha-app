@@ -1061,9 +1061,107 @@
   font-weight: 400;
   line-height: 2rem; /* 177.778% */
 }
+/* article details */
+.ArticleDetailsSection {
+  display: flex;
+  flex-direction: column;
+  align-items: self-start;
+  gap: 1rem;
+  justify-content: flex-start;
+  padding: 2rem 3rem; /* Padding for larger screens */
+}
+.ArticleDetailsDate {
+  display: flex;
+}
+.ArticleDetailsDate span {
+  color: var(--Foundation-Black-Text-Color-B300, #262727);
+  font-family: Poppins;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 2rem; /* 177.778% */
+  margin-right: 0.5rem;
+}
+.ArticleDetailsDate p {
+  color: var(--Foundation-Black-Text-Color-B100, #818282);
+  font-family: Poppins;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 2rem;
+}
+.ArticleDetailsTitle {
+  color: #000;
+  font-family: Poppins;
+  font-size: 2.5rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 3.125rem; /* 125% */
+}
+.ArticleDetailsSubTitle {
+  color: var(--Foundation-Black-Text-Color-B400, #1b1b1b);
+  font-family: Poppins;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 2rem; /* 177.778% */
+}
+.ArticleDetailsDesc {
+  color: var(--Foundation-Black-Text-Color-B100, #818282);
+  font-family: Poppins;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 2rem; /* 177.778% */
+}
+.ArticleDetailsTitle,
+.ArticleDetailsSubTitle {
+  width: 60%;
+}
+.ArticleDetailsSectionTow {
+  display: flex;
+  flex-direction: row;
+}
+.ArticleDetailsSectionTowImage {
+  flex: 1;
+  padding: 1rem;
+}
+.ArticleDetailsSectionTowContent {
+  flex: 2;
+  /* margin: 1rem; */
+}
+.moreTextArticle {
+  color: var(--Foundation-Black-Text-Color-B300, #262727);
+  font-family: Poppins;
+  font-size: 1.375rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 3.5rem; /* 254.545% */
+}
+.hederMoreArticle {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+}
+.btnMessage {
+  background-image: url("../icons/bg-floting-icon.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 9999;
+  height: 83px;
+  width: auto;
+  background-size: contain;
+}
+
 @media (max-width: 768px) {
+  .ArticleDetailsTitle,
+  .ArticleDetailsSubTitle {
+    width: 100%;
+  }
   .aboutUsFirst,
-  .recentArticleContainer {
+  .recentArticleContainer,
+  .ArticleDetailsSectionTow {
     flex-direction: column;
   }
   .recentArticleContent {
@@ -1076,6 +1174,7 @@
   .aboutUs,
   .articlesSection,
   .recentArticleSection,
+  .ArticleDetailsSection,
   .servicesSectionSearch {
     padding: 2rem 2rem !important; /* Remove padding */
   }

@@ -81,6 +81,14 @@ body {
   top: 54px;
   /* color: white; */
 }
+.msg-height {
+  height: 330px;
+}
+.btn-message {
+  background-image: url("../assets/icons/bg-floting-icon.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+}
 .custom-input [data-slot="input-wrapper"] {
   border-radius: 0.53669rem !important; /* Apply custom border radius */
   border: 1.431px solid var(--Foundation-Black-Text-Color-B75, #a6a6a6) !important; /* Apply custom border */
