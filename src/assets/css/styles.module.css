@@ -1041,10 +1041,86 @@
   font-weight: 600;
   /* line-height: 6.09238rem; 443.083% */
   border-radius: 50%;
-  background-color: var(--Foundation-Primary-color-P50, #FFF3E8);;
+  background-color: var(--Foundation-Primary-color-P50, #fff3e8);
   /* border: 2.318px solid var(--Foundation-Black-Text-Color-B50, #e9e9e9); */
-  padding:2.5rem;
+  padding: 2.5rem;
 }
+
+.vendorImageDetails {
+  border-radius: 0.75rem;
+  width: 32rem;
+}
+.VendorDetailsName {
+  color: var(--Foundation-Black-Text-Color-B300, #262727);
+  text-align: center;
+  font-family: Poppins;
+  font-size: 2rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 145%; /* 2.9rem */
+}
+.VendorDetailsDesc {
+  color: var(--Foundation-Black-Text-Color-B100, #818282);
+  text-align: center;
+  font-family: Poppins;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 2rem; /* 200% */
+}
+.VendorDetailsReview {
+  color: var(--Foundation-Black-Text-Color-B300, #262727);
+  font-family: Poppins;
+  font-size: 0.875rem;
+  font-style: normal;
+
+  margin: 1rem 0rem;
+  font-weight: 500;
+  line-height: 1.3125rem; /* 150% */
+}
+.backBolton {
+  border-radius: 0.375rem;
+  border: 1px solid var(--Foundation-Black-Text-Color-B75, #a6a6a6);
+  background: transparent;
+  /* box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.15); */
+  color: var(--Foundation-Black-Text-Color-B75, #a6a6a6);
+  font-family: Poppins;
+  font-size: 1rem;
+  font-weight: 600;
+  width: fit-content;
+  position: relative;
+  z-index: 10;
+  padding: 1rem 1.5rem;
+}
+.VendorDetailsInfoContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem; /* المسافة بين كل وحدة وأخرى */
+}
+
+.VendorDetailsInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* المسافة بين label و value */
+}
+
+.VendorDetailsInfoLabel {
+  color: var(--Foundation-Black-Text-Color-B300, #262727);
+  font-family: Poppins;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.VendorDetailsInfoValue {
+  color: var(--Foundation-Black-Text-Color-B100, #818282);
+  font-family: Poppins;
+  font-size: 1rem;
+  font-weight: 400;
+  white-space: normal; /* السماح بانتقال النص إلى سطر جديد */
+
+}
+
+
 @media (max-width: 768px) {
   .filterVendorContainer {
     flex-basis: 100%;

@@ -12,8 +12,16 @@ import google from "@/assets/images/website/Mobile app store badge.svg"; // Bott
 import google1 from "@/assets/images/website/Mobile app store badge (1).svg"; // Bottom wave image
 import google2 from "@/assets/images/website/Mobile app store badge (2).svg"; // Bottom wave image
 import ImageApp from "@/assets/images/website/Group 1410088879.png"; // Hero image
+import { useState } from "react";
+import VendorDetails from "@/components/vendors/VendorDetails";
 
 export default function VendorHome() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal visibility
+  const handleClick = () => {
+    setIsModalOpen(true); // Open the modal when clicking "Service Requests"
+  };
+
   const dataTow = [
     {
       id: 1,
@@ -215,8 +223,11 @@ export default function VendorHome() {
                 </div>
                 <div className={styles.bottomVendorCard}>
                   <Button
-                    as={Link}
-                    href="#"
+                    // as={Link}
+                    // href="#"
+                    onClick={() => {
+                      handleClick();
+                    }}
                     className={styles.vendorCardButton}
                   >
                     View Profile
@@ -303,7 +314,10 @@ export default function VendorHome() {
       </section>
       <section className={styles.cutSection}></section>
       <section className={styles.cutSectionTow}></section>
-
+      <VendorDetails
+        isOpen={isModalOpen}
+        onOpenChange={setIsModalOpen} // Pass the state handler to manage the modal
+      />
     </>
   );
 }
