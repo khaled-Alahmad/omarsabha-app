@@ -26,26 +26,38 @@ export default function NavBar() {
 
   const menuItems = [
     { name: "Home", path: "/", title: "Home - InstaHandi" },
-    { name: "Service", path: "/service", title: "Our Services - InstaHandi" },
+    {
+      name: "Our services",
+      path: "/service",
+      title: "Our Services - InstaHandi",
+    },
     { name: "About Us", path: "/about", title: "About Us - InstaHandi" },
     {
-      name: "Service Requests",
-      path: "/service-request",
-      title: "Service Requests - InstaHandi",
+      name: "Requests open for bidding",
+      path: "/request-service",
+      title: "Requests open for bidding - InstaHandi",
     },
     { name: "Vendors", path: "/vendors", title: "Vendors - InstaHandi" },
   ];
 
   const isActive = (path) => {
-    return activeSegment === null && path === "/"
-      ? true
-      : activeSegment && path.includes(activeSegment);
-  };
+    // Check if the activeSegment is null and path is the root
+    if (activeSegment === null && path === "/") {
+      return true;
+    }
 
+    // Check if the activeSegment is the same as the path
+    if (path === `/${activeSegment}`) {
+      return true;
+    }
+
+    // Check if the path starts with the activeSegment for sub-paths
+    return activeSegment && path.startsWith(`/${activeSegment}`);
+  };
   const handleClick = (title, path) => {
     document.title = title;
     setIsMenuOpen(false); // Close the menu if in mobile view
-    if (path === "/service-request") {
+    if (path === "/request-service") {
       setIsModalOpen(true); // Open the modal when clicking "Service Requests"
     }
   };
@@ -80,7 +92,7 @@ export default function NavBar() {
           {menuItems.map((item) => (
             <NavbarItem key={item.name}>
               <Link
-                href={item.path === "/service-request" ? "#" : item.path}
+                href={item.path === "/request-service" ? "#" : item.path}
                 className={`item-navbar ${
                   isActive(item.path)
                     ? "active-link underline underline-offset-4"
@@ -134,10 +146,12 @@ export default function NavBar() {
             {menuItems.map((item) => (
               <NavbarMenuItem key={item.name}>
                 <Link
-                  className={`w-full ${
-                    isActive(item.path) ? "active-link" : ""
+                  href={item.path === "/request-service" ? "#" : item.path}
+                  className={`item-navbar mt-4 ${
+                    isActive(item.path)
+                      ? "active-link underline underline-offset-4"
+                      : "text-white-50"
                   }`}
-                  href={item.path}
                   onClick={() => handleClick(item.title, item.path)}
                 >
                   {item.name}
@@ -147,7 +161,7 @@ export default function NavBar() {
             <NavbarMenuItem>
               <Button
                 as={Link}
-                className="bg-primary-300 text-primary-50 shadow w-full"
+                className="bg-primary-300 text-primary-50 shadow w-full mt-5"
                 href="#"
               >
                 Register

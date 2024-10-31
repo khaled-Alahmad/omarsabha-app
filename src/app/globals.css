@@ -51,6 +51,11 @@ body {
   font-weight: 500;
   line-height: normal;
 }
+@media (max-width: 768px) {
+  .item-navbar {
+    color: var(--Foundation-Black-Text-Color-B300, #fff);
+  }
+}
 .navbar {
   border-radius: 2.5rem;
   background: var(--Foundation-White-text-color-W300, #fff);
@@ -74,7 +79,7 @@ body {
 .mobile-menu {
   position: absolute;
   top: 54px;
-  color: white;
+  /* color: white; */
 }
 .custom-input [data-slot="input-wrapper"] {
   border-radius: 0.53669rem !important; /* Apply custom border radius */
