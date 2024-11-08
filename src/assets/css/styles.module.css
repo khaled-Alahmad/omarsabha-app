@@ -1153,7 +1153,23 @@
   width: auto;
   background-size: contain;
 }
-
+/*  login */
+.loginPage {
+  padding: 2rem 0rem;
+}
+.rowLogin {
+  display: flex;
+  flex-direction: row;
+}
+.imageLogin,
+.felidsLogin {
+  flex: 1;
+  padding: 1rem 2rem;
+}
+.imageLoginCss {
+  border-radius: 0.75rem;
+  height: 100%;
+}
 @media (max-width: 768px) {
   .ArticleDetailsTitle,
   .ArticleDetailsSubTitle {

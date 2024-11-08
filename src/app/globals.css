@@ -84,6 +84,27 @@ body {
 .msg-height {
   height: 330px;
 }
+/* globals.css or app/loading.css */
+.loading-overlay {
+  position: fixed; /* Fixed to the screen */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent dark background */
+  z-index: 9999; /* Make sure the overlay is on top of other content */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow around the overlay */
+  backdrop-filter: blur(15px); /* Apply blur effect to the background */
+}
+
+.spinner {
+  display: block;
+  margin: auto;
+}
+
 .btn-message {
   background-image: url("../assets/icons/bg-floting-icon.svg");
   background-position: center;
