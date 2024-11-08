@@ -125,7 +125,10 @@ export default function VendorSignIn() {
             className={styles.input}
             onChange={handlePasswordChange}
           />
-          <a href="/" className={styles.forgetPassword}>
+          <a
+            href="/auth/forget-password/vendor"
+            className={styles.forgetPassword}
+          >
             Forget Password?
           </a>
           <Button
