@@ -1,0 +1,144 @@
+.container {
+  max-width: 100%;
+  margin: auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+}
+
+.formGroup {
+  margin-bottom: 1.5rem;
+}
+
+.halfInput {
+  display: inline-block;
+  width: 48%;
+}
+
+.halfInput:first-child {
+  margin-right: 4%;
+}
+
+.label {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.radioGroup {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.uploadSection {
+  margin-bottom: 2rem;
+}
+
+.uploadLabel {
+  font-weight: 600;
+  text-align: left;
+  margin-bottom: 0.5rem;
+}
+
+.uploadBox {
+  border: 2px dashed #e0e0e0;
+  padding: 2rem;
+  text-align: center;
+  color: #818282;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-bottom: 1.5rem;
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: space-between;
+}
+
+.skipButton {
+  color: #818282;
+}
+
+.nextButton,
+.saveButton {
+  background-color: #fe8315;
+  color: white;
+}
+
+.setupContainer {
+  max-width: 100%;
+  margin: auto;
+  padding: 2rem;
+}
+
+.progressBar {
+  display: flex;
+  justify-content: space-evenly;
+  /* margin-bottom: 2rem; */
+  align-content: center;
+  align-items: center;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  color: #818282;
+  font-size: 0.875rem;
+}
+
+.step::before {
+  content: "";
+  position: absolute;
+  top: 24%;
+  width: 100%;
+  height: 4px;
+  background-color: #e0e0e0;
+  z-index: -1;
+}
+
+.step::before {
+  left: 90%;
+}
+
+/* .step:last-child::before {
+  right: 50%;
+} */
+
+.stepNumber {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+  color: #a6a6a6;
+  font-weight: 600;
+}
+
+.stepLabel {
+  margin-top: 0.5rem;
+  color: var(--Foundation-Black-Text-Color-B75, #a6a6a6);
+  font-family: Poppins;
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 145%; /* 1.0875rem */
+}
+
+.active .stepNumber {
+  background-color: #fe8315;
+  color: white;
+}
+
+.active {
+  color: #fe8315;
+}

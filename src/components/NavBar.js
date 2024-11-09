@@ -130,7 +130,7 @@ export default function NavBar() {
                 </Button>
               </DropdownTrigger>
               <DropdownMenu aria-label="Link Actions">
-                <DropdownItem key="vendor" href="/home">
+                <DropdownItem key="vendor" href="/auth/sign-up/vendor">
                   As Vendor
                 </DropdownItem>
                 <DropdownItem key="client" href="/about">
