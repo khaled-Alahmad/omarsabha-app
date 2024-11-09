@@ -31,11 +31,9 @@ export default function RootLayout({ children }) {
       </head>
       <body className={` antialiased`}>
         <NextUIProvider>
-          <NextThemesProvider attribute="class" defaultTheme="light">
-            <NavBar />
-            {children}
-            <Footer />
-          </NextThemesProvider>
+          <NavBar />
+          {children}
+          <Footer />
         </NextUIProvider>
       </body>
     </html>

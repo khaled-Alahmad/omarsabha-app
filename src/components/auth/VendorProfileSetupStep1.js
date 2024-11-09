@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 import React, { useState } from "react";
 import {
   Input,
@@ -12,7 +12,7 @@ import {
 import styles from "./VendorProfileSetup.module.css";
 
 export default function VendorProfileSetupStep1({ onNext }) {
-  const [vendorType, setVendorType] = useState("Individual");
+  // const [vendorType, setVendorType] = useState("Individual");
 
   return (
     <div className={styles.container}>
@@ -43,15 +43,19 @@ export default function VendorProfileSetupStep1({ onNext }) {
         <RadioGroup
           orientation="vertical"
           label="Vendor Type"
-          value={vendorType}
-          onChange={setVendorType}
-          className={`${styles.radioGroup} radioGroup`} /* Make sure this class name matches */
+          color="warning"
+          classNames={{
+            label: styles.radioLabel,
+          }}
         >
           <Radio value="Individual">Individual</Radio>
           <Radio value="Business">Business</Radio>
         </RadioGroup>
       </div>
-
+      {/* <RadioGroup label="Select your favorite city" color="warning">
+        <Radio value="Individual">Individual</Radio>
+        <Radio value="Business">Business</Radio>
+      </RadioGroup> */}
       {/* Additional fields */}
       <div className={styles.formGroup}>
         <Select
@@ -75,9 +79,12 @@ export default function VendorProfileSetupStep1({ onNext }) {
           labelPlacement="outside"
           fullWidth
         >
-          <SelectItem value="1-3">1-3 years</SelectItem>
-          <SelectItem value="3-5">3-5 years</SelectItem>
-          <SelectItem value="5-10">5-10 years</SelectItem>
+          <SelectItem value="1-2">1-2 years</SelectItem>
+          <SelectItem value="2-4">2-4 years</SelectItem>
+          <SelectItem value="4-6">4-6 years</SelectItem>
+          <SelectItem value="6-8">6-8 years</SelectItem>
+
+          <SelectItem value="8-10">8-10 years</SelectItem>
         </Select>
       </div>
 

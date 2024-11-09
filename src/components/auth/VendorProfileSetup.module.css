@@ -16,7 +16,7 @@
 }
 
 .formGroup {
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
 
 .halfInput {
@@ -61,35 +61,96 @@
   line-height: normal;
   text-align: start;
 }
-/* Custom style for all radio buttons */
-.radioGroup .nextui-radio {
-  border-color: #ccc; /* Default border color for all */
-}
-
-/* Specific style for the checked radio button */
-.radioGroup .nextui-radio:checked .nextui-radio-box {
-  background-color: #fe8315 !important; /* Desired color for checked state */
-  border-color: #fe8315 !important;
-}
-
-/* Label color for checked state */
-.radioGroup .nextui-radio:checked + .nextui-radio-label {
-  color: #fe8315 !important; /* Ensuring text changes with selection */
-}
-
-/* Hover state if needed */
-.radioGroup .nextui-radio:hover .nextui-radio-box {
-  border-color: #fe8315;
-}
 
 .uploadSection {
   margin-bottom: 2rem;
 }
 
 .uploadLabel {
-  font-weight: 600;
+  color: var(--Foundation-Black-Text-Color-B300, #262727);
+  font-family: Poppins;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
   text-align: left;
   margin-bottom: 0.5rem;
+}
+.uploadBoxLabel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  gap: 1rem;
+  flex-direction: column;
+}
+
+.imageContainer {
+  position: relative;
+  display: inline-block;
+}
+
+.imagePreview {
+  max-width: 100%;
+  max-height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+/* Delete button styling */
+.deleteButton {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.descImage {
+  color: var(--Foundation-Black-Text-Color-B300, #262727);
+
+  /* * Highlight Regular/Manrope/Font Size: 18/Font Weight: Regular/Line Height: 120.000/Letter Spacing: Auto */
+  font-family: Manrope;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+/* Custom style for the radio group label */
+.radioLabel {
+  color: var(--Foundation-Black-Text-Color-B300, #262727);
+  font-family: Poppins;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-align: start;
+}
+
+/* Style for the unselected radio button */
+.radioContainer .nextui-radio {
+  border: 2px solid #e0e0e0;
+  border-radius: 50%;
+}
+
+/* Style for the checked radio button */
+.radioSelected .nextui-radio {
+  background-color: #fe8315 !important; /* Color for checked state */
+  border-color: #fe8315 !important;
+}
+
+/* Style for the label of the selected radio button */
+.radioSelected .nextui-radio-label {
+  color: #fe8315 !important;
 }
 
 .uploadBox {
@@ -180,4 +241,32 @@
 
 .active {
   color: #fe8315;
+}
+
+@media (max-width: 768px) {
+  .formGroup {
+    display: flex;
+    flex-direction: column;
+  }
+  .step::before {
+    width: 100%;
+  }
+  .halfInput {
+    display: inline-block;
+    width: 100%;
+  }
+
+  .halfInput:first-child {
+    margin-right: 0%;
+    margin-bottom: 2rem;
+  }
+  .progressBar {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+  .progressBar:first-child {
+    margin-right: 2%;
+  }
 }
