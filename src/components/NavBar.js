@@ -13,15 +13,18 @@ import {
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
+  Badge,
 } from "@nextui-org/react";
 import { useSelectedLayoutSegment } from "next/navigation";
 import { useState, useEffect } from "react";
 import { AcmeLogo } from "./AcmeLogo";
 import ServiceRequestClient from "./ServiceRequestClient";
-
+import avatarImage from "@/assets/icons/avatar.png";
+import notificationIcon from "@/assets/icons/notification.svg";
 export default function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal visibility
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false); // Auth state
   const activeSegment = useSelectedLayoutSegment();
 
   const menuItems = [
@@ -40,30 +43,23 @@ export default function NavBar() {
     { name: "Vendors", path: "/vendors", title: "Vendors - InstaHandi" },
   ];
 
-  const isActive = (path) => {
-    // Check if the activeSegment is null and path is the root
-    if (activeSegment === null && path === "/") {
-      return true;
-    }
+  const isActive = (path) =>
+    (activeSegment === null && path === "/") || path === `/${activeSegment}`;
 
-    // Check if the activeSegment is the same as the path
-    if (path === `/${activeSegment}`) {
-      return true;
-    }
-
-    // Check if the path starts with the activeSegment for sub-paths
-    return activeSegment && path.startsWith(`/${activeSegment}`);
-  };
   const handleClick = (title, path) => {
     document.title = title;
-    setIsMenuOpen(false); // Close the menu if in mobile view
-    if (path === "/request-service") {
-      setIsModalOpen(true); // Open the modal when clicking "Service Requests"
-    }
+    setIsMenuOpen(false);
+    if (path === "/request-service" && !isAuthenticated) setIsModalOpen(true);
   };
 
   useEffect(() => {
-    // Set default title based on the active route on initial load
+    // Check for auth status (replace with actual auth logic)
+    const checkAuth = () => {
+      // Example: setIsAuthenticated(!!localStorage.getItem("authToken"));
+      setIsAuthenticated(true); // Set to true for testing
+    };
+    checkAuth();
+
     const activeItem = menuItems.find(
       (item) => item.path === `/${activeSegment || ""}`
     );
@@ -92,7 +88,11 @@ export default function NavBar() {
           {menuItems.map((item) => (
             <NavbarItem key={item.name}>
               <Link
-                href={item.path === "/request-service" ? "#" : item.path}
+                href={
+                  item.path === "/request-service" && !isAuthenticated
+                    ? "#"
+                    : item.path
+                }
                 className={`item-navbar ${
                   isActive(item.path)
                     ? "active-link underline underline-offset-4"
@@ -106,7 +106,6 @@ export default function NavBar() {
             </NavbarItem>
           ))}
         </NavbarContent>
-
         <NavbarContent
           className="sm:hidden justify-between w-full"
           style={{ height: "36px" }}
@@ -115,30 +114,88 @@ export default function NavBar() {
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           />
         </NavbarContent>
-
         <NavbarContent justify="end" className="sm:flex">
-          <NavbarItem>
-            <Dropdown>
-              <DropdownTrigger>
-                <Button
-                  as={Link}
-                  className="bg-primary-300 text-primary-50 shadow"
-                  href="#"
-                  variant="flat"
-                >
-                  Register
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu aria-label="Link Actions">
-                <DropdownItem key="vendor" href="/auth/sign-up/vendor">
-                  As Vendor
-                </DropdownItem>
-                <DropdownItem key="client" href="/about">
-                  As Client
-                </DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
-          </NavbarItem>
+          {isAuthenticated ? (
+            <>
+              <NavbarItem>
+                <Dropdown>
+                  <DropdownTrigger>
+                    {/* <Badge
+                      content="!"
+                      color="error"
+                      variant="flat"
+                      shape="circle"
+                    > */}
+                    <img
+                      src={notificationIcon.src}
+                      alt="Notifications"
+                      className="cursor-pointer w-6 h-6"
+                    />
+                    {/* </Badge> */}
+                  </DropdownTrigger>
+                  <DropdownMenu aria-label="Notifications">
+                    {[...Array(4)].map((_, i) => (
+                      <DropdownItem key={i} className="notification-item">
+                        <Link
+                          href="/request-service/1"
+                          className="notification-link"
+                        >
+                          New Services request posted. Place your Bid Now!
+                          <span className="notification-time">
+                            5 Minutes ago
+                          </span>
+                        </Link>
+                      </DropdownItem>
+                    ))}
+                  </DropdownMenu>
+                </Dropdown>
+              </NavbarItem>
+              <NavbarItem>
+                <Dropdown>
+                  <DropdownTrigger>
+                    <img
+                      src={avatarImage.src}
+                      alt="Profile"
+                      className="rounded-full w-8 h-8 cursor-pointer"
+                    />
+                  </DropdownTrigger>
+                  <DropdownMenu aria-label="User Menu">
+                    <DropdownItem key="profile">My Profile</DropdownItem>
+                    <DropdownItem key="proposals">My Proposals</DropdownItem>
+                    <DropdownItem key="jobs">My Jobs</DropdownItem>
+                    <DropdownItem key="transactions">Transactions</DropdownItem>
+                    <DropdownItem key="support">Help & Support</DropdownItem>
+                    <DropdownItem key="logout" color="error">
+                      Log Out
+                    </DropdownItem>
+                  </DropdownMenu>
+                </Dropdown>
+              </NavbarItem>
+            </>
+          ) : (
+            <NavbarItem>
+              <Dropdown>
+                <DropdownTrigger>
+                  <Button
+                    as={Link}
+                    className="bg-primary-300 text-primary-50 shadow"
+                    href="#"
+                    variant="flat"
+                  >
+                    Register
+                  </Button>
+                </DropdownTrigger>
+                <DropdownMenu aria-label="Link Actions">
+                  <DropdownItem key="vendor" href="/auth/sign-up/vendor">
+                    As Vendor
+                  </DropdownItem>
+                  <DropdownItem key="client" href="/auth/sign-up/client">
+                    As Client
+                  </DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
+            </NavbarItem>
+          )}
         </NavbarContent>
 
         <NavbarMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)}>
@@ -146,7 +203,11 @@ export default function NavBar() {
             {menuItems.map((item) => (
               <NavbarMenuItem key={item.name}>
                 <Link
-                  href={item.path === "/request-service" ? "#" : item.path}
+                  href={
+                    item.path === "/request-service" && !isAuthenticated
+                      ? "#"
+                      : item.path
+                  }
                   className={`item-navbar mt-4 ${
                     isActive(item.path)
                       ? "active-link underline underline-offset-4"
@@ -158,21 +219,23 @@ export default function NavBar() {
                 </Link>
               </NavbarMenuItem>
             ))}
-            <NavbarMenuItem>
-              <Button
-                as={Link}
-                className="bg-primary-300 text-primary-50 shadow w-full mt-5"
-                href="#"
-              >
-                Register
-              </Button>
-            </NavbarMenuItem>
+            {!isAuthenticated && (
+              <NavbarMenuItem>
+                <Button
+                  as={Link}
+                  className="bg-primary-300 text-primary-50 shadow w-full mt-5"
+                  href="#"
+                >
+                  Register
+                </Button>
+              </NavbarMenuItem>
+            )}
           </div>
         </NavbarMenu>
       </Navbar>
       <ServiceRequestClient
         isOpen={isModalOpen}
-        onOpenChange={setIsModalOpen} // Pass the state handler to manage the modal
+        onOpenChange={setIsModalOpen}
       />
     </>
   );

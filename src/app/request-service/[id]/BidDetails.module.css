@@ -1,0 +1,133 @@
+.container {
+  /* margin: auto; */
+  padding: 2rem 3rem;
+  background-color: #fff;
+  /* border-radius: 8px; */
+}
+
+.title {
+  color: var(--Foundation-Primary-color-P300, #fe8315);
+  text-align: center;
+  font-family: Poppins;
+  font-size: 1.375rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 145%; /* 1.99375rem */
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.descriptionSection {
+  margin-bottom: 20px;
+}
+
+.descriptionSection h3 {
+  color: var(--Foundation-Black-Text-Color-B300, #262727);
+  font-family: Poppins;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 145%; /* 1.63125rem */
+  margin-bottom: 20px;
+}
+
+.descriptionSection p {
+  color: var(--Foundation-Black-Text-Color-B100, #818282);
+  font-family: Poppins;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 2rem; /* 200% */
+}
+
+/* In your CSS or module CSS file */
+.detailsSection {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr); /* Default to single column */
+  gap: 1rem; /* Add space between items */
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 1024px) {
+  /* Adjust to the breakpoint you consider 'lg' */
+  .detailsSection {
+    grid-template-columns: repeat(4, 1fr); /* Four columns on larger screens */
+  }
+}
+
+.detailsSection div {
+  padding: 0.5rem;
+  color: var(--Foundation-Black-Text-Color-B100, #818282);
+  font-family: Poppins;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.detailsSection span {
+  color: var(--Foundation-Black-Text-Color-B300, #262727);
+  font-family: Poppins;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.imageGallery {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.image {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 0.90519rem;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-start;
+}
+
+.proposeButton {
+  background-color: #fff;
+  color: var(--Foundation-Black-Text-Color-B75, #a6a6a6);
+  font-family: Poppins;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.25rem; /* 111.111% */
+  cursor: pointer;
+  padding: 1rem;
+
+  border-radius: 0.375rem;
+  border: 1px solid var(--Foundation-Black-Text-Color-B75, #a6a6a6);
+}
+
+.bidButton {
+  border-radius: 0.375rem;
+  background: var(--Foundation-Primary-color-P300, #fe8315);
+  color: var(--Foundation-White-text-color-W300, #fff);
+  font-family: Poppins;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 600;
+  padding: 1rem 2.125rem;
+
+  line-height: 1.25rem; /* 111.111% */
+}
+@media (max-width: 768px) {
+  .container {
+    padding: 2rem 2rem !important;
+  }
+  .imageGallery{
+    flex-direction: column;
+  }
+  .image{
+    width: 100%;
+  }
+}

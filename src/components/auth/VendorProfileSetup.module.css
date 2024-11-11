@@ -28,13 +28,14 @@
   margin-right: 4%;
 }
 
-.formGroup label {
+.formGroup label,
+.formGroup .label {
   color: var(--Foundation-Black-Text-Color-B300, #262727);
   font-family: Poppins;
   font-size: 0.875rem;
   font-style: normal;
   font-weight: 500;
-  text-align: start;
+  text-align: left;
   line-height: normal;
   margin-bottom: 0.5rem;
 }

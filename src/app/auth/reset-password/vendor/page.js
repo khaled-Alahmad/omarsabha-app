@@ -1,46 +1,80 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Input, Button } from "@nextui-org/react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { getCookie } from "cookies-next";
 import styles from "./ResetPassword.module.css";
-import resetImage from "@/assets/images/auth/reset-password.png"; // Replace with actual path
+import resetImage from "@/assets/images/auth/reset-password.png";
 import { EyeSlashFilledIcon } from "@/components/ui/Icons/EyeSlashFilledIcon";
 import { EyeFilledIcon } from "@/components/ui/Icons/EyeFilledIcon";
 
-export default function ForgetPassword() {
-  const [email, setEmail] = useState("");
-  const [isVisible, setIsVisible] = useState(false);
-  const toggleVisibility = () => setIsVisible(!isVisible);
-  const [confirmIsVisible, setConfirmIsVisible] = useState(false);
+export default function ResetPassword() {
+  const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [isVisible, setIsVisible] = useState(false);
+  const [confirmIsVisible, setConfirmIsVisible] = useState(false);
+  const router = useRouter();
+  const [authToken, setAuthToken] = useState("");
 
-  const [requirements, setRequirements] = useState({
-    length: false,
-    hasNumber: false,
-    hasSpecialChar: false,
-  });
+  // جلب التوكين من الكوكيز عند تحميل الصفحة
+  useEffect(() => {
+    const token = getCookie("authToken");
+    console.log(token);
+
+    if (token) {
+      setAuthToken(token);
+    } else {
+      toast.error("Authorization token not found", { position: "top-right" });
+    }
+  }, []);
+
+  const toggleVisibility = () => setIsVisible(!isVisible);
   const toggleConfirmVisibility = () => setConfirmIsVisible(!confirmIsVisible);
 
-  const [password, setPassword] = useState("");
   const handlePasswordChange = (e) => {
-    const value = e.target.value;
-    setPassword(value);
-
-    setRequirements({
-      length: value.length >= 8,
-      hasNumber: /\d/.test(value),
-      hasSpecialChar: /[!@#$%^&*(),.?":{}|<>]/.test(value),
-    });
+    setPassword(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Implement email submission logic here
-    alert(`Password reset link sent to ${email}`);
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match", { position: "top-right" });
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_URL_AUTH}/reset-password`,
+        {
+          password,
+          password_confirmation: confirmPassword,
+        },
+        {
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        toast.success("Password reset successful", { position: "top-right" });
+        router.push("/auth/email-sent");
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Failed to reset password", {
+        position: "top-right",
+      });
+    }
   };
 
   return (
     <div className={styles.container}>
+      <ToastContainer />
       <div className={styles.imageWrapper}>
         <img
           src={resetImage.src}
@@ -51,7 +85,7 @@ export default function ForgetPassword() {
 
       <h2 className={styles.title}>Reset Your Password</h2>
       <p className={styles.subtitle}>
-        Enter a new password and confirm your new password to reset.
+        Enter a new password and confirm it to reset.
       </p>
 
       <form onSubmit={handleSubmit} className={styles.form}>
@@ -80,19 +114,6 @@ export default function ForgetPassword() {
           className={styles.input}
           onChange={handlePasswordChange}
         />
-
-        {/* Password Requirements */}
-        <ul className={styles.requirements}>
-          <li className={requirements.length ? styles.valid : styles.invalid}>
-            Password must be at least 8 characters long
-          </li>
-          <li
-            className={requirements.hasNumber ? styles.valid : styles.invalid}
-          >
-            It is recommended to include a letter, a number, or a special
-            character.
-          </li>
-        </ul>
 
         <Input
           label="Confirm Password"

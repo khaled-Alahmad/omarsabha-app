@@ -70,19 +70,18 @@
   background-color: #fe8315;
   color: white;
 }
-
+/* إعداد عام لشريط التقدم */
 .setupContainer {
-  max-width: 100%;
+  /* max-width: 700px; */
   margin: auto;
   padding: 2rem;
 }
-
 .progressBar {
   display: flex;
-  justify-content: space-evenly;
-  /* margin-bottom: 2rem; */
-  align-content: center;
+  justify-content: space-around;
   align-items: center;
+  margin-bottom: 2rem;
+  padding: 0 1rem;
 }
 
 .step {
@@ -90,66 +89,95 @@
   flex-direction: column;
   align-items: center;
   position: relative;
-  color: #818282;
+  color: #a6a6a6; /* لون النص */
   font-size: 0.875rem;
 }
-
-.step::before {
-  content: "";
-  position: absolute;
-  top: 24%;
-  width: 400%;
-  height: 0.4375rem;
-  border-radius: 0.32006rem;
-
-  background-color: #a6a6a6;
-  z-index: -1;
-}
-
-.step::before {
-  left: 90%;
-}
-
-/* .step:last-child::before {
-  right: 50%;
-} */
 
 .stepNumber {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 30px;
-  height: 30px;
+  width: 35px;
+  height: 35px;
   border-radius: 50%;
-  background-color: #a6a6a6;
+  background-color: #a6a6a6; /* لون الخلفية عند عدم النشاط */
   color: #fff;
   font-weight: 600;
+  font-size: 1rem;
+}
+
+.active .stepNumber {
+  background-color: #fe8315; /* لون الخلفية عند النشاط */
+  color: white;
 }
 
 .stepLabel {
   margin-top: 0.5rem;
-  color: var(--Foundation-Black-Text-Color-B75, #a6a6a6);
-  font-family: Poppins;
-  font-size: 0.75rem;
-  font-style: normal;
+  color: #a6a6a6;
+  font-family: Poppins, sans-serif;
+  font-size: 0.875rem;
   font-weight: 600;
-  line-height: 145%; /* 1.0875rem */
+  text-align: center;
 }
 
-.active .stepNumber {
-  background-color: #fe8315;
-  color: white;
+.step::before {
+  content: "";
+  position: absolute;
+  top: 28%;
+  left: 275%;
+  transform: translate(-50%, -50%);
+  height: 4px;
+  width: 352px;
+  background-color: #a6a6a6;
+  z-index: -1;
 }
 
-.active {
-  color: #fe8315;
+.step.active::before {
+  background-color: #fe8315; /* لون الشريط عند النشاط */
 }
+
+/* عدم عرض الخط الأخير */
+.step:last-child::before {
+  display: none;
+}
+
+/* إعدادات الاستجابة للجوال */
+@media (max-width: 768px) {
+  .progressBar {
+    flex-direction: column;
+  }
+
+  .step {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 1rem;
+    width: 100%;
+  }
+
+  .stepLabel {
+    margin-left: 0.5rem;
+  }
+
+  .step::before {
+    top: auto;
+    left: calc(100% + 10px); /* مسافة الخط بين الدوائر في الوضع الأفقي */
+    width: 30px;
+    height: 4px;
+  }
+
+  .stepNumber {
+    width: 30px;
+    height: 30px;
+  }
+}
+
 @media (max-width: 768px) {
   .formGroup {
     flex-direction: column;
   }
   .step::before {
-    width: 100%;
+    display: none;
   }
   .progressBar {
     display: flex;
@@ -157,7 +185,7 @@
     align-items: center;
     margin-bottom: 2rem;
   }
-  .step:first-child{
-    margin-right: 6rem;
+  .step:first-child {
+    /* margin-right: 6rem; */
   }
 }

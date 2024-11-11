@@ -1,21 +1,64 @@
 "use client";
 import React, { useState } from "react";
 import { Input, Button } from "@nextui-org/react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 import styles from "./ForgetPassword.module.css";
-import resetImage from "@/assets/images/auth/forget-password.png"; // Replace with actual path
+import resetImage from "@/assets/images/auth/forget-password.png";
+import { useRouter } from "next/navigation";
 
 export default function ForgetPassword() {
   const [email, setEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter(); // Initialize useRouter
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
-    // Implement email submission logic here
-    alert(`Password reset link sent to ${email}`);
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_URL_AUTH}/forget-password`,
+        { email },
+        {
+          headers: {
+            Accept: "application/json",
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        toast.success(`Password reset link sent to ${email}`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        router.push("/auth/email-sent/vendor");
+      }
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || "Unknown error";
+      toast.error(`Failed to send reset link: ${errorMessage}`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <div className={styles.container}>
+      <ToastContainer />
       <div className={styles.imageWrapper}>
         <img
           src={resetImage.src}
@@ -38,14 +81,17 @@ export default function ForgetPassword() {
           className={styles.input}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          required
+          type="email"
         />
         <Button
           type="submit"
           className={styles.button}
           color="primary"
           size="lg"
+          disabled={isLoading}
         >
-          Send me the link
+          {isLoading ? "Sending..." : "Send me the link"}
         </Button>
       </form>
     </div>

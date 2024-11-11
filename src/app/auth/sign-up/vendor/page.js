@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-// import axios from "axios";
+import axios from "axios";
 import { setCookie } from "cookies-next";
 import { Button, Checkbox, Divider, Input } from "@nextui-org/react";
 import styles from "@/app/auth/sign-up/vendor/VendorSignUp.module.css";
@@ -9,6 +9,7 @@ import { EyeSlashFilledIcon } from "@/components/ui/Icons/EyeSlashFilledIcon";
 import { EyeFilledIcon } from "@/components/ui/Icons/EyeFilledIcon";
 import facebookIcon from "@/assets/icons/fb-icon.svg";
 import googleIcon from "@/assets/icons/google-icon.svg";
+import { useRouter } from "next/navigation";
 
 export default function VendorSignUp() {
   const [email, setEmail] = useState("");
@@ -17,6 +18,8 @@ export default function VendorSignUp() {
   const [isChecked, setIsChecked] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [confirmIsVisible, setConfirmIsVisible] = useState(false);
+  const router = useRouter();
+
   const [requirements, setRequirements] = useState({
     length: false,
     hasNumber: false,
@@ -37,41 +40,47 @@ export default function VendorSignUp() {
     });
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   if (password !== confirmPassword) {
-  //     alert("Passwords do not match");
-  //     return;
-  //   }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
 
-  //   try {
-  //     const response = await axios.post(
-  //       "http://127.0.0.1:8000/api/auth/register",
-  //       {
-  //         email,
-  //         password,
-  //         password_confirmation: confirmPassword,
-  //         role: "vendor",
-  //       },
-  //       {
-  //         headers: {
-  //           Accept: "application/json",
-  //           Authorization: "Bearer 2|R1O0uIFVqd3FhYl271cchP65g2jL8fuQss7F7zZma0ea5e53",
-  //         },
-  //       }
-  //     );
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_URL_AUTH}/register`,
+        {
+          email,
+          password,
+          password_confirmation: confirmPassword,
+          role: "vendor",
+        },
+        {
+          headers: {
+            Accept: "application/json",
+            Authorization:
+              "Bearer 2|R1O0uIFVqd3FhYl271cchP65g2jL8fuQss7F7zZma0ea5e53",
+          },
+        }
+      );
 
-  //     if (response.data && response.data.token) {
-  //       // Set the token in a cookie on the client side
-  //       setCookie("authToken", response.data.token, { expires: 7, path: "/" });
-  //       alert("Registration successful!");
-  //       // Perform additional actions like redirecting if necessary
-  //     }
-  //   } catch (error) {
-  //     console.error("Registration error:", error);
-  //     alert("Failed to register. Please try again.");
-  //   }
-  // };
+      if (response.data && response.data.access_token) {
+        const expiresIn7Days = new Date();
+        expiresIn7Days.setDate(expiresIn7Days.getDate() + 7);
+        setCookie("authToken", response.data.access_token, {
+          expires: expiresIn7Days,
+          path: "/",
+        });
+        alert("Registration successful!");
+        router.push("/auth/profile-setup/vendor");
+        // يمكنك إعادة التوجيه إلى صفحة أخرى بعد التسجيل الناجح
+      }
+    } catch (error) {
+      console.error("Registration error:", error);
+      alert("Failed to register. Please try again.");
+    }
+  };
 
   return (
     <div className={styles.container}>
@@ -83,11 +92,7 @@ export default function VendorSignUp() {
         <h2 className={styles.title}>Vendor Sign Up</h2>
         <p className={styles.subtitle}>Enter details to create your account</p>
 
-        <form
-          className={styles.form}
-
-          // onSubmit={handleSubmit}
-        >
+        <form className={styles.form} onSubmit={handleSubmit}>
           <Input
             isClearable
             variant="bordered"
@@ -126,7 +131,6 @@ export default function VendorSignUp() {
             onChange={handlePasswordChange}
           />
 
-          {/* Password Requirements */}
           <ul className={styles.requirements}>
             <li className={requirements.length ? styles.valid : styles.invalid}>
               Password must be at least 8 characters long
@@ -181,6 +185,7 @@ export default function VendorSignUp() {
           >
             Sign Up
           </Button>
+
           <div className={styles.dividerContainer}>
             <Divider className={styles.divider} />
             <span className={styles.dividerText}>Or</span>

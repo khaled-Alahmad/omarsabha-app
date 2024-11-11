@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-// import axios from "axios";
+import axios from "axios";
 import { setCookie } from "cookies-next";
 import { Button, Checkbox, Divider, Input } from "@nextui-org/react";
 import styles from "@/app/auth/sign-in/vendor/VendorSignIn.module.css";
@@ -9,69 +9,64 @@ import { EyeSlashFilledIcon } from "@/components/ui/Icons/EyeSlashFilledIcon";
 import { EyeFilledIcon } from "@/components/ui/Icons/EyeFilledIcon";
 import facebookIcon from "@/assets/icons/fb-icon.svg";
 import googleIcon from "@/assets/icons/google-icon.svg";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 export default function VendorSignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [isChecked, setIsChecked] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const [confirmIsVisible, setConfirmIsVisible] = useState(false);
-  const [requirements, setRequirements] = useState({
-    length: false,
-    hasNumber: false,
-    hasSpecialChar: false,
-  });
+  const router = useRouter();
 
   const toggleVisibility = () => setIsVisible(!isVisible);
-  const toggleConfirmVisibility = () => setConfirmIsVisible(!confirmIsVisible);
 
-  const handlePasswordChange = (e) => {
-    const value = e.target.value;
-    setPassword(value);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    setRequirements({
-      length: value.length >= 8,
-      hasNumber: /\d/.test(value),
-      hasSpecialChar: /[!@#$%^&*(),.?":{}|<>]/.test(value),
-    });
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_URL_AUTH}/login`,
+        {
+          email,
+          password,
+          role: "vendor",
+        },
+        {
+          headers: {
+            Accept: "application/json",
+          },
+        }
+      );
+      // .then((res) => console.log(res))
+      // .catch((err) => console.log(err));
+      console.log(response.data.access_token);
+
+      if (response.data && response.data.access_token) {
+        // حساب تاريخ انتهاء الصلاحية بعد 7 أيام
+        const expiresIn7Days = new Date();
+        expiresIn7Days.setDate(expiresIn7Days.getDate() + 7);
+
+        // تخزين التوكن في الكوكيز مع تاريخ انتهاء الصلاحية
+        setCookie("authToken", response.data.access_token, {
+          expires: expiresIn7Days,
+          path: "/",
+        });
+
+        toast.success("Login successful!");
+        // يمكنك إعادة التوجيه إلى صفحة أخرى بعد تسجيل الدخول بنجاح
+      }
+      if (
+        response.data &&
+        response.data.user &&
+        response.data.user.profile_setup == 0
+      ) {
+        router.push("/auth/profile-setup/vendor");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      alert("Failed to login. Please check your credentials and try again.");
+    }
   };
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   if (password !== confirmPassword) {
-  //     alert("Passwords do not match");
-  //     return;
-  //   }
-
-  //   try {
-  //     const response = await axios.post(
-  //       "http://127.0.0.1:8000/api/auth/register",
-  //       {
-  //         email,
-  //         password,
-  //         password_confirmation: confirmPassword,
-  //         role: "vendor",
-  //       },
-  //       {
-  //         headers: {
-  //           Accept: "application/json",
-  //           Authorization: "Bearer 2|R1O0uIFVqd3FhYl271cchP65g2jL8fuQss7F7zZma0ea5e53",
-  //         },
-  //       }
-  //     );
-
-  //     if (response.data && response.data.token) {
-  //       // Set the token in a cookie on the client side
-  //       setCookie("authToken", response.data.token, { expires: 7, path: "/" });
-  //       alert("Registration successful!");
-  //       // Perform additional actions like redirecting if necessary
-  //     }
-  //   } catch (error) {
-  //     console.error("Registration error:", error);
-  //     alert("Failed to register. Please try again.");
-  //   }
-  // };
 
   return (
     <div className={styles.container}>
@@ -83,11 +78,7 @@ export default function VendorSignIn() {
         <h2 className={styles.title}>Vendor Sign In</h2>
         <p className={styles.subtitle}>Enter detail to Sign in</p>
 
-        <form
-          className={styles.form}
-
-          // onSubmit={handleSubmit}
-        >
+        <form className={styles.form} onSubmit={handleSubmit}>
           <Input
             isClearable
             variant="bordered"
@@ -123,7 +114,7 @@ export default function VendorSignIn() {
             fullWidth
             value={password}
             className={styles.input}
-            onChange={handlePasswordChange}
+            onChange={(e) => setPassword(e.target.value)}
           />
           <a
             href="/auth/forget-password/vendor"
@@ -139,6 +130,7 @@ export default function VendorSignIn() {
           >
             Sign In
           </Button>
+
           <div className={styles.dividerContainer}>
             <Divider className={styles.divider} />
             <span className={styles.dividerText}>Or</span>
