@@ -1,8 +1,17 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import { Button } from "@nextui-org/react";
 import styles from "./BidDetails.module.css"; // Import your CSS module for styling
-import serviceImage from '@/assets/images/vendor/service-request.png'
+import serviceImage from "@/assets/images/vendor/service-request.png";
+import ProposeChangeModal from "@/components/vendor/service-request/ProposeChangeModal";
 export default function BidDetails() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    console.log("Open modal clicked"); // Check if this prints in the console
+    setIsModalOpen(true);
+  };
+  const closeModal = () => setIsModalOpen(false);
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Light switch replacement</h2>
@@ -76,13 +85,18 @@ export default function BidDetails() {
       </div>
 
       <div className={styles.buttonGroup}>
-        <Button className={styles.proposeButton} color="default" disabled>
+        <Button
+          className={styles.proposeButton}
+          color="default"
+          onClick={openModal}
+        >
           Propose Change
         </Button>
         <Button className={styles.bidButton} color="primary">
           Place Bid
         </Button>
       </div>
+      <ProposeChangeModal isOpen={isModalOpen} onClose={closeModal} />
     </div>
   );
 }
