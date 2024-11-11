@@ -19,6 +19,16 @@ import { useSelectedLayoutSegment } from "next/navigation";
 import { useState, useEffect } from "react";
 import { AcmeLogo } from "./AcmeLogo";
 import ServiceRequestClient from "./ServiceRequestClient";
+import {
+  FaUser,
+  FaFileAlt,
+  FaBriefcase,
+  FaDollarSign,
+  FaLifeRing,
+  FaSignOutAlt,
+  FaQuestionCircle,
+} from "react-icons/fa"; // Import icons from react-icons
+
 import avatarImage from "@/assets/icons/avatar.png";
 import notificationIcon from "@/assets/icons/notification.svg";
 export default function NavBar() {
@@ -51,7 +61,31 @@ export default function NavBar() {
     setIsMenuOpen(false);
     if (path === "/request-service" && !isAuthenticated) setIsModalOpen(true);
   };
-
+  const handleRoute = (key) => {
+    switch (key) {
+      case "profile":
+        router.push("/vendor/profile");
+        break;
+      case "proposals":
+        router.push("/vendor/proposals");
+        break;
+      case "jobs":
+        router.push("/vendor/jobs");
+        break;
+      case "transactions":
+        router.push("/vendor/transactions");
+        break;
+      case "support":
+        router.push("/vendor/support");
+        break;
+      case "logout":
+        // Add logout functionality here
+        console.log("Logging out...");
+        break;
+      default:
+        break;
+    }
+  };
   useEffect(() => {
     // Check for auth status (replace with actual auth logic)
     const checkAuth = () => {
@@ -160,13 +194,48 @@ export default function NavBar() {
                     />
                   </DropdownTrigger>
                   <DropdownMenu aria-label="User Menu">
-                    <DropdownItem key="profile">My Profile</DropdownItem>
-                    <DropdownItem key="proposals">My Proposals</DropdownItem>
-                    <DropdownItem key="jobs">My Jobs</DropdownItem>
-                    <DropdownItem key="transactions">Transactions</DropdownItem>
-                    <DropdownItem key="support">Help & Support</DropdownItem>
-                    <DropdownItem key="logout" color="error">
-                      Log Out
+                    <DropdownItem key="profile" startContent={<FaUser />}>
+                      <Link href="/vendor/profile">
+                        <a>My Profile</a>
+                      </Link>
+                    </DropdownItem>
+
+                    <DropdownItem key="proposals" startContent={<FaFileAlt />}>
+                      <Link href="/vendor/proposals">
+                        <a>My Proposals</a>
+                      </Link>
+                    </DropdownItem>
+
+                    <DropdownItem key="jobs" startContent={<FaBriefcase />}>
+                      <Link href="/vendor/jobs">
+                        <a>My Jobs</a>
+                      </Link>
+                    </DropdownItem>
+
+                    <DropdownItem
+                      key="transactions"
+                      startContent={<FaDollarSign />}
+                    >
+                      <Link href="/vendor/transactions">
+                        <a>Transactions</a>
+                      </Link>
+                    </DropdownItem>
+
+                    <DropdownItem
+                      key="support"
+                      startContent={<FaQuestionCircle />}
+                    >
+                      <Link href="/vendor/support">
+                        <a>Help & Support</a>
+                      </Link>
+                    </DropdownItem>
+
+                    <DropdownItem
+                      key="logout"
+                      color="error"
+                      startContent={<FaSignOutAlt />}
+                    >
+                      <a>Log Out</a>
                     </DropdownItem>
                   </DropdownMenu>
                 </Dropdown>
