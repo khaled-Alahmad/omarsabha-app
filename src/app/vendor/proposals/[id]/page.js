@@ -137,7 +137,7 @@ export default function ServiceDetails() {
           <div>
             <span>Completion Date:</span> 2024-10-14
           </div>
-          <div>
+          <div className={styles.status}>
             <span>Status:</span> Pending
           </div>
         </div>

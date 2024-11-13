@@ -43,7 +43,14 @@
   grid-template-columns: repeat(4, 1fr);
   gap: 0.5rem;
 }
-
+.status {
+  color: var(--Foundation-Secondary-color-S300, #fed700) !important;
+  font-family: Poppins;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.25rem;
+}
 .detailsGrid div {
   color: var(--Foundation-Black-Text-Color-B100, #818282);
   font-family: Poppins;
