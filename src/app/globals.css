@@ -63,7 +63,7 @@ body {
   padding: 1rem 1.5rem;
 }
 .active-link {
-  color: var(--Foundation-Primary-color-P300, #fe8315);
+  color: var(--Foundation-Primary-color-P300, #fe8315) !important;
   font-family: Poppins;
   font-size: 1rem;
   font-style: normal;

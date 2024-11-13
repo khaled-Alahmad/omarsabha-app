@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./MyProposals.module.css";
 import { SearchIcon } from "@/components/ui/Icons/SearchIcon";
 import { Input, Select, SelectItem } from "@nextui-org/react";
+import { useRouter } from "next/navigation";
 
 const mockData = [
   {
@@ -68,6 +69,7 @@ export default function MyJobs() {
   const [proposals, setProposals] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const proposalsPerPage = 2;
+  const router = useRouter();
 
   useEffect(() => {
     // Simulate fetching data
@@ -147,7 +149,13 @@ export default function MyJobs() {
         </div>
       </div>
       {currentProposals.map((proposal, index) => (
-        <div key={index} className={styles.proposalCard}>
+        <div
+          key={index}
+          className={styles.proposalCard}
+          onClick={() => {
+            router.push("/vendor/jobs/1");
+          }}
+        >
           <div className={styles.proposalHeader}>
             <h3>{proposal.title}</h3>
             <span className={styles.status}>
