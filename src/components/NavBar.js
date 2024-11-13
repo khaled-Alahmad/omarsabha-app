@@ -13,9 +13,8 @@ import {
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
-  Badge,
 } from "@nextui-org/react";
-import { useSelectedLayoutSegment } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { AcmeLogo } from "./AcmeLogo";
 import ServiceRequestClient from "./ServiceRequestClient";
@@ -24,18 +23,20 @@ import {
   FaFileAlt,
   FaBriefcase,
   FaDollarSign,
-  FaLifeRing,
-  FaSignOutAlt,
   FaQuestionCircle,
-} from "react-icons/fa"; // Import icons from react-icons
+  FaSignOutAlt,
+} from "react-icons/fa";
 
 import avatarImage from "@/assets/icons/avatar.png";
 import notificationIcon from "@/assets/icons/notification.svg";
+
 export default function NavBar() {
+  const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false); // Auth state
-  const activeSegment = useSelectedLayoutSegment();
+  const currentPath = usePathname(); // Get the current path with usePathname
+  console.log("Current Path:", currentPath);
 
   const menuItems = [
     { name: "Home", path: "/", title: "Home - InstaHandi" },
@@ -53,52 +54,39 @@ export default function NavBar() {
     { name: "Vendors", path: "/vendors", title: "Vendors - InstaHandi" },
   ];
 
-  const isActive = (path) =>
-    (activeSegment === null && path === "/") || path === `/${activeSegment}`;
-
   const handleClick = (title, path) => {
     document.title = title;
     setIsMenuOpen(false);
     if (path === "/request-service" && !isAuthenticated) setIsModalOpen(true);
   };
+
   const handleRoute = (key) => {
-    switch (key) {
-      case "profile":
-        router.push("/vendor/profile");
-        break;
-      case "proposals":
-        router.push("/vendor/proposals");
-        break;
-      case "jobs":
-        router.push("/vendor/jobs");
-        break;
-      case "transactions":
-        router.push("/vendor/transactions");
-        break;
-      case "support":
-        router.push("/vendor/support");
-        break;
-      case "logout":
-        // Add logout functionality here
-        console.log("Logging out...");
-        break;
-      default:
-        break;
+    const routes = {
+      profile: "/vendor/profile",
+      proposals: "/vendor/proposals",
+      jobs: "/vendor/jobs",
+      transactions: "/vendor/transactions",
+      support: "/vendor/support",
+    };
+
+    if (key === "logout") {
+      console.log("Logging out...");
+      // Implement logout functionality here
+    } else if (routes[key]) {
+      router.push(routes[key]);
     }
   };
+
   useEffect(() => {
-    // Check for auth status (replace with actual auth logic)
+    // Simulate auth check (replace with actual auth logic)
     const checkAuth = () => {
-      // Example: setIsAuthenticated(!!localStorage.getItem("authToken"));
       setIsAuthenticated(true); // Set to true for testing
     };
     checkAuth();
 
-    const activeItem = menuItems.find(
-      (item) => item.path === `/${activeSegment || ""}`
-    );
+    const activeItem = menuItems.find((item) => item.path === currentPath);
     if (activeItem) document.title = activeItem.title;
-  }, [activeSegment]);
+  }, [currentPath]);
 
   return (
     <>
@@ -128,11 +116,11 @@ export default function NavBar() {
                     : item.path
                 }
                 className={`item-navbar ${
-                  isActive(item.path)
-                    ? "active-link underline underline-offset-4"
+                  currentPath === item.path
+                    ? "bg-green-200 text-white"
                     : "text-black"
                 }`}
-                aria-current={isActive(item.path) ? "page" : undefined}
+                aria-current={currentPath === item.path ? "page" : undefined}
                 onClick={() => handleClick(item.title, item.path)}
               >
                 {item.name}
@@ -154,18 +142,11 @@ export default function NavBar() {
               <NavbarItem>
                 <Dropdown>
                   <DropdownTrigger>
-                    {/* <Badge
-                      content="!"
-                      color="error"
-                      variant="flat"
-                      shape="circle"
-                    > */}
                     <img
                       src={notificationIcon.src}
                       alt="Notifications"
                       className="cursor-pointer w-6 h-6"
                     />
-                    {/* </Badge> */}
                   </DropdownTrigger>
                   <DropdownMenu aria-label="Notifications">
                     {[...Array(4)].map((_, i) => (
@@ -193,41 +174,61 @@ export default function NavBar() {
                       className="rounded-full w-8 h-8 cursor-pointer"
                     />
                   </DropdownTrigger>
-                  <DropdownMenu aria-label="User Menu">
-                    <DropdownItem key="profile" startContent={<FaUser />}>
-                      <Link href="/vendor/profile">
-                        <a>My Profile</a>
-                      </Link>
+                  <DropdownMenu aria-label="User Menu" onAction={handleRoute}>
+                    <DropdownItem
+                      key="profile"
+                      startContent={<FaUser />}
+                      className={
+                        currentPath === "/vendor/profile" ? "bg-green-100" : ""
+                      }
+                    >
+                      My Profile
                     </DropdownItem>
 
-                    <DropdownItem key="proposals" startContent={<FaFileAlt />}>
-                      <Link href="/vendor/proposals">
-                        <a>My Proposals</a>
-                      </Link>
+                    <DropdownItem
+                      key="proposals"
+                      startContent={<FaFileAlt />}
+                      className={
+                        currentPath === "/vendor/proposals"
+                          ? "bg-green-100 active"
+                          : ""
+                      }
+                    >
+                      My Proposals
                     </DropdownItem>
 
-                    <DropdownItem key="jobs" startContent={<FaBriefcase />}>
-                      <Link href="/vendor/jobs">
-                        <a>My Jobs</a>
-                      </Link>
+                    <DropdownItem
+                      key="jobs"
+                      startContent={<FaBriefcase />}
+                      className={
+                        currentPath == "/vendor/jobs"
+                          ? "bg-green-100 "
+                          : ""
+                      }
+                    >
+                      My Jobs
                     </DropdownItem>
 
                     <DropdownItem
                       key="transactions"
                       startContent={<FaDollarSign />}
+                      className={
+                        currentPath === "/vendor/transactions"
+                          ? "bg-green-100"
+                          : ""
+                      }
                     >
-                      <Link href="/vendor/transactions">
-                        <a>Transactions</a>
-                      </Link>
+                      Transactions
                     </DropdownItem>
 
                     <DropdownItem
                       key="support"
                       startContent={<FaQuestionCircle />}
+                      className={
+                        currentPath === "/vendor/support" ? "bg-green-100" : ""
+                      }
                     >
-                      <Link href="/vendor/support">
-                        <a>Help & Support</a>
-                      </Link>
+                      Help & Support
                     </DropdownItem>
 
                     <DropdownItem
@@ -235,7 +236,7 @@ export default function NavBar() {
                       color="error"
                       startContent={<FaSignOutAlt />}
                     >
-                      <a>Log Out</a>
+                      Log Out
                     </DropdownItem>
                   </DropdownMenu>
                 </Dropdown>
@@ -266,41 +267,6 @@ export default function NavBar() {
             </NavbarItem>
           )}
         </NavbarContent>
-
-        <NavbarMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)}>
-          <div className={`mobile-menu ${isMenuOpen ? "open" : ""}`}>
-            {menuItems.map((item) => (
-              <NavbarMenuItem key={item.name}>
-                <Link
-                  href={
-                    item.path === "/request-service" && !isAuthenticated
-                      ? "#"
-                      : item.path
-                  }
-                  className={`item-navbar mt-4 ${
-                    isActive(item.path)
-                      ? "active-link underline underline-offset-4"
-                      : "text-white-50"
-                  }`}
-                  onClick={() => handleClick(item.title, item.path)}
-                >
-                  {item.name}
-                </Link>
-              </NavbarMenuItem>
-            ))}
-            {!isAuthenticated && (
-              <NavbarMenuItem>
-                <Button
-                  as={Link}
-                  className="bg-primary-300 text-primary-50 shadow w-full mt-5"
-                  href="#"
-                >
-                  Register
-                </Button>
-              </NavbarMenuItem>
-            )}
-          </div>
-        </NavbarMenu>
       </Navbar>
       <ServiceRequestClient
         isOpen={isModalOpen}

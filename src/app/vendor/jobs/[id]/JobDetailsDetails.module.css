@@ -1,0 +1,319 @@
+.container {
+  padding: 2rem 3rem;
+}
+
+.header {
+  color: var(--Foundation-Primary-color-P300, #fe8315);
+  text-align: center;
+  font-family: Poppins;
+  font-size: 1.375rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 145%; /* 1.99375rem */
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.section {
+  margin-bottom: 2rem;
+}
+
+.subheader {
+  color: var(--Foundation-Black-Text-Color-B300, #262727);
+  font-family: Poppins;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 145%; /* 1.63125rem */
+  margin-bottom: 0.5rem;
+}
+
+.description {
+  color: var(--Foundation-Black-Text-Color-B100, #818282);
+  font-family: Poppins;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 2rem; /* 200% */
+  margin-bottom: 1rem;
+}
+
+.detailsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+}
+.status {
+  color: var(--Foundation-Secondary-color-S300, #fed700) !important;
+  font-family: Poppins;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.25rem;
+}
+.detailsGrid div {
+  color: var(--Foundation-Black-Text-Color-B100, #818282);
+  font-family: Poppins;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.detailsGrid div span {
+  color: var(--Foundation-Black-Text-Color-B300, #262727);
+  font-family: Poppins;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.imageGrid {
+  display: flex;
+  gap: 1rem;
+  margin: 1rem 0rem;
+}
+
+.image {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 0.90519rem;
+  border: 1.819px solid rgba(0, 0, 0, 0.2);
+}
+
+.clientInfo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 2rem 0rem;
+}
+
+.avatar {
+  width: 6.25rem;
+  height: 6.25rem;
+  border-radius: 50%;
+}
+
+.clientDetails {
+  display: flex;
+  flex: 1;
+  align-items: center;
+}
+
+.clientDetails h4 {
+  color: var(--Foundation-Primary-color-P300, #fe8315);
+  text-align: center;
+  font-family: Poppins;
+  font-size: 1.375rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 145%; /* 1.99375rem */
+}
+
+.clientDetails p {
+  margin: 0.25rem 0;
+  color: var(--Foundation-Black-Text-Color-B100, #818282);
+  font-family: Poppins;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.clientDetails p span {
+  color: var(--Foundation-Black-Text-Color-B300, #262727);
+  font-family: Poppins;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.viewMore {
+  color: var(--Foundation-Primary-color-P300, #fe8315);
+  font-family: Poppins;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-skip-ink: none;
+  text-decoration-thickness: auto;
+  text-underline-offset: auto;
+  text-underline-position: from-font;
+  cursor: pointer;
+  background: transparent;
+}
+
+@media (max-width: 768px) {
+  .detailsGrid {
+    grid-template-columns: 1fr;
+  }
+  .imageGrid {
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+  }
+  .image {
+    width: 100%;
+  }
+  .container {
+    padding: 2rem 2rem;
+  }
+  .clientInfo,
+  .clientDetails {
+    flex-direction: column;
+  }
+  .statusTable {
+    overflow-x: auto;
+  }
+}
+.bottomJob h2 {
+  color: var(--Foundation-Black-Text-Color-B300, #262727);
+  font-family: Poppins;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  margin-bottom: 1rem;
+}
+.progressContainer {
+  margin-bottom: 1rem;
+}
+
+.progressBar {
+  position: relative;
+  height: 1.5rem;
+  background-color: #a6a6a6;
+  border-radius: 3.06513rem;
+  margin-bottom: 8px;
+}
+
+.completedBar {
+  height: 100%;
+  background-color: #fe8315;
+  border-radius: 3.06513rem;
+}
+
+.progressLabels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+
+.progressLabel {
+  font-family: Poppins;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.25rem; /* 125% */
+  color: #a6a6a6;
+  margin-bottom: 3rem;
+}
+
+.completed {
+  color: #fe8315;
+}
+
+.current {
+  color: #fbbc05;
+}
+
+.statusTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+}
+
+.statusTable th,
+.statusTable td {
+  padding: 10px;
+  text-align: left;
+}
+.statusTable thead tr {
+  color: var(--Foundation-Primary-color-P300, #fe8315);
+  font-family: Poppins;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  border-bottom: 1.086px solid var(--Foundation-Black-Text-Color-B100, #818282);
+  background: var(--Foundation-White-text-color-W100, #fff);
+}
+
+.statusTable th {
+  color: var(--Foundation-Primary-color-P300, #fe8315);
+  font-family: Poppins;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.stepDescription {
+  color: var(--Foundation-Black-Text-Color-B100, #818282);
+  font-family: Poppins;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 2rem; /* 228.571% */
+  margin-top: 4px;
+}
+.stepsLabel {
+  color: var(--Foundation-Black-Text-Color-B300, #262727);
+  font-family: Poppins;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 155%; /* 1.55rem */
+}
+.completed td {
+  color: #fe8315;
+}
+.icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  /* padding: 0.5rem; */
+}
+.current td {
+  color: #fbbc05;
+}
+
+.upcoming td {
+  color: #a6a6a6;
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.backButton {
+  padding: 10px 20px;
+  background-color: #f0f0f0;
+  border: none;
+  border-radius: 4px;
+  color: #818282;
+  cursor: pointer;
+}
+.date {
+  color: var(--Foundation-Black-Text-Color-B100, #818282) !important;
+  font-family: Poppins;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 155%; /* 1.55rem */
+}
+.startOrderButton {
+  padding: 10px 20px;
+  background-color: #fe8315;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+}
