@@ -33,10 +33,17 @@ import {
 
 import avatarImage from "@/assets/icons/avatar.png";
 import notificationIcon from "@/assets/icons/notification.svg";
+import LogoutModal from "./vendor/LogoutModal";
 
 export default function NavBar() {
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const [isModalLogOutOpen, setIsModalLogOutOpen] = useState(false);
+
+  const openModalLogOutOpen = () => setIsModalLogOutOpen(true);
+  const closeModalLogOutOpen = () => setIsModalLogOutOpen(false);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false); // Auth state
   const currentPath = usePathname(); // Get the current path with usePathname
@@ -71,12 +78,11 @@ export default function NavBar() {
       proposals: "/vendor/proposals",
       jobs: "/vendor/jobs",
       transactions: "/vendor/transactions",
-      support: "/vendor/support",
+      support: "/vendor/help-support",
     };
 
     if (key === "logout") {
-      console.log("Logging out...");
-      // Implement logout functionality here
+      openModalLogOutOpen();
     } else if (routes[key]) {
       router.push(routes[key]);
     }
@@ -323,7 +329,7 @@ export default function NavBar() {
                         </svg>
                       }
                       className={
-                        currentPath === "/vendor/support" ? "bg-green-100" : ""
+                        currentPath === "/vendor/help-support" ? "bg-green-100" : ""
                       }
                     >
                       Help & Support
@@ -383,6 +389,7 @@ export default function NavBar() {
         isOpen={isModalOpen}
         onOpenChange={setIsModalOpen}
       />
+      <LogoutModal isOpen={isModalLogOutOpen} onClose={closeModalLogOutOpen} />
     </>
   );
 }
