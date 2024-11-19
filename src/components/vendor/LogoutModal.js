@@ -10,6 +10,7 @@ import {
 } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import { deleteCookie } from "cookies-next"; // Ensure this library is installed
+import toast from "react-hot-toast";
 
 export default function LogoutModal({ isOpen, onClose }) {
   const router = useRouter();
@@ -18,6 +19,7 @@ export default function LogoutModal({ isOpen, onClose }) {
     // Clear cookies
     deleteCookie("authToken");
     deleteCookie("userRole");
+    toast.success("Logout successful!");
 
     // Redirect to home page
     router.push("/");

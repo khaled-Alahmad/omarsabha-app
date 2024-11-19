@@ -2,12 +2,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { getCookie } from "cookies-next";
-import { toast } from "react-toastify";
 import VendorProfileSetupStep1 from "@/components/auth/VendorProfileSetupStep1";
 import VendorProfileSetupStep2 from "@/components/auth/VendorProfileSetupStep2";
 import VendorProfileSetupStep3 from "@/components/auth/VendorProfileSetupStep3";
 import styles from "@/app/auth/profile-setup/vendor/VendorProfileSetup.module.css";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function VendorProfileSetup() {
   const router = useRouter();

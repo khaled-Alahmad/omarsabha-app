@@ -23,65 +23,61 @@ export default function VendorSignIn() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // try {
-    //   const response = await axios.post(
-    //     `${process.env.NEXT_PUBLIC_URL_AUTH}/login`,
-    //     {
-    //       email,
-    //       password,
-    //       role: "vendor",
-    //     },
-    //     {
-    //       headers: {
-    //         Accept: "application/json",
-    //       },
-    //     }
-    //   );
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_URL_AUTH}/login`,
+        {
+          email,
+          password,
+          role: "vendor",
+        },
+        {
+          headers: {
+            Accept: "application/json",
+          },
+        }
+      );
 
-    //   const { access_token, user } = response.data;
+      const { access_token, user } = response.data;
 
-    //   if (access_token) {
-    //     // Set expiration date for cookies (7 days)
-    //     const expiresIn7Days = new Date();
-    //     expiresIn7Days.setDate(expiresIn7Days.getDate() + 7);
+      if (access_token) {
+        // Set expiration date for cookies (7 days)
+        const expiresIn7Days = new Date();
+        expiresIn7Days.setDate(expiresIn7Days.getDate() + 7);
 
-    //     // Store token and role in cookies
-    //     setCookie("authToken", access_token, {
-    //       expires: expiresIn7Days,
-    //       path: "/",
-    //     });
-    //     setCookie("userRole", user.role, {
-    //       expires: expiresIn7Days,
-    //       path: "/",
-    //     });
+        // Store token and role in cookies
+        setCookie("authToken", access_token, {
+          expires: expiresIn7Days,
+          path: "/",
+        });
+        setCookie("userRole", user.role, {
+          expires: expiresIn7Days,
+          path: "/",
+        });
 
-    // Show success message before navigation
-    console.log("clicked!");
+        // Show success message before navigation
+        // toast.success("Login successful!");
+        // console.log("clicked!");
 
-    toast.success("Login successful!");
-    // toast.success("Login successful!", {
-    //   onClose: () => {
-    //     // Ensure proper navigation after toast
-    //     if (user.profile_setup === 0) {
-    //       router.push("/auth/profile-setup/vendor");
-    //     } else {
-    //       router.push("/");
-    //     }
-    //   },
-    // });
-    //   }
-    // } catch (error) {
-    //   console.error("Login error:", error);
+        toast.success("Login successful!");
+        if (user.profile_setup === 0) {
+          router.push("/auth/profile-setup/vendor");
+        } else {
+          router.push("/");
+        }
+      }
+    } catch (error) {
+      console.error("Login error:", error);
 
-    //   // Provide a better error handling mechanism
-    //   if (error.response && error.response.data) {
-    //     const errorMessage =
-    //       error.response.data.message || "An error occurred during login.";
-    //     toast.error(errorMessage);
-    //   } else {
-    //     toast.error("Failed to login. Please try again.");
-    //   }
-    // }
+      // Provide a better error handling mechanism
+      if (error.response && error.response.data) {
+        const errorMessage =
+          error.response.data.message || "An error occurred during login.";
+        toast.error(errorMessage);
+      } else {
+        toast.error("Failed to login. Please try again.");
+      }
+    }
   };
 
   return (

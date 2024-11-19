@@ -10,6 +10,7 @@ import { EyeFilledIcon } from "@/components/ui/Icons/EyeFilledIcon";
 import facebookIcon from "@/assets/icons/fb-icon.svg";
 import googleIcon from "@/assets/icons/google-icon.svg";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function VendorSignUp() {
   const [email, setEmail] = useState("");
@@ -72,9 +73,8 @@ export default function VendorSignUp() {
           expires: expiresIn7Days,
           path: "/",
         });
-        alert("Registration successful!");
+        toast.success("Registration successful!");
         router.push("/auth/profile-setup/vendor");
-        // يمكنك إعادة التوجيه إلى صفحة أخرى بعد التسجيل الناجح
       }
     } catch (error) {
       console.error("Registration error:", error);

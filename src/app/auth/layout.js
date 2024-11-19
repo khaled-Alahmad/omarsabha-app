@@ -1,15 +1,11 @@
-// app/sign-up/layout.js
+// app/auth/layout.js
 import "@/app/globals.css";
 
 export const metadata = {
-  title: "Auth - InstaHandi",
-  description: "Sign up page for InstaHandi",
+  title: "Auth Pages - InstaHandi",
+  description: "Authentication Pages Layout",
 };
 
-export default function SignUpLayout({ children }) {
-  return (
-    <div>
-      {children} 
-    </div>
-  );
+export default function AuthLayout({ children }) {
+  return <main>{children}</main>;
 }

@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "@/assets/css/styles.module.css"; // Import CSS module
 import Image from "next/image";
 
@@ -9,10 +8,10 @@ function CardService({ item }) {
       className={`${styles.servicesItemsCard} lg:col-span-3 col-span-6`}
     >
       <div className={styles.ImageService}>
-        <Image src={item.img} alt="Frame Image" className="mb-2" />
+        <img src={item.main_image} alt="Frame Image" className="mb-2" />
       </div>
-      <div className={styles.titleService}>{item.title}</div>
-      <div className={styles.descService}>{item.desc}</div>
+      <div className={styles.titleService}>{item.name}</div>
+      <div className={styles.descService}>{item.description}</div>
     </div>
   );
 }

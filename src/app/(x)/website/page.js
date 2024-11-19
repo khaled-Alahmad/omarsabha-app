@@ -41,6 +41,8 @@ import { EyeFilledIcon } from "@/components/ui/Icons/EyeFilledIcon";
 import CardService from "@/components/CardService";
 import FloatingButton from "@/components/ui/website/FloatingButton";
 import ChatComponent from "@/components/ui/website/ChatComponent";
+import { VendorSingUp } from "./@home/vendor-sign-up/page";
+import ServiceHome from "./@home/services/page";
 
 export default function WebsiteHome() {
   const [isVisible, setIsVisible] = useState(false);
@@ -274,7 +276,8 @@ export default function WebsiteHome() {
           />
         </div>
       </section>
-      <section className={styles.makeAppointment}>
+      <VendorSingUp />
+      {/* <section className={styles.makeAppointment}>
         <div className={styles.leftSection}>
           <div className={styles.serviceLine}>
             <Image src={Frame3} alt="Frame Image" className="me-4" />
@@ -373,8 +376,8 @@ export default function WebsiteHome() {
             </CardBody>
           </Card>
         </div>
-      </section>
-      <section className={styles.servicesSection}>
+      </section> */}
+      {/* <section className={styles.servicesSection}>
         <h2 className={styles.servicesTitle}>Our Services</h2>
         <span className={styles.servicesDesc}>
           Need a quick fix around the house? Our skilled professionals are
@@ -402,7 +405,8 @@ export default function WebsiteHome() {
         <Button as={Link} href="/service" className={styles.ctaButton}>
           View All Services
         </Button>
-      </section>
+      </section> */}
+      <ServiceHome />
       <section className="lg:flex align-middle justify-start lg:ps-12 lg:pt-8 pt-4  ps-8 ">
         <div className={styles.leftAppDownload}>
           <h2 className={styles.titleAppDownload}>

@@ -42,6 +42,12 @@ import CardService from "@/components/CardService";
 import FloatingButton from "@/components/ui/website/FloatingButton";
 import ChatComponent from "@/components/ui/website/ChatComponent";
 import { useRouter } from "next/router";
+import Footer from "@/components/Footer";
+import NavBar from "@/components/NavBar";
+import { VendorSingUp } from "./(x)/website/@home/vendor-sign-up/page";
+import ServiceHome from "./(x)/website/@home/services/page";
+import GetTheApp from "./(x)/website/@home/get-the-app/page";
+import OurVendors from "./(x)/website/@home/our-vendors/page";
 
 // The main Home component
 export default function Home() {
@@ -247,344 +253,149 @@ export default function Home() {
     return () => window.removeEventListener("resize", updateTestimonialsToShow); // Clean up
   }, []);
   return (
-    <div className={styles.home}>
-      <section
-        className={styles.hero}
-        style={{
-          backgroundImage: `url(${bgImage.src})`, // Background image
-        }}
-      >
-        {/* <div className="container"> */}
-        <div className={styles.heroText}>
-          <h1>InstaHandi</h1>
-          <h2>REQUEST, COMPARE BIDS, HIRE</h2>
-          <ul>
-            <li className="flex align-middle items-center mb-5">
-              <Image src={Frame} alt="Frame Image" className="me-4" />
-              Have all the vendors in your City compete to win your business.
-            </li>
-            <li className="flex align-middle items-center mb-5">
-              <Image src={Frame1} alt="Frame Image" className="me-4" />
-              Free quality service providers hiring.
-            </li>
-            <li className="flex align-middle items-center mb-5">
-              <Image src={Frame2} alt="Frame Image" className="me-4" />
-              Best deal guarantee.
-            </li>
-          </ul>
-          <Button as={Link} href="#" className={styles.ctaButton}>
-            Request Service Now
-          </Button>
-        </div>
-        <div className={styles.heroImage}>
-          <Image src={ImageHero} alt="Hero Image" layout="responsive" />
-        </div>
-        {/* </div> */}
+    <>
+      <NavBar />
 
-        {/* Bottom wave image */}
-        <div className={styles["bottom-wave"]}>
-          <Image
-            src={ImageBt}
-            alt="Bottom Wave Image"
-            layout="responsive"
-            // objectFit="cover"
-          />
-        </div>
-      </section>
-      <section className={styles.makeAppointment}>
-        <div className={styles.leftSection}>
-          <div className={styles.serviceLine}>
-            <Image src={Frame3} alt="Frame Image" className="me-4" />
-            Get job leads 100% free.
+      <div className={styles.home}>
+        <section
+          className={styles.hero}
+          style={{
+            backgroundImage: `url(${bgImage.src})`, // Background image
+          }}
+        >
+          {/* <div className="container"> */}
+          <div className={styles.heroText}>
+            <h1>InstaHandi</h1>
+            <h2>REQUEST, COMPARE BIDS, HIRE</h2>
+            <ul>
+              <li className="flex align-middle items-center mb-5">
+                <Image src={Frame} alt="Frame Image" className="me-4" />
+                Have all the vendors in your City compete to win your business.
+              </li>
+              <li className="flex align-middle items-center mb-5">
+                <Image src={Frame1} alt="Frame Image" className="me-4" />
+                Free quality service providers hiring.
+              </li>
+              <li className="flex align-middle items-center mb-5">
+                <Image src={Frame2} alt="Frame Image" className="me-4" />
+                Best deal guarantee.
+              </li>
+            </ul>
+            <Button as={Link} href="#" className={styles.ctaButton}>
+              Request Service Now
+            </Button>
           </div>
-          <div className={styles.serviceLine}>
-            <Image src={Frame4} alt="Frame Image" className="me-4" />
-            Grow your business with verified money backed service requests.
+          <div className={styles.heroImage}>
+            <Image src={ImageHero} alt="Hero Image" layout="responsive" />
           </div>
-          <div className={styles.serviceLine}>
-            <Image src={Frame6} alt="Frame Image" className="me-4" />
-            Pay small fee only when you win a job.
+          {/* </div> */}
+
+          {/* Bottom wave image */}
+          <div className={styles["bottom-wave"]}>
+            <Image
+              src={ImageBt}
+              alt="Bottom Wave Image"
+              layout="responsive"
+              // objectFit="cover"
+            />
           </div>
-        </div>
-        <div className={styles.rightSection}>
-          <Card className={styles.cardServiceAppointment}>
-            <CardHeader>
-              <h4 className={styles.cardServiceAppointmentTitle}>
-                Become a service provider
-              </h4>
-            </CardHeader>
-            <CardBody className={`${styles.customCardBody}`}>
-              <div className="mb-4">
-                <Input
-                  type="email"
-                  label="Email"
-                  className={`${styles.inputField} custom-input`}
-                />
-              </div>
-              <div className="mb-4">
-                <Input
-                  label="Password"
-                  // placeholder="Enter your password"
-                  className={`${styles.inputField} custom-input`}
-                  endContent={
-                    <button
-                      className="focus:outline-none"
-                      type="button"
-                      onClick={toggleVisibility}
-                      aria-label="toggle password visibility"
-                    >
-                      {isVisible ? (
-                        <EyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
-                      ) : (
-                        <EyeFilledIcon className="text-2xl text-default-400 pointer-events-none" />
-                      )}
-                    </button>
-                  }
-                  type={isVisible ? "text" : "password"}
-                />
-              </div>
-              <div className="mb-4">
-                <Input
-                  label="Confirm Password"
-                  // placeholder="Confirm your password"
-                  className={`${styles.inputField} custom-input`}
-                  endContent={
-                    <button
-                      className="focus:outline-none"
-                      type="button"
-                      onClick={toggleVisibility}
-                      aria-label="toggle password visibility"
-                    >
-                      {isVisible ? (
-                        <EyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
-                      ) : (
-                        <EyeFilledIcon className="text-2xl text-default-400 pointer-events-none" />
-                      )}
-                    </button>
-                  }
-                  type={isVisible ? "text" : "password"}
-                />
-              </div>
-              <div className="mb-4">
-                <Checkbox
-                  color="warning"
-                  isSelected={isSelected} // This will control whether the checkbox is checked
-                  onValueChange={setIsSelected} // This will update the state when the checkbox is clicked
+        </section>
+
+        <VendorSingUp />
+        <ServiceHome />
+
+        <GetTheApp />
+        <section className={styles.cutSection}></section>
+        <OurVendors />
+        <section className={styles.servicesSection}>
+          <h2 className={styles.servicesTitle}>Testimonials</h2>
+          <span className={styles.servicesDesc}>
+            What Our Customers Are Saying
+          </span>
+          <div className={styles.testimonialsWrapper}>
+            {/* Left Arrow */}
+            <button
+              onClick={handlePrev}
+              className={`${styles.arrowButtonLeft} me-4`}
+              disabled={startIndex === 0}
+            >
+              <Image height={40} width={40} src={left} alt="Left Arrow" />
+            </button>
+
+            {/* Display the testimonials */}
+            <div className={styles.testimonialsItems}>
+              {dataThree
+                .slice(startIndex, startIndex + testimonialsToShow)
+                .map((item) => (
+                  <div key={item.id} className={styles.testimonialsItemsCard}>
+                    <div className={styles.vendorLine}>
+                      {Array.from({ length: item.start }, (_, index) => (
+                        <Image
+                          key={index}
+                          src={star}
+                          alt="Star Icon"
+                          className="me-1"
+                        />
+                      ))}
+                    </div>
+                    <div className={styles.descVendor}>{item.desc}</div>
+                    <User
+                      name={item.name}
+                      description={item.job}
+                      avatarProps={{ src: item.img }}
+                      classNames={{
+                        name: styles.nameAvatar,
+                        description: styles.descAvatar,
+                      }}
+                    />
+                  </div>
+                ))}
+            </div>
+
+            {/* Right Arrow */}
+            <button
+              onClick={handleNext}
+              className={`${styles.arrowButtonRight} ms-4`}
+              disabled={startIndex >= dataThree.length - testimonialsToShow}
+            >
+              <Image height={40} width={40} src={right} alt="Right Arrow" />
+            </button>
+          </div>
+        </section>
+        <section className={styles.faqSection}>
+          <h2 className={styles.faqTitle}>Frequently Asked Questions</h2>
+          <div className={styles.faqList}>
+            {faqData.map((item, index) => (
+              <div key={index} className={styles.faqItem}>
+                <div
+                  className={styles.faqQuestion}
+                  onClick={() => handleToggle(index)}
                 >
-                  I agree to the Terms and Conditions
-                </Checkbox>
-              </div>
-              <div className="mb-4">
-                <Button as={Link} href="#" className={styles.signUpButton}>
-                  Sign Up
-                </Button>
-              </div>
-              <div className="mb-4">
-                <p className={styles.bottomTextCard}>
-                  Already a member?
-                  <Link href="/auth/sign-in/vendor" className={styles.bottomTextCardT}>
-                    Sign In
-                  </Link>
-                </p>
-              </div>
-            </CardBody>
-          </Card>
-        </div>
-      </section>
-      <section className={styles.servicesSection}>
-        <h2 className={styles.servicesTitle}>Our Services</h2>
-        <span className={styles.servicesDesc}>
-          Need a quick fix around the house? Our skilled professionals are
-          available for all types of home repairs, from fixing leaky faucets to
-          repairing broken windows. With InstaHandi, you can ensure that even
-          the smallest issues are addressed promptly and efficiently.
-        </span>
-        <div className={`${styles.servicesItems} grid my-8 gap-4 grid-cols-12`}>
-          {data.map((item) => {
-            return (
-              // <div
-              //   key={item.id}
-              //   className={`${styles.servicesItemsCard} lg:col-span-3 col-span-6`}
-              // >
-              //   <div className={styles.ImageService}>
-              //     <Image src={service1} alt="Frame Image" className="mb-2" />
-              //   </div>
-              //   <div className={styles.titleService}>{item.title}</div>
-              //   <div className={styles.descService}>{item.desc}</div>
-              // </div>
-              <CardService item={item} key={item.id} />
-            );
-          })}
-        </div>
-        <Button as={Link} href="/service" className={styles.ctaButton}>
-          View All Services
-        </Button>
-      </section>
-      <section className="lg:flex align-middle justify-start lg:ps-12 lg:pt-8 pt-4  ps-8 ">
-        <div className={styles.leftAppDownload}>
-          <h2 className={styles.titleAppDownload}>
-            What Are You Waiting For, Get the App Now!
-          </h2>
-          <p className={styles.descAppDownload}>
-            Don&apos;t wait any longer to experience the convenience and
-            reliability of InstaHandi. Download our app today and take the first
-            step towards hassle-free home services.
-          </p>
-          <div className="flex gap-4 mb-4">
-            <Image src={google} alt="Frame Image" className="mb-2" />
-            <Image src={google1} alt="Frame Image" className="mb-2" />
-            <Image src={google2} alt="Frame Image" className="mb-2" />
-          </div>
-          <Button as={Link} href="#" className={`${styles.ctaButton} mb-2`}>
-            Download App
-          </Button>
-        </div>
-        <div className="flex-1 ">
-          <Image
-            // className="hidden lg:flex"
-            src={ImageApp}
-            alt="Hero Image"
-            layout="responsive"
-          />
-        </div>
-      </section>
-      <section className={styles.cutSection}></section>
-      <section className={styles.vendorsSection}>
-        <h2 className={styles.servicesTitle}>Our Vendors</h2>
-        <span className={styles.servicesDesc}>
-          At InstaHandi, we pride ourselves on partnering with the best
-          professionals in the industry. Our vendors are highly skilled,
-          thoroughly vetted, and committed to delivering exceptional service.
-        </span>
-        <div className={`${styles.servicesItems} grid my-8 gap-4 grid-cols-12`}>
-          {dataTow.map((item) => {
-            return (
-              <div
-                key={item.id}
-                className={`${styles.VendorItemsCard} lg:col-span-3 col-span-12`}
-              >
-                <div className={styles.ImageVendor}>
-                  <Image
-                    src={ImageVendors}
-                    alt="Frame Image"
-                    className="mb-2"
-                  />
-                </div>
-                <div className={styles.titleVendor}>{item.title}</div>
-                <Divider className="my-2" />
-
-                <div className={styles.descVendor}>{item.desc}</div>
-                <div className={styles.vendorLine}>
-                  <Image src={icons} alt="Frame Image" className="me-2" />
-                  10-20 Years in Business
-                </div>
-                <div className={styles.bottomVendorCard}>
-                  <Button
-                    as={Link}
-                    href="#"
-                    className={styles.vendorCardButton}
-                  >
-                    View Profile
-                  </Button>
-                  <span className={styles.ratingVendorCard}>
-                    {item.rating}/Rating⭐
+                  {item.question}
+                  <span className={styles.toggleIcon}>
+                    {activeIndex === index ? "−" : "+"}
                   </span>
                 </div>
+                {activeIndex === index && (
+                  <div className={styles.faqAnswer}>{item.answer}</div>
+                )}
               </div>
-            );
-          })}
-        </div>
-        <Button as={Link} href="/vendors" className={styles.ctaButton}>
-          View All Vendors
-        </Button>
-      </section>
-      <section className={styles.servicesSection}>
-        <h2 className={styles.servicesTitle}>Testimonials</h2>
-        <span className={styles.servicesDesc}>
-          What Our Customers Are Saying
-        </span>
-        <div className={styles.testimonialsWrapper}>
-          {/* Left Arrow */}
-          <button
-            onClick={handlePrev}
-            className={`${styles.arrowButtonLeft} me-4`}
-            disabled={startIndex === 0}
-          >
-            <Image height={40} width={40} src={left} alt="Left Arrow" />
-          </button>
-
-          {/* Display the testimonials */}
-          <div className={styles.testimonialsItems}>
-            {dataThree
-              .slice(startIndex, startIndex + testimonialsToShow)
-              .map((item) => (
-                <div key={item.id} className={styles.testimonialsItemsCard}>
-                  <div className={styles.vendorLine}>
-                    {Array.from({ length: item.start }, (_, index) => (
-                      <Image
-                        key={index}
-                        src={star}
-                        alt="Star Icon"
-                        className="me-1"
-                      />
-                    ))}
-                  </div>
-                  <div className={styles.descVendor}>{item.desc}</div>
-                  <User
-                    name={item.name}
-                    description={item.job}
-                    avatarProps={{ src: item.img }}
-                    classNames={{
-                      name: styles.nameAvatar,
-                      description: styles.descAvatar,
-                    }}
-                  />
-                </div>
-              ))}
+            ))}
           </div>
-
-          {/* Right Arrow */}
-          <button
-            onClick={handleNext}
-            className={`${styles.arrowButtonRight} ms-4`}
-            disabled={startIndex >= dataThree.length - testimonialsToShow}
+        </section>
+        {/* Other components */}
+        {/* <Link href="/service">Go to Services</Link> */}
+        <FloatingButton onClick={toggleChat} />
+        {isChatOpen && (
+          <div
+            style={{ zIndex: "9999", height: "400px" }}
+            className="fixed bottom-20 right-4 bg-white-50 shadow-lg rounded-lg  w-80 transition-transform transform duration-300 ease-in-out"
           >
-            <Image height={40} width={40} src={right} alt="Right Arrow" />
-          </button>
-        </div>
-      </section>
-      <section className={styles.faqSection}>
-        <h2 className={styles.faqTitle}>Frequently Asked Questions</h2>
-        <div className={styles.faqList}>
-          {faqData.map((item, index) => (
-            <div key={index} className={styles.faqItem}>
-              <div
-                className={styles.faqQuestion}
-                onClick={() => handleToggle(index)}
-              >
-                {item.question}
-                <span className={styles.toggleIcon}>
-                  {activeIndex === index ? "−" : "+"}
-                </span>
-              </div>
-              {activeIndex === index && (
-                <div className={styles.faqAnswer}>{item.answer}</div>
-              )}
-            </div>
-          ))}
-        </div>
-      </section>
-      {/* Other components */}
-      {/* <Link href="/service">Go to Services</Link> */}
-      <FloatingButton onClick={toggleChat} />
-      {isChatOpen && (
-        <div
-          style={{ zIndex: "9999", height: "400px" }}
-          className="fixed bottom-20 right-4 bg-white-50 shadow-lg rounded-lg  w-80 transition-transform transform duration-300 ease-in-out"
-        >
-          <ChatComponent />
-        </div>
-      )}
-    </div>
+            <ChatComponent />
+          </div>
+        )}
+      </div>
+      <Footer />
+    </>
   );
 }

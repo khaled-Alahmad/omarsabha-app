@@ -1655,7 +1655,17 @@
 .supportButton button:hover {
   background-color: #e87214;
 }
-
+.ImageService {
+  border-radius: 1rem;
+  display: inline-flex;
+  padding: 0.75rem;
+  align-items: center;
+  gap: 0.625rem;
+  background: var(
+    --Grident-color,
+    linear-gradient(180deg, #fe8315 -27.06%, #fed700 122.48%)
+  );
+}
 @media (max-width: 768px) {
   .filterVendorContainer {
     flex-basis: 100%;

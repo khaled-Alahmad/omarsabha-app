@@ -1,7 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { Input, Button } from "@nextui-org/react";
-import { toast  } from "react-toastify";
  
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -10,6 +9,7 @@ import styles from "./ResetPassword.module.css";
 import resetImage from "@/assets/images/auth/reset-password.png";
 import { EyeSlashFilledIcon } from "@/components/ui/Icons/EyeSlashFilledIcon";
 import { EyeFilledIcon } from "@/components/ui/Icons/EyeFilledIcon";
+import toast from "react-hot-toast";
 
 export default function ResetPassword() {
   const [password, setPassword] = useState("");

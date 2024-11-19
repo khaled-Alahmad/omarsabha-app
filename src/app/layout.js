@@ -1,21 +1,9 @@
-import localFont from "next/font/local";
-import "./globals.css";
+// app/layout.js
+import "@/app/globals.css";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 import { NextUIProvider } from "@nextui-org/react";
-import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { Toaster } from "react-hot-toast";
-
-// const geistSans = localFont({
-//   src: "./fonts/GeistVF.woff",
-//   variable: "--font-geist-sans",
-//   weight: "100 900",
-// });
-// const geistMono = localFont({
-//   src: "./fonts/GeistMonoVF.woff",
-//   variable: "--font-geist-mono",
-//   weight: "100 900",
-// });
 
 export const metadata = {
   title: "InstaHandi",
@@ -31,11 +19,9 @@ export default function RootLayout({ children }) {
           rel="stylesheet"
         />
       </head>
-      <body className={` antialiased`}>
+      <body className="antialiased">
         <NextUIProvider>
-          <NavBar />
           {children}
-          <Footer />
           <Toaster position="top-right" reverseOrder={false} />
         </NextUIProvider>
       </body>
