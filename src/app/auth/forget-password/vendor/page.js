@@ -1,12 +1,12 @@
 "use client";
 import React, { useState } from "react";
 import { Input, Button } from "@nextui-org/react";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import axios from "axios";
 import styles from "./ForgetPassword.module.css";
 import resetImage from "@/assets/images/auth/forget-password.png";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function ForgetPassword() {
   const [email, setEmail] = useState("");
@@ -58,9 +58,11 @@ export default function ForgetPassword() {
 
   return (
     <div className={styles.container}>
-      <ToastContainer />
+      
       <div className={styles.imageWrapper}>
-        <img
+        <Image
+          width={1000}
+          height={1000}
           src={resetImage.src}
           alt="Reset Password"
           className={styles.image}

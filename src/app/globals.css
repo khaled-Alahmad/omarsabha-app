@@ -56,6 +56,74 @@ body {
     color: var(--Foundation-Black-Text-Color-B300, #fff);
   }
 }
+/* NavbarMenu Styling */
+.navbar-menu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  backdrop-filter: blur(10px); /* Blurred background */
+  transition: background-color 0.3s ease, color 0.3s ease;
+  z-index: 50;
+  padding: 16px;
+  border-radius: 0 0 12px 12px;
+}
+
+.navbar-menu.light {
+  background: rgba(255, 255, 255, 0.8); /* Light blurred background */
+  color: #1a1a1a; /* Black text */
+}
+
+.navbar-menu.dark {
+  background: rgba(0, 0, 0, 0.7); /* Dark blurred background */
+  color: #ffffff; /* White text */
+}
+
+/* Menu Item Styling */
+.item-navbar {
+  display: block;
+  padding: 12px 16px;
+  font-family: "Poppins", sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: left;
+  transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+.item-navbar:hover {
+  text-decoration: underline;
+  color: #fe8315; /* Primary color for hover */
+}
+
+.item-navbar.active-link {
+  font-weight: bold;
+  color: #fe8315; /* Primary color for active */
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+  .navbar-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 30;
+    /* bottom: 0; */
+    backdrop-filter: blur(20px);
+    padding: 6rem 1rem 0rem 1rem;
+    overflow-y: auto;
+    border-radius: 0;
+    height: auto !important;
+  }
+
+  .item-navbar {
+    padding: 16px 24px;
+    font-size: 1.125rem; /* Slightly larger text for mobile */
+  }
+}
+
 .navbar {
   border-radius: 2.5rem;
   background: var(--Foundation-White-text-color-W300, #fff);
@@ -78,7 +146,7 @@ body {
 }
 .mobile-menu {
   position: absolute;
-  top: 54px;
+  top: 60px !important;
   /* color: white; */
 }
 .msg-height {

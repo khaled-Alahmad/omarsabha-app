@@ -1,8 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { Input, Button } from "@nextui-org/react";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast  } from "react-toastify";
+ 
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { getCookie } from "cookies-next";
@@ -74,7 +74,7 @@ export default function ResetPassword() {
 
   return (
     <div className={styles.container}>
-      <ToastContainer />
+       
       <div className={styles.imageWrapper}>
         <img
           src={resetImage.src}

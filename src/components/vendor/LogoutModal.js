@@ -8,12 +8,23 @@ import {
   ModalContent,
   Divider,
 } from "@nextui-org/react";
+import { useRouter } from "next/navigation";
+import { deleteCookie } from "cookies-next"; // Ensure this library is installed
 
 export default function LogoutModal({ isOpen, onClose }) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const router = useRouter();
 
-  //   const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+  const handleLogout = () => {
+    // Clear cookies
+    deleteCookie("authToken");
+    deleteCookie("userRole");
+
+    // Redirect to home page
+    router.push("/");
+
+    // Close modal
+    onClose();
+  };
 
   return (
     <Modal
@@ -40,7 +51,11 @@ export default function LogoutModal({ isOpen, onClose }) {
           <Button flat color="error" onClick={onClose} style={buttonStyle}>
             Cancel
           </Button>
-          <Button color="primary" style={submitButtonStyle}>
+          <Button
+            color="primary"
+            style={submitButtonStyle}
+            onClick={handleLogout}
+          >
             Log Out
           </Button>
         </ModalFooter>

@@ -30,6 +30,7 @@ import {
   FaQuestionCircle,
   FaSignOutAlt,
 } from "react-icons/fa";
+import { getCookie } from "cookies-next";
 
 import avatarImage from "@/assets/icons/avatar.png";
 import notificationIcon from "@/assets/icons/notification.svg";
@@ -37,6 +38,7 @@ import LogoutModal from "./vendor/LogoutModal";
 
 export default function NavBar() {
   const router = useRouter();
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const [isModalLogOutOpen, setIsModalLogOutOpen] = useState(false);
@@ -45,9 +47,8 @@ export default function NavBar() {
   const closeModalLogOutOpen = () => setIsModalLogOutOpen(false);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false); // Auth state
-  const currentPath = usePathname(); // Get the current path with usePathname
-  // console.log("Current Path:", currentPath);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const currentPath = usePathname();
   const activeSegment = useSelectedLayoutSegment();
 
   const menuItems = [
@@ -91,16 +92,17 @@ export default function NavBar() {
     (activeSegment === null && path === "/") || path === `/${activeSegment}`;
 
   useEffect(() => {
-    // Simulate auth check (replace with actual auth logic)
-    const checkAuth = () => {
-      setIsAuthenticated(true); // Set to true for testing
-    };
-    checkAuth();
-
     const activeItem = menuItems.find((item) => item.path === currentPath);
     if (activeItem) document.title = activeItem.title;
   }, [currentPath]);
-
+  const authToken = getCookie("authToken"); // Synchronously check the cookie
+  useEffect(() => {
+    if (authToken) {
+      setIsAuthenticated(true);
+    } else {
+      setIsAuthenticated(false);
+    }
+  }, [authToken]);
   return (
     <>
       <Navbar
@@ -149,6 +151,26 @@ export default function NavBar() {
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           />
         </NavbarContent>
+        <NavbarMenu
+          isOpen={isMenuOpen}
+          onClose={() => setIsMenuOpen(false)}
+          className={`navbar-menu ${isMenuOpen ? "dark" : "light"}`} // Dynamically toggle light/dark mode
+        >
+          {menuItems.map((item) => (
+            <NavbarMenuItem key={item.name}>
+              <Link
+                href={item.path}
+                className={`item-navbar ${
+                  isActive(item.path) ? "active-link" : ""
+                }`}
+                onClick={() => setIsMenuOpen(false)} // Close menu on click
+              >
+                {item.name}
+              </Link>
+            </NavbarMenuItem>
+          ))}
+        </NavbarMenu>
+
         <NavbarContent justify="end" className="sm:flex">
           {isAuthenticated ? (
             <>
@@ -190,6 +212,7 @@ export default function NavBar() {
                   <DropdownMenu aria-label="User Menu" onAction={handleRoute}>
                     <DropdownItem
                       key="profile"
+                      color="error"
                       startContent={
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -209,7 +232,9 @@ export default function NavBar() {
                         </svg>
                       }
                       className={
-                        currentPath === "/vendor/profile" ? "bg-green-100" : ""
+                        currentPath === "/vendor/profile"
+                          ? "bg-green-100 hover:bg-green-200"
+                          : "hover:bg-green-200"
                       }
                     >
                       My Profile
@@ -217,6 +242,7 @@ export default function NavBar() {
 
                     <DropdownItem
                       key="proposals"
+                      color="error"
                       startContent={
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -241,14 +267,15 @@ export default function NavBar() {
                       }
                       className={
                         currentPath === "/vendor/proposals"
-                          ? "bg-green-100 active"
-                          : ""
+                          ? "bg-green-100 hover:bg-green-200"
+                          : "hover:bg-green-200"
                       }
                     >
                       My Proposals
                     </DropdownItem>
 
                     <DropdownItem
+                      color="error"
                       key="jobs"
                       startContent={
                         <svg
@@ -265,7 +292,9 @@ export default function NavBar() {
                         </svg>
                       }
                       className={
-                        currentPath == "/vendor/jobs" ? "bg-green-100 " : ""
+                        currentPath == "/vendor/jobs"
+                          ? "bg-green-100 hover:bg-green-200"
+                          : "hover:bg-green-200"
                       }
                     >
                       My Jobs
@@ -273,6 +302,7 @@ export default function NavBar() {
 
                     <DropdownItem
                       key="transactions"
+                      color="error"
                       startContent={
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -297,8 +327,8 @@ export default function NavBar() {
                       }
                       className={
                         currentPath === "/vendor/transactions"
-                          ? "bg-green-100"
-                          : ""
+                          ? "bg-green-100 hover:bg-green-200"
+                          : "hover:bg-green-200"
                       }
                     >
                       Transactions
@@ -306,6 +336,7 @@ export default function NavBar() {
 
                     <DropdownItem
                       key="support"
+                      color="error"
                       startContent={
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -329,7 +360,9 @@ export default function NavBar() {
                         </svg>
                       }
                       className={
-                        currentPath === "/vendor/help-support" ? "bg-green-100" : ""
+                        currentPath === "/vendor/help-support"
+                          ? "bg-green-100 hover:bg-green-200"
+                          : "hover:bg-green-200"
                       }
                     >
                       Help & Support
@@ -338,6 +371,7 @@ export default function NavBar() {
                     <DropdownItem
                       key="logout"
                       color="error"
+                      className="hover:bg-green-200"
                       startContent={
                         <svg
                           xmlns="http://www.w3.org/2000/svg"

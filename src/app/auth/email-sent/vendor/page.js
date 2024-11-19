@@ -3,14 +3,17 @@ import React from "react";
 import styles from "./EmailSent.module.css";
 import emailSentImage from "@/assets/images/auth/email-sent-image.png"; // Replace with actual path to image
 import { Divider } from "@nextui-org/react";
+import Image from "next/image";
 
 export default function EmailSent() {
   return (
     <div className={styles.container}>
       <div className={styles.imageWrapper}>
-        <img
+        <Image
           src={emailSentImage.src}
           alt="Email Sent"
+          width={1000}
+          height={1000}
           className={styles.image}
         />
       </div>

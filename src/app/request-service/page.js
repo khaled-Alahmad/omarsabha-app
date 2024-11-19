@@ -54,7 +54,7 @@ export default function ServiceRequestList() {
                 <h3>Light switch replacement</h3>
                 <p>
                   Lorem ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem ipsum has been the industry's
+                  typesetting industry. Lorem ipsum has been the industry&apos;s
                   standard dummy text ever since the 1500s...
                 </p>
                 <div className={styles.requestDetailsSection}>

@@ -10,62 +10,78 @@ import { EyeFilledIcon } from "@/components/ui/Icons/EyeFilledIcon";
 import facebookIcon from "@/assets/icons/fb-icon.svg";
 import googleIcon from "@/assets/icons/google-icon.svg";
 import { useRouter } from "next/navigation";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 
 export default function VendorSignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isVisible, setIsVisible] = useState(false);
   const router = useRouter();
-
+  // toast.success("Login successful!");
   const toggleVisibility = () => setIsVisible(!isVisible);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_URL_AUTH}/login`,
-        {
-          email,
-          password,
-          role: "vendor",
-        },
-        {
-          headers: {
-            Accept: "application/json",
-          },
-        }
-      );
-      // .then((res) => console.log(res))
-      // .catch((err) => console.log(err));
-      console.log(response.data.access_token);
+    // try {
+    //   const response = await axios.post(
+    //     `${process.env.NEXT_PUBLIC_URL_AUTH}/login`,
+    //     {
+    //       email,
+    //       password,
+    //       role: "vendor",
+    //     },
+    //     {
+    //       headers: {
+    //         Accept: "application/json",
+    //       },
+    //     }
+    //   );
 
-      if (response.data && response.data.access_token) {
-        // حساب تاريخ انتهاء الصلاحية بعد 7 أيام
-        const expiresIn7Days = new Date();
-        expiresIn7Days.setDate(expiresIn7Days.getDate() + 7);
+    //   const { access_token, user } = response.data;
 
-        // تخزين التوكن في الكوكيز مع تاريخ انتهاء الصلاحية
-        setCookie("authToken", response.data.access_token, {
-          expires: expiresIn7Days,
-          path: "/",
-        });
+    //   if (access_token) {
+    //     // Set expiration date for cookies (7 days)
+    //     const expiresIn7Days = new Date();
+    //     expiresIn7Days.setDate(expiresIn7Days.getDate() + 7);
 
-        toast.success("Login successful!");
-        // يمكنك إعادة التوجيه إلى صفحة أخرى بعد تسجيل الدخول بنجاح
-      }
-      if (
-        response.data &&
-        response.data.user &&
-        response.data.user.profile_setup == 0
-      ) {
-        router.push("/auth/profile-setup/vendor");
-      }
-    } catch (error) {
-      console.error("Login error:", error);
-      alert("Failed to login. Please check your credentials and try again.");
-    }
+    //     // Store token and role in cookies
+    //     setCookie("authToken", access_token, {
+    //       expires: expiresIn7Days,
+    //       path: "/",
+    //     });
+    //     setCookie("userRole", user.role, {
+    //       expires: expiresIn7Days,
+    //       path: "/",
+    //     });
+
+    // Show success message before navigation
+    console.log("clicked!");
+
+    toast.success("Login successful!");
+    // toast.success("Login successful!", {
+    //   onClose: () => {
+    //     // Ensure proper navigation after toast
+    //     if (user.profile_setup === 0) {
+    //       router.push("/auth/profile-setup/vendor");
+    //     } else {
+    //       router.push("/");
+    //     }
+    //   },
+    // });
+    //   }
+    // } catch (error) {
+    //   console.error("Login error:", error);
+
+    //   // Provide a better error handling mechanism
+    //   if (error.response && error.response.data) {
+    //     const errorMessage =
+    //       error.response.data.message || "An error occurred during login.";
+    //     toast.error(errorMessage);
+    //   } else {
+    //     toast.error("Failed to login. Please try again.");
+    //   }
+    // }
   };
 
   return (

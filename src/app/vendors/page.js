@@ -1,27 +1,30 @@
 "use client";
 import styles from "@/assets/css/styles.module.css";
 import Image from "next/image";
-import ImageBt from "@/assets/images/website/Vector 1.png"; // Bottom wave image
-import bgImage from "@/assets/images/website/bg-our-service.png"; // Background image
+import ImageBt from "@/assets/images/website/Vector 1.png"; 
+import bgImage from "@/assets/images/website/bg-our-service.png";
 import { Button, Divider, Input, Select, SelectItem } from "@nextui-org/react";
 import Link from "next/link";
-import ImageVendors from "@/assets/images/website/vendors.png"; // Bottom wave image
-import icons from "@/assets/icons/Icon.png"; // Bottom wave image
+import ImageVendors from "@/assets/images/website/vendors.png"; 
+import icons from "@/assets/icons/Icon.png"; 
 import { SearchIcon } from "@/components/ui/Icons/SearchIcon";
-import google from "@/assets/images/website/Mobile app store badge.svg"; // Bottom wave image
-import google1 from "@/assets/images/website/Mobile app store badge (1).svg"; // Bottom wave image
-import google2 from "@/assets/images/website/Mobile app store badge (2).svg"; // Bottom wave image
-import ImageApp from "@/assets/images/website/Group 1410088879.png"; // Hero image
+import google from "@/assets/images/website/Mobile app store badge.svg";
+import google1 from "@/assets/images/website/Mobile app store badge (1).svg";
+import google2 from "@/assets/images/website/Mobile app store badge (2).svg"; 
+import ImageApp from "@/assets/images/website/Group 1410088879.png"; 
 import { useState } from "react";
 import VendorDetails from "@/components/vendors/VendorDetails";
+import { fetchData } from "@/context/apiHelper";
 
-export default function VendorHome() {
+export default  function VendorHome() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal visibility
+  const [isModalOpen, setIsModalOpen] = useState(false); 
   const handleClick = () => {
-    setIsModalOpen(true); // Open the modal when clicking "Service Requests"
+    setIsModalOpen(true);
   };
-
+  const filters = { status: "active", page: 1 };
+  const data =  fetchData("system-reviews", filters);
+  console.log("Fetched Data:", data);
   const dataTow = [
     {
       id: 1,

@@ -1,0 +1,138 @@
+.container {
+  padding: 2rem 3rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap; /* Allow wrapping for smaller screens */
+}
+
+.header h2 {
+  margin: 0;
+  color: var(--Foundation-Black-Text-Color-B300, #262727);
+  font-family: Poppins;
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 145%; /* 2.9rem */
+}
+
+.dateRangePicker {
+  width: 300px;
+  margin-top: 10px;
+}
+
+.tableWrapper {
+  overflow-x: auto; /* Enable horizontal scroll for smaller screens */
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 900px; /* Set a minimum width to maintain the table structure */
+}
+
+.tableHeader {
+  border: 1px solid #f5f5f5;
+  background: #fafafa;
+}
+
+.tableHeader th {
+  padding: 12px 8px;
+  color: var(--Foundation-Black-Text-Color-B300, #262727);
+  font-family: Poppins;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: left;
+}
+
+.tableRow {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.tableRow td {
+  padding: 12px 8px;
+  color: #121212;
+  font-family: Poppins;
+  font-size: 0.875rem;
+  font-weight: 400;
+  vertical-align: middle;
+}
+
+.through {
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  margin-right: 6px;
+  font-size: 1.2rem;
+}
+
+.statusCompleted {
+  color: #27ae60;
+  font-weight: 600;
+}
+
+.statusPending {
+  color: #f39c12;
+  font-weight: 600;
+}
+
+.actionsButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+.paginationButton {
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  border: 1px solid var(--Foundation-Black-Text-Color-B75, #a6a6a6);
+  cursor: pointer;
+  color: var(--Foundation-Black-Text-Color-B300, #262727);
+  font-family: Poppins;
+  font-size: 0.75rem;
+  font-weight: 400;
+  text-align: center;
+}
+
+.paginationButton.active {
+  background-color: #fe8315;
+  color: #ffffff;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .container {
+    padding: 2rem 2rem;
+  }
+
+  .tableHeader th {
+    font-size: 0.875rem; /* Reduce header font size */
+  }
+
+  .tableRow td {
+    font-size: 0.75rem; /* Reduce row font size */
+    padding: 8px 6px; /* Adjust padding for smaller screens */
+  }
+
+  .dateRangePicker {
+    width: 100%; /* Make date range picker span full width */
+  }
+
+  .paginationButton {
+    padding: 0.375rem 0.75rem;
+    font-size: 0.625rem; /* Reduce pagination button font size */
+  }
+}
