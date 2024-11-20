@@ -14,14 +14,14 @@ export default function CheckIcon({ className }) {
       <path
         d="M180.68 47.0646C188.101 47.7861 203.623 45.3948 206.345 30.0576C209.066 14.7203 216.343 10.4737 219.641 10.2676"
         stroke="#262727"
-        stroke-width="2.81494"
-        stroke-linecap="round"
+        strokeWidth="2.81494"
+        strokeLinecap="round"
       />
       <path
         d="M4.23793 15.9332C3.91382 23.3822 7.13078 38.7549 22.5915 40.6532C38.0522 42.5515 42.6814 49.5913 43.0634 52.874"
         stroke="#262727"
-        stroke-width="2.81494"
-        stroke-linecap="round"
+        strokeWidth="2.81494"
+        strokeLinecap="round"
       />
       <circle cx="114.778" cy="109.624" r="74.1982" fill="#34AC6B" />
       <g filter="url(#filter0_d_1033_3003)">
@@ -30,7 +30,7 @@ export default function CheckIcon({ className }) {
           cy="109.625"
           r="63.9382"
           stroke="white"
-          stroke-width="1.87663"
+          strokeWidth="1.87663"
         />
       </g>
       <path
@@ -40,16 +40,16 @@ export default function CheckIcon({ className }) {
       <path
         d="M170.333 183.823C177.26 185.824 190.652 193.428 188.804 207.835"
         stroke="#34AC6B"
-        stroke-width="2.81494"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2.81494"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M9.99609 212.283C8.12773 205.319 7.71282 189.925 21.0001 184.058"
         stroke="#34AC6B"
-        stroke-width="2.81494"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2.81494"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <circle cx="135.844" cy="218.371" r="7.11207" fill="#FE8315" />
       <circle
@@ -57,7 +57,7 @@ export default function CheckIcon({ className }) {
         cy="105.748"
         r="6.64291"
         stroke="#D36B71"
-        stroke-width="0.938314"
+        strokeWidth="0.938314"
       />
       <circle cx="90.1809" cy="7.78831" r="7.78831" fill="#FE8315" />
       <circle cx="112.296" cy="20.9344" r="4.11308" fill="#B25C0F" />
@@ -66,14 +66,14 @@ export default function CheckIcon({ className }) {
         cy="81.338"
         r="6.73896"
         stroke="#34AC6B"
-        stroke-width="0.938314"
+        strokeWidth="0.938314"
       />
       <circle
         cx="38.1964"
         cy="194.996"
         r="7.45673"
         stroke="#34AC6B"
-        stroke-width="0.938314"
+        strokeWidth="0.938314"
       />
       <circle
         cx="3.7865"

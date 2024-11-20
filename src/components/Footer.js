@@ -8,6 +8,7 @@ import linkedinIcon from "@/assets/icons/linkedin.svg";
 import facebookIcon from "@/assets/icons/facebook.svg";
 import logo from "@/assets/images/website/logo.png"; // Replace with your actual logo path
 import { Divider } from "@nextui-org/react";
+import Link from "next/link";
 
 const Footer = () => {
   return (
@@ -16,37 +17,37 @@ const Footer = () => {
         <Image src={logo} alt="InstaHandi Logo" className={styles.logo} />
         <div className={styles.logoAndNav}>
           <nav className={styles.nav}>
-            <a href="/">Home</a>
-            <a href="/service">Service</a>
-            <a href="/about">About Us</a>
-            <a href="/requests">Service Requests</a>
-            <a href="/vendors">Vendors</a>
-            <a href="/articles">Articles</a>
+            <Link href="/">Home</Link>
+            <Link href="/service">Service</Link>
+            <Link href="/about">About Us</Link>
+            <Link href="/requests">Service Requests</Link>
+            <Link href="/vendors">Vendors</Link>
+            <Link href="/articles">Articles</Link>
           </nav>
         </div>
 
         <div className={styles.socialLinks}>
-          <a
+          <Link
             href="https://twitter.com"
             target="_blank"
             rel="noopener noreferrer"
           >
             <Image src={twitterIcon} alt="Twitter" />
-          </a>
-          <a
+          </Link>
+          <Link
             href="https://linkedin.com"
             target="_blank"
             rel="noopener noreferrer"
           >
             <Image src={linkedinIcon} alt="LinkedIn" />
-          </a>
-          <a
+          </Link>
+          <Link
             href="https://facebook.com"
             target="_blank"
             rel="noopener noreferrer"
           >
             <Image src={facebookIcon} alt="Facebook" />
-          </a>
+          </Link>
         </div>
       </div>
 
@@ -56,7 +57,7 @@ const Footer = () => {
           <a href="mailto:support@instahandi.com">support@instahandi.com</a>
         </p>
         <div className={styles.bottomRight}>
-          <a href="/terms">Terms and Conditions</a>
+          <Link href="/terms">Terms and Conditions</Link>
         </div>
       </div>
       <Divider className="my-2" />

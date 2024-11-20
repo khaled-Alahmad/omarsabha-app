@@ -55,7 +55,7 @@ export default async function OurVendors() {
                 {item.years_experience} Years in Business
               </div>
               <div className={styles.bottomVendorCard}>
-                <Button as={Link} href="#" className={styles.vendorCardButton}>
+                <Button className={styles.vendorCardButton}>
                   View Profile
                 </Button>
                 <span className={styles.ratingVendorCard}>

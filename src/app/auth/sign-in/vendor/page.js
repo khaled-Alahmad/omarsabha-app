@@ -5,12 +5,15 @@ import { setCookie } from "cookies-next";
 import { Button, Checkbox, Divider, Input } from "@nextui-org/react";
 import styles from "@/app/auth/sign-in/vendor/VendorSignIn.module.css";
 import imageLogin from "@/assets/images/auth/login-image.png";
+import imageLogo from "@/assets/images/auth/logo.png";
+
 import { EyeSlashFilledIcon } from "@/components/ui/Icons/EyeSlashFilledIcon";
 import { EyeFilledIcon } from "@/components/ui/Icons/EyeFilledIcon";
 import facebookIcon from "@/assets/icons/fb-icon.svg";
 import googleIcon from "@/assets/icons/google-icon.svg";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import Link from "next/link";
 
 export default function VendorSignIn() {
   const [email, setEmail] = useState("");
@@ -82,8 +85,16 @@ export default function VendorSignIn() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.imageSection}>
+      <div className={`${styles.imageSection} relative`}>
         <img src={imageLogin.src} alt="Home Image" className={styles.image} />
+        <Link href="/">
+          {" "}
+          <img
+            src={imageLogo.src}
+            alt="Logo"
+            className="absolute top-8 left-10 bg-black-400 rounded-lg p-1 z-40"
+          />
+        </Link>
       </div>
 
       <div className={styles.formSection}>

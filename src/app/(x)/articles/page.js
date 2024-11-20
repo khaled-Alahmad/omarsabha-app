@@ -122,14 +122,14 @@ export default function ArticlesPage() {
               upcycling old furniture to creating your own wall art, we have
               gathered the best ideas and tips to make your home uniquely yours
             </p>
-            <Button
-              as={Link}
+            <Link
               href="/articles/1"
               className={styles.redMoreButton}
-              endContent={<ArrowIcon />}
+              endcontent={<ArrowIcon />}
+              
             >
               Read More
-            </Button>
+            </Link>
           </div>
         </div>
       </section>

@@ -28,7 +28,7 @@ export default function JobDetails() {
           <path
             d="M9.05664 9.1416H15.0566M9.05664 13.1416H15.0566M9.05664 17.1416H13.0566"
             stroke="#262727"
-            stroke-linecap="round"
+            strokeLinecap="round"
           />
         </svg>
       ),

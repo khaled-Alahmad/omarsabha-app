@@ -11,6 +11,8 @@ import facebookIcon from "@/assets/icons/fb-icon.svg";
 import googleIcon from "@/assets/icons/google-icon.svg";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import imageLogo from "@/assets/images/auth/logo.png";
+import Link from "next/link";
 
 export default function VendorSignUp() {
   const [email, setEmail] = useState("");
@@ -84,8 +86,16 @@ export default function VendorSignUp() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.imageSection}>
+      <div className={`${styles.imageSection} relative`}>
         <img src={imageLogin.src} alt="Home Image" className={styles.image} />
+        <Link href="/">
+          {" "}
+          <img
+            src={imageLogo.src}
+            alt="Logo"
+            className="absolute top-8 left-10 bg-black-400 rounded-lg p-1 z-40"
+          />
+        </Link>
       </div>
 
       <div className={styles.formSection}>

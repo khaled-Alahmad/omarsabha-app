@@ -314,14 +314,14 @@ export default function NavBar() {
                           <path
                             d="M3.05398 6.23993L1.33398 6.13793C2.56665 2.97126 6.10598 1.16859 9.55598 2.06459C13.2313 3.01992 15.4147 6.67659 14.432 10.2313C13.6193 13.1719 10.896 15.1226 7.89865 15.1686"
                             stroke="#262727"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                           />
                           <path
                             d="M8.00065 15.1677C4.33398 15.1677 1.33398 11.8343 1.33398 7.83432M9.06998 6.98232C8.83532 6.73566 8.26132 6.15766 7.35332 6.56899C6.44598 6.97899 6.30198 8.29966 7.67465 8.44032C8.29465 8.50366 8.69932 8.36699 9.06998 8.75366C9.44065 9.14166 9.50932 10.219 8.56265 10.5097C7.61598 10.8003 7.00198 10.3203 6.83732 10.1703M7.93932 5.84766V6.37432M7.93932 10.599V11.181"
                             stroke="#262727"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                           />
                         </svg>
                       }
@@ -411,8 +411,8 @@ export default function NavBar() {
                         <path
                           d="M1 1L7 7L13 1"
                           stroke="white"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
                         />
                       </svg>
                     }
@@ -455,44 +455,44 @@ export default function NavBar() {
                         <path
                           d="M13.7973 4.89062H2.20267C1.81459 4.89062 1.5 5.20522 1.5 5.59329V13.323C1.5 13.711 1.81459 14.0256 2.20267 14.0256H13.7973C14.1854 14.0256 14.5 13.711 14.5 13.323V5.59329C14.5 5.20522 14.1854 4.89062 13.7973 4.89062Z"
                           stroke="#818282"
-                          stroke-width="0.666667"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
+                          strokeWidth="0.666667"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
                         />
                         <path
                           d="M11.7443 4.89046C11.5332 4.05746 11.0504 3.31863 10.3722 2.79087C9.69406 2.26311 8.85927 1.97656 7.99995 1.97656C7.14062 1.97656 6.30583 2.26311 5.62767 2.79087C4.9495 3.31863 4.46669 4.05746 4.25562 4.89046"
                           stroke="#818282"
-                          stroke-width="0.666667"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
+                          strokeWidth="0.666667"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
                         />
                         <path
                           d="M12.3919 12.9713C12.974 12.9713 13.4459 12.4994 13.4459 11.9173C13.4459 11.3352 12.974 10.8633 12.3919 10.8633C11.8098 10.8633 11.3379 11.3352 11.3379 11.9173C11.3379 12.4994 11.8098 12.9713 12.3919 12.9713Z"
                           stroke="#818282"
-                          stroke-width="0.55"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
+                          strokeWidth="0.55"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
                         />
                         <path
                           d="M12.3919 10.8619C12.974 10.8619 13.4459 10.39 13.4459 9.80791C13.4459 9.2258 12.974 8.75391 12.3919 8.75391C11.8098 8.75391 11.3379 9.2258 11.3379 9.80791C11.3379 10.39 11.8098 10.8619 12.3919 10.8619Z"
                           stroke="#818282"
-                          stroke-width="0.55"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
+                          strokeWidth="0.55"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
                         />
                         <path
                           d="M10.2837 12.9713C10.8658 12.9713 11.3377 12.4994 11.3377 11.9173C11.3377 11.3352 10.8658 10.8633 10.2837 10.8633C9.70163 10.8633 9.22974 11.3352 9.22974 11.9173C9.22974 12.4994 9.70163 12.9713 10.2837 12.9713Z"
                           stroke="#818282"
-                          stroke-width="0.55"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
+                          strokeWidth="0.55"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
                         />
                         <path
                           d="M10.2837 10.8619C10.8658 10.8619 11.3377 10.39 11.3377 9.80791C11.3377 9.2258 10.8658 8.75391 10.2837 8.75391C9.70163 8.75391 9.22974 9.2258 9.22974 9.80791C9.22974 10.39 9.70163 10.8619 10.2837 10.8619Z"
                           stroke="#818282"
-                          stroke-width="0.55"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
+                          strokeWidth="0.55"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
                         />
                       </svg>
                     }
