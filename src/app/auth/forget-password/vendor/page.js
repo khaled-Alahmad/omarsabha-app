@@ -29,15 +29,7 @@ export default function ForgetPassword() {
       );
 
       if (response.status === 200) {
-        toast.success(`Password reset link sent to ${email}`, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        toast.success(`Password reset link sent to ${email}`);
         router.push("/auth/email-sent/vendor");
       }
     } catch (error) {
@@ -58,7 +50,6 @@ export default function ForgetPassword() {
 
   return (
     <div className={styles.container}>
-      
       <div className={styles.imageWrapper}>
         <Image
           width={1000}
