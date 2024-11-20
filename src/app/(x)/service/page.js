@@ -1,73 +1,72 @@
-// app/website/services/page.js
-"use client";
 import styles from "@/assets/css/styles.module.css";
 import bgImage from "@/assets/images/website/bg-our-service.png"; // Background image
 import ImageBt from "@/assets/images/website/Vector 1.png"; // Bottom wave image
 import CardService from "@/components/CardService";
 import { Button } from "@nextui-org/react";
-import Image from "next/image";
 import Link from "next/link";
-import { useEffect } from "react";
-import service1 from "@/assets/icons/Icon.svg"; // Bottom wave image
-import google from "@/assets/images/website/Mobile app store badge.svg"; // Bottom wave image
-import google1 from "@/assets/images/website/Mobile app store badge (1).svg"; // Bottom wave image
-import google2 from "@/assets/images/website/Mobile app store badge (2).svg"; // Bottom wave image
-import ImageApp from "@/assets/images/website/Group 1410088879.png"; // Hero image
 
-export default function ServicesPage() {
-  // useEffect(() => {
-  //   document.title = "Our Service";
-  // }, []);
-  const data = [
-    {
-      id: 1,
-      title: "Plumbing services",
-      desc: "Drain pipe leaking, pipe clogged, replace the pipe line",
-      img: service1,
-    },
-    {
-      id: 2,
-      title: "Mold Removal",
-      desc: "Removing and cleaning mildew, Restoration and Prevention",
-      img: service1,
-    },
-    {
-      id: 3,
-      title: "Appliance Repair",
-      desc: "repair of washing machines, refrigerators, Air conditioner, etc",
-      img: service1,
-    },
-    {
-      id: 4,
-      title: "Bathroom Remodeling",
-      desc: "Design and Consulting, installation, Repairing, tile repair",
-      img: service1,
-    },
-    {
-      id: 5,
-      title: "Locksmith",
-      desc: "Lock Installation and Repair, Duplication, Lock Rekeying",
-      img: service1,
-    },
-    {
-      id: 6,
-      title: "Furniture assembly",
-      desc: "Removing and cleaning mildew, Restoration and Prevention",
-      img: service1,
-    },
-    {
-      id: 7,
-      title: "Painting",
-      desc: "repair of washing machines, refrigerators, Air conditioner, etc",
-      img: service1,
-    },
-    {
-      id: 8,
-      title: "Painting",
-      desc: "Design and Consulting, installation, Repairing, tile repair",
-      img: service1,
-    },
-  ];
+import { fetchData } from "@/context/apiHelper";
+import GetTheApp from "../website/@home/get-the-app/page";
+
+export default async function ServicesPage() {
+  const filters = {
+    search: "",
+  };
+  const data = await fetchData("services", filters);
+
+  const services = await data.data;
+  console.log(services);
+
+  // const data = [
+  //   {
+  //     id: 1,
+  //     title: "Plumbing services",
+  //     desc: "Drain pipe leaking, pipe clogged, replace the pipe line",
+  //     img: service1,
+  //   },
+  //   {
+  //     id: 2,
+  //     title: "Mold Removal",
+  //     desc: "Removing and cleaning mildew, Restoration and Prevention",
+  //     img: service1,
+  //   },
+  //   {
+  //     id: 3,
+  //     title: "Appliance Repair",
+  //     desc: "repair of washing machines, refrigerators, Air conditioner, etc",
+  //     img: service1,
+  //   },
+  //   {
+  //     id: 4,
+  //     title: "Bathroom Remodeling",
+  //     desc: "Design and Consulting, installation, Repairing, tile repair",
+  //     img: service1,
+  //   },
+  //   {
+  //     id: 5,
+  //     title: "Locksmith",
+  //     desc: "Lock Installation and Repair, Duplication, Lock Rekeying",
+  //     img: service1,
+  //   },
+  //   {
+  //     id: 6,
+  //     title: "Furniture assembly",
+  //     desc: "Removing and cleaning mildew, Restoration and Prevention",
+  //     img: service1,
+  //   },
+  //   {
+  //     id: 7,
+  //     title: "Painting",
+  //     desc: "repair of washing machines, refrigerators, Air conditioner, etc",
+  //     img: service1,
+  //   },
+  //   {
+  //     id: 8,
+  //     title: "Painting",
+  //     desc: "Design and Consulting, installation, Repairing, tile repair",
+  //     img: service1,
+  //   },
+  // ];
   return (
     <>
       <section
@@ -87,7 +86,7 @@ export default function ServicesPage() {
             </p>
           </div>
           <div className={styles["bottom-wave"]}>
-            <Image
+            <img
               src={ImageBt}
               alt="Bottom Wave Image"
               layout="responsive"
@@ -123,54 +122,13 @@ export default function ServicesPage() {
           </div>
         </div>
         <div className={`${styles.servicesItems} grid my-8 gap-4 grid-cols-12`}>
-          {data.map((item) => {
-            return (
-              // <div
-              //   key={item.id}
-              //   className={`${styles.servicesItemsCard} lg:col-span-3 col-span-6`}
-              // >
-              //   <div className={styles.ImageService}>
-              //     <Image src={service1} alt="Frame Image" className="mb-2" />
-              //   </div>
-              //   <div className={styles.titleService}>{item.title}</div>
-              //   <div className={styles.descService}>{item.desc}</div>
-              // </div>
-              <CardService item={item} key={item.id} />
-            );
+          {services.map((item) => {
+            return <CardService item={item} key={item.id} />;
           })}
         </div>
-        {/* <Button as={Link} href="#" className={styles.ctaButton}>
-          View All Services
-        </Button> */}
       </section>
-      <section className="lg:flex align-middle justify-start lg:ps-12 lg:pt-8 pt-4  ps-8 ">
-        <div className={styles.leftAppDownload}>
-          <h2 className={styles.titleAppDownload}>
-            What Are You Waiting For, Get the App Now!
-          </h2>
-          <p className={styles.descAppDownload}>
-            Don&apos;t wait any longer to experience the convenience and
-            reliability of InstaHandi. Download our app today and take the first
-            step towards hassle-free home services.
-          </p>
-          <div className="flex gap-4 mb-4">
-            <Image src={google} alt="Frame Image" className="mb-2" />
-            <Image src={google1} alt="Frame Image" className="mb-2" />
-            <Image src={google2} alt="Frame Image" className="mb-2" />
-          </div>
-          <Button as={Link} href="#" className={`${styles.ctaButton} mb-2`}>
-            Download App
-          </Button>
-        </div>
-        <div className="flex-1 ">
-          <Image
-            // className="hidden lg:flex"
-            src={ImageApp}
-            alt="Hero Image"
-            layout="responsive"
-          />
-        </div>
-      </section>
+
+      <GetTheApp />
       <section className={styles.cutSection}></section>
 
       <section className="lg:flex flex-col align-middle items-center justify-start lg:ps-12  text-center lg:pt-8 pt-4  ps-8 ">
@@ -179,8 +137,8 @@ export default function ServicesPage() {
           <h3 className={styles.titleGetOurService}>How To Get Our Service</h3>
           <p className={styles.descOurService}>
             Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry&apos;s standard dummy text
-            ever since the 1500s,
+            industry. Lorem Ipsum has been the industry&apos;s standard dummy
+            text ever since the 1500s,
           </p>
         </div>
         <div className={styles.septsGetOurService}>
@@ -224,11 +182,11 @@ export default function ServicesPage() {
           <h2 className={styles.sellTitle}>Start Selling your Service N0w!</h2>
           <p className={styles.sellDesc}>
             Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry&apos;s standard dummy text
-            ever since tLorem Ipsum is simply dummy text of the printing and
-            typesetting industry. Lorem Ipsum has been the industry&apos;s standard
-            dummy text ever since tLorem Ipsum is simply dummy text of the
-            printing and typesetting industry. Lorem Ipsum has been the
+            industry. Lorem Ipsum has been the industry&apos;s standard dummy
+            text ever since tLorem Ipsum is simply dummy text of the printing
+            and typesetting industry. Lorem Ipsum has been the industry&apos;s
+            standard dummy text ever since tLorem Ipsum is simply dummy text of
+            the printing and typesetting industry. Lorem Ipsum has been the
             industry&apos;s standard dummy text ever since t
           </p>
         </div>
