@@ -123,14 +123,15 @@ export const VendorSingUp = () => {
                   </Checkbox>
                 </div>
                 <div className="mb-4">
-                  <Button as={Link} href="#" className={styles.signUpButton}>
-                    Sign Up
-                  </Button>
+                  <Button className={styles.signUpButton}>Sign Up</Button>
                 </div>
                 <div className="mb-4">
                   <p className={styles.bottomTextCard}>
                     Already a member?
-                    <Link href="/#" className={styles.bottomTextCardT}>
+                    <Link
+                      href="/auth/sign-in/vendor"
+                      className={styles.bottomTextCardT}
+                    >
                       Sign In
                     </Link>
                   </p>
