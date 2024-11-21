@@ -248,7 +248,7 @@ export default function VendorHome() {
           View All Vendors
         </Button> */}
       </section>
-      <StepGetService />yyy
+      <StepGetService />
       <GetTheApp />
       <section className={styles.cutSection}></section>
       <section className={styles.cutSectionTow}></section>
