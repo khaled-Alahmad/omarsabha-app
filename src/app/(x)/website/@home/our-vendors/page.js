@@ -7,9 +7,6 @@ import ImageVendors from "@/assets/images/website/vendors.png"; // Bottom wave i
 
 import { Button, Divider } from "@nextui-org/react";
 import { fetchData } from "@/context/apiHelper";
-// async function getVendors() {
-//   return data.data.vendors;
-// }
 
 export default async function OurVendors() {
   const data = await fetchData("home-data");
