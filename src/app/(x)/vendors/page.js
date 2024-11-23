@@ -1,129 +1,75 @@
-"use client"
+"use client";
 import styles from "@/assets/css/styles.module.css";
 import Image from "next/image";
 import ImageBt from "@/assets/images/website/Vector 1.png";
 import bgImage from "@/assets/images/website/bg-our-service.png";
-import { Button, Divider, Input, Select, SelectItem } from "@nextui-org/react";
-import Link from "next/link";
-import ImageVendors from "@/assets/images/website/vendors.png";
-import icons from "@/assets/icons/Icon.png";
-import { SearchIcon } from "@/components/ui/Icons/SearchIcon";
-import google from "@/assets/images/website/Mobile app store badge.svg";
-import google1 from "@/assets/images/website/Mobile app store badge (1).svg";
-import google2 from "@/assets/images/website/Mobile app store badge (2).svg";
-import ImageApp from "@/assets/images/website/Group 1410088879.png";
-import { useState } from "react";
+
+import {
+  Button,
+  Card,
+  Divider,
+  Input,
+  Select,
+  SelectItem,
+  Skeleton,
+} from "@nextui-org/react";
+import { useState, useEffect } from "react";
 import VendorDetails from "@/components/vendors/VendorDetails";
 import { fetchData } from "@/context/apiHelper";
 import GetTheApp from "../website/@home/get-the-app/page";
 import StepGetService from "./@steps/page";
+import icons from "@/assets/icons/Icon.png";
+import { SearchIcon } from "@/components/ui/Icons/SearchIcon";
 
 export default function VendorHome() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const handleClick = () => {
-    setIsModalOpen(true);
-  };
-  const filters = { status: "active", page: 1 };
-  const data = fetchData("vendors", filters);
-  console.log("Fetched Data:", data);
-  const dataTow = [
-    {
-      id: 1,
-      title: "Kahraman construction",
-      desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem....",
-      img: ImageVendors,
-      rating: "4.9",
-    },
-    {
-      id: 2,
-      title: "Kahraman construction",
-      desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem....",
-      img: ImageVendors,
-      rating: "4.9",
-    },
-    {
-      id: 3,
-      title: "Kahraman construction",
-      desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem....",
-      img: ImageVendors,
-      rating: "4.9",
-    },
-    {
-      id: 4,
-      title: "Kahraman construction",
-      desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem....",
-      img: ImageVendors,
-      rating: "4.9",
-    },
-    {
-      id: 5,
-      title: "Kahraman construction",
-      desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem....",
-      img: ImageVendors,
-      rating: "4.9",
-    },
-    {
-      id: 6,
-      title: "Kahraman construction",
-      desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem....",
-      img: ImageVendors,
-      rating: "4.9",
-    },
-    {
-      id: 7,
-      title: "Kahraman construction",
-      desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem....",
-      img: ImageVendors,
-      rating: "4.9",
-    },
-    {
-      id: 8,
-      title: "Kahraman construction",
-      desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem....",
-      img: ImageVendors,
-      rating: "4.9",
-    },
-    {
-      id: 9,
-      title: "Kahraman construction",
-      desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem....",
-      img: ImageVendors,
-      rating: "4.9",
-    },
-    {
-      id: 10,
-      title: "Kahraman construction",
-      desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem....",
-      img: ImageVendors,
-      rating: "4.9",
-    },
-    {
-      id: 11,
-      title: "Kahraman construction",
-      desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem....",
-      img: ImageVendors,
-      rating: "4.9",
-    },
-    {
-      id: 12,
-      title: "Kahraman construction",
-      desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem....",
-      img: ImageVendors,
-      rating: "4.9",
-    },
-  ];
+  const [selectedVendorId, setSelectedVendorId] = useState(null);
+  const [filters, setFilters] = useState({ search: "" });
+  const [vendors, setVendors] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   const services = [
     { key: "1", label: "Service 1" },
     { key: "2", label: "Service 2" },
     { key: "3", label: "Service 3" },
   ];
+
+  // Fetch vendors based on filters
+  useEffect(() => {
+    const fetchVendors = async () => {
+      setLoading(true);
+      try {
+        const data = await fetchData("vendors", filters);
+        setVendors(data.data || []);
+      } catch (error) {
+        console.error("Error fetching vendors:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchVendors();
+  }, [filters]);
+
+  const handleSearchChange = (e) => {
+    setFilters((prev) => ({ ...prev, search: e.target.value }));
+  };
+
+  const handleServiceFilter = (serviceKey) => {
+    setFilters((prev) => ({ ...prev, service: serviceKey }));
+  };
+
+  const handleOpenVendorDetails = (vendorId) => {
+    setSelectedVendorId(vendorId);
+    setIsModalOpen(true);
+  };
+
   return (
     <>
       <section
         className={styles.ourService}
         style={{
-          backgroundImage: `url(${bgImage.src})`, // Background image
+          backgroundImage: `url(${bgImage.src})`,
         }}
       >
         <div className="container">
@@ -137,16 +83,9 @@ export default function VendorHome() {
             </p>
           </div>
           <div className={styles["bottom-wave"]}>
-            <Image
-              src={ImageBt}
-              alt="Bottom Wave Image"
-              layout="responsive"
-              // objectFit="cover"
-            />
+            <Image src={ImageBt} alt="Bottom Wave Image" layout="responsive" />
           </div>
         </div>
-
-        {/* Services content */}
       </section>
       <section className={styles.vendorsSection}>
         <div className={styles.hederVendorsSection}>
@@ -155,107 +94,93 @@ export default function VendorHome() {
           </h2>
           <div className={styles.filterVendorContainer}>
             <Input
-              // label="Search"
               isClearable
               size="lg"
               radius="md"
-              className="me-2 max-w-xs  "
-              classNames={{
-                label: "text-black/100 dark:text-white/90",
-                input: [
-                  "bg-transparent",
-                  "text-black/90 dark:text-white/90",
-                  "ms-2 border-l-2 border-l-slate-400",
-                  "placeholder:text-transparent-700/50 dark:placeholder:text-white/60",
-                ],
-                innerWrapper: "bg-transparent",
-                inputWrapper: [
-                  "bg-transparent",
-                  "dark:bg-transparent",
-                  "border-2",
-
-                  "!cursor-text",
-                ],
-              }}
+              className="me-2 max-w-xs"
               placeholder="Search by names"
+              value={filters.search}
+              onChange={handleSearchChange}
               startContent={
-                <SearchIcon className="text-black/50 mb-0.5 dark:text-white/90 text-slate-400 pointer-events-none flex-shrink-0" />
+                <SearchIcon className="text-black/50 mb-0.5 text-slate-400 pointer-events-none flex-shrink-0" />
               }
             />
             <Select
               placeholder="Filter by Services"
               size="lg"
-              className="max-w-xs  "
               radius="md"
-              classNames={{
-                base: "bg-transparent",
-                label: "color-primary",
-                trigger: "bg-transparent border-2",
-
-                mainWrapper: "bg-transparent  text-slate-400",
-              }}
+              onChange={(key) => handleServiceFilter(key)}
+              className="max-w-xs"
             >
-              {services.map((animal) => (
-                <SelectItem key={animal.key} value={animal.key}>
-                  {animal.label}
+              {services.map((service) => (
+                <SelectItem key={service.key} value={service.key}>
+                  {service.label}
                 </SelectItem>
               ))}
             </Select>
           </div>
         </div>
-        ;
         <div className={`${styles.servicesItems} grid my-8 gap-4 grid-cols-12`}>
-          {dataTow.map((item) => {
-            return (
-              <div
-                key={item.id}
-                className={`${styles.VendorItemsCard} lg:col-span-3 col-span-12`}
-              >
-                <div className={styles.ImageVendor}>
-                  <Image
-                    src={ImageVendors}
-                    alt="Frame Image"
-                    className="mb-2"
-                  />
+          {loading
+            ? Array.from({ length: 4 }, (_, index) => (
+                <Card
+                  className={`${styles.VendorItemsCard} w-[320px] lg:col-span-3 col-span-12`}
+                  key={index}
+                >
+                  <Skeleton className="rounded-lg w-full h-40 mb-2" />
+                  <Skeleton className="rounded-lg w-3/4 h-5 mb-2" />
+                  <Skeleton className="rounded-lg w-1/2 h-5" />
+                </Card>
+              ))
+            : vendors.map((vendor) => (
+                <div
+                  key={vendor.id}
+                  className={`${styles.VendorItemsCard} lg:col-span-3 col-span-12`}
+                >
+                  <div className={styles.ImageVendor}>
+                    <img
+                      src={vendor.user?.profile_photo}
+                      alt={vendor.first_name}
+                      className="mb-2"
+                      style={{
+                        width: "18rem",
+                        height: "14rem",
+                        objectFit: "cover",
+                      }}
+                    />
+                  </div>
+                  <div className={styles.titleVendor}>
+                    {vendor.user?.first_name} {vendor.user?.last_name}
+                  </div>
+                  <Divider className="my-2" />
+                  <div className={styles.descVendor}>
+                    {vendor.user?.description}
+                  </div>
+                  <div className={styles.vendorLine}>
+                    <Image src={icons} alt="Experience Icon" className="me-2" />
+                    {vendor.years_experience} Years in Business
+                  </div>
+                  <div className={styles.bottomVendorCard}>
+                    <Button
+                      className={styles.vendorCardButton}
+                      onClick={() => handleOpenVendorDetails(vendor.id)}
+                    >
+                      View Profile
+                    </Button>
+                    <span className={styles.ratingVendorCard}>
+                      {vendor.average_rating}/Rating⭐
+                    </span>
+                  </div>
                 </div>
-                <div className={styles.titleVendor}>{item.title}</div>
-                <Divider className="my-2" />
-
-                <div className={styles.descVendor}>{item.desc}</div>
-                <div className={styles.vendorLine}>
-                  <Image src={icons} alt="Frame Image" className="me-2" />
-                  10-20 Years in Business
-                </div>
-                <div className={styles.bottomVendorCard}>
-                  <Button
-                    // as={Link}
-                    // href="#"
-                    onClick={() => {
-                      handleClick();
-                    }}
-                    className={styles.vendorCardButton}
-                  >
-                    View Profile
-                  </Button>
-                  <span className={styles.ratingVendorCard}>
-                    {item.rating}/Rating⭐
-                  </span>
-                </div>
-              </div>
-            );
-          })}
+              ))}
         </div>
-        {/* <Button as={Link} href="#" className={styles.ctaButton}>
-          View All Vendors
-        </Button> */}
       </section>
       <StepGetService />
       <GetTheApp />
-      <section className={styles.cutSection}></section>
-      <section className={styles.cutSectionTow}></section>
       <VendorDetails
         isOpen={isModalOpen}
-        onOpenChange={setIsModalOpen} // Pass the state handler to manage the modal
+        onOpenChange={setIsModalOpen}
+        vendorId={selectedVendorId}
       />
     </>
   );

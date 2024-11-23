@@ -11,11 +11,34 @@ import Link from "next/link";
 import styles from "@/assets/css/styles.module.css";
 import Image from "next/image";
 import VendorImage from "@/assets/images/website/vendor-details.png"; // Bottom wave image
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { fetchData } from "@/context/apiHelper";
 
-export default function VendorDetails({ isOpen, onOpen, onOpenChange }) {
-    const [scrollBehavior, setScrollBehavior] = useState("outside");
+export default function VendorDetails({ isOpen, onOpenChange, vendorId }) {
+  console.log("vendor id:", vendorId);
 
+  const [scrollBehavior, setScrollBehavior] = useState("outside");
+
+  const [vendorDetails, setVendorDetails] = useState(null);
+
+  useEffect(() => {
+    const fetchVendorDetails = async () => {
+      if (vendorId) {
+        try {
+          const data = await fetchData(`vendors/${vendorId}`);
+          setVendorDetails(data.user);
+          console.log(data.user);
+        } catch (error) {
+          console.error("Error fetching vendor details:", error);
+        }
+      }
+    };
+
+    fetchVendorDetails();
+  }, [vendorId]);
+  if (!vendorDetails) {
+    return <div>Loading...</div>;
+  }
   return (
     <>
       <Modal
@@ -23,7 +46,6 @@ export default function VendorDetails({ isOpen, onOpen, onOpenChange }) {
         size="5xl"
         isOpen={isOpen}
         scrollBehavior={scrollBehavior}
-
         onOpenChange={onOpenChange}
         classNames={{
           backdrop:
@@ -38,29 +60,25 @@ export default function VendorDetails({ isOpen, onOpen, onOpenChange }) {
                 </ModalHeader> */}
               <ModalBody className="p-8">
                 <div className="flex flex-col justify-center items-center">
-                  <Image
-                    src={VendorImage}
+                  <img
+                    src={vendorDetails.user?.profile_photo}
                     alt="Frame Image"
                     className={`mb-2 ${styles.vendorImageDetails}`}
-                    // width={300}
-                    // layout="responsive"
+                    style={{
+                      width: "18rem",
+                      height: "14rem",
+                      objectFit: "cover",
+                    }}
                   />
                   <h3 className={styles.VendorDetailsName}>
-                    Vendor/Company Name
+                    {vendorDetails.user?.first_name}
+                    {vendorDetails.user?.last_name}
                   </h3>
                   <span className={styles.VendorDetailsReview}>
                     ⭐⭐⭐⭐ 15 Reviews
                   </span>
                   <p className={styles.VendorDetailsDesc}>
-                    Lorem Ipsum is simply dummy text of the printing and
-                    typesetting industry. Lorem Ipsum has been the industry&apos;s
-                    standard dummy text ever since the 1500s, when an unknown
-                    printer took a galley of type and scrambled it to make a
-                    type specimen book. Lorem Ipsum is simply dummy text of the
-                    printing and typesetting industry. Lorem Ipsum has been the
-                    industry&apos;s standard dummy text ever since the 1500s, when an
-                    unknown printer took a galley of type and scrambled it to
-                    make a type specimen book.
+                    {vendorDetails.user?.description}{" "}
                   </p>
                   <div className={styles.VendorDetailsInfoContainer}>
                     <div className={styles.VendorDetailsInfo}>
@@ -74,41 +92,50 @@ export default function VendorDetails({ isOpen, onOpen, onOpenChange }) {
                         Street Address:
                       </span>
                       <p className={styles.VendorDetailsInfoValue}>
-                        Street Address: Shahr-e-Quaid - e - Azam, Khoamer
-                        Khomer, Gilgit, Gilgit-Baltistan
+                        {vendorDetails.user?.location?.street_address}
                       </p>
                     </div>
                     <div className={styles.VendorDetailsInfo}>
                       <span className={styles.VendorDetailsInfoLabel}>
                         City:
                       </span>
-                      <p className={styles.VendorDetailsInfoValue}>Gilgit</p>
+                      <p className={styles.VendorDetailsInfoValue}>
+                        {" "}
+                        {vendorDetails.user?.location?.city}
+                      </p>
                     </div>
                     <div className={styles.VendorDetailsInfo}>
                       <span className={styles.VendorDetailsInfoLabel}>
                         State:
                       </span>
-                      <p className={styles.VendorDetailsInfoValue}>Pakistan</p>
+                      <p className={styles.VendorDetailsInfoValue}>
+                        {" "}
+                        {vendorDetails.user?.location?.state}
+                      </p>
                     </div>
                     <div className={styles.VendorDetailsInfo}>
                       <span className={styles.VendorDetailsInfoLabel}>
                         Country:
                       </span>
-                      <p className={styles.VendorDetailsInfoValue}>Pakistan</p>
+                      <p className={styles.VendorDetailsInfoValue}>
+                        {vendorDetails.user?.location?.country}
+                      </p>
                     </div>
                     <div className={styles.VendorDetailsInfo}>
                       <span className={styles.VendorDetailsInfoLabel}>
                         Postal Code:
                       </span>
-                      <p className={styles.VendorDetailsInfoValue}>15100</p>
+                      <p className={styles.VendorDetailsInfoValue}>
+                        {vendorDetails.user?.location?.zip_code}
+                      </p>
                     </div>
                     <div className={styles.VendorDetailsInfo}>
                       <span className={styles.VendorDetailsInfoLabel}>
                         Years in business:
                       </span>
                       <p className={styles.VendorDetailsInfoValue}>
-                        {" "}
-                        12-20 years
+                        {vendorDetails.user?.years_experience}
+                        years
                       </p>
                     </div>
                     <div className={styles.VendorDetailsInfo}>
@@ -116,15 +143,15 @@ export default function VendorDetails({ isOpen, onOpen, onOpenChange }) {
                         Phone number:
                       </span>
                       <p className={styles.VendorDetailsInfoValue}>
-                        03555 35 41 62
+                        {vendorDetails.user?.phone || "not exist"}
                       </p>
                     </div>
                   </div>
                   <div className="flex justify-evenly w-full m-4 ">
                     <Button
-                      as={Link}
+                      // as={Link}
                       onPress={onClose}
-                      href="#"
+                      // href="#"
                       className={`${styles.backBolton} `}
                       // style={{ flex: "1" }}
                     >
