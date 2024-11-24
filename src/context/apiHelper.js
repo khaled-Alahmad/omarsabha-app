@@ -1,15 +1,23 @@
-import { getCookie } from "cookies-next";
+import { getCookie as getClientCookie } from "cookies-next";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_URL; 
+const API_BASE_URL = process.env.NEXT_PUBLIC_URL;
 
 async function apiRequest(endpoint, method = "GET", data = null, filters = {}) {
   try {
-    const token = getCookie("authToken"); 
-    console.log(token);
+    let token;
 
+    if (typeof window === "undefined") {
+      // نحن على الخادم
+      const { cookies } = await import("next/headers");
+      token = cookies().get("authToken")?.value;
+    } else {
+      // نحن على العميل
+      token = getClientCookie("authToken");
+    }
     const headers = {
       "Content-Type": "application/json",
     };
+    console.log("Token:", token);
 
     if (token) {
       headers["Authorization"] = `Bearer ${token}`;
@@ -32,6 +40,7 @@ async function apiRequest(endpoint, method = "GET", data = null, filters = {}) {
     }
 
     const response = await fetch(url, options);
+    console.log(response);
 
     if (!response.ok) {
       const errorResponse = await response.json();
@@ -41,25 +50,21 @@ async function apiRequest(endpoint, method = "GET", data = null, filters = {}) {
     return await response.json();
   } catch (error) {
     console.error("API Request Error:", error.message);
-    throw error; 
+    throw error;
   }
 }
-
 
 export async function fetchData(endpoint, filters = {}) {
   return await apiRequest(endpoint, "GET", null, filters);
 }
 
-
 export async function addData(endpoint, data) {
   return await apiRequest(endpoint, "POST", data);
 }
 
-
 export async function updateData(endpoint, data) {
   return await apiRequest(endpoint, "PUT", data);
 }
-
 
 export async function deleteData(endpoint) {
   return await apiRequest(endpoint, "DELETE");

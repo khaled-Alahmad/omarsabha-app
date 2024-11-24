@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
 
 export function middleware(request) {
   const authToken = request.cookies.get("authToken")?.value;
@@ -8,18 +7,24 @@ export function middleware(request) {
   console.log("Middleware Triggered for URL:", request.url);
   console.log("Auth Token:", authToken);
 
-  const pathname = request.nextUrl.pathname;
+  const pathname = new URL(request.url).pathname;
 
   const authPattern = new URLPattern({ pathname: "/auth/:path*" });
   const vendorPattern = new URLPattern({ pathname: "/vendor/:path*" });
+  const requestServicePattern = new URLPattern({
+    pathname: "/request-service",
+  });
   const clientPattern = new URLPattern({ pathname: "/client/:path*" });
+
+  const isVendorRoute =
+    vendorPattern.test(request.url) || requestServicePattern.test(request.url);
 
   if (authToken && authPattern.test(request.url)) {
     return NextResponse.redirect(new URL("/", request.url));
   }
 
   const isProtectedRoute =
-    vendorPattern.test(request.url) ||
+    isVendorRoute ||
     clientPattern.test(request.url) ||
     pathname.startsWith("/dashboard") ||
     pathname.startsWith("/profile");
@@ -28,7 +33,7 @@ export function middleware(request) {
     return NextResponse.redirect(new URL("/auth/login", request.url));
   }
 
-  if (vendorPattern.test(request.url) && userRole !== "vendor") {
+  if (isVendorRoute && userRole !== "vendor") {
     return NextResponse.redirect(new URL("/unauthorized", request.url));
   }
 
@@ -46,6 +51,7 @@ export const config = {
     "/client/:path*",
     "/dashboard",
     "/profile",
-    "/auth/:path*", // Include auth routes
+    "/auth/:path*",
+    "/request-service", // تمت إضافة هذا المسار
   ],
 };

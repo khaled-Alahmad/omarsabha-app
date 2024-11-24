@@ -12,7 +12,7 @@ export default async function ServicesPage() {
   const filters = {
     search: "",
   };
-  const data = await fetchData("services", filters);
+  const data = await fetchData("public/services", filters);
 
   const services = await data.data;
   console.log(services);

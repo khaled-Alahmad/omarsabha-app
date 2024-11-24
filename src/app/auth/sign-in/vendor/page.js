@@ -63,7 +63,7 @@ export default function VendorSignIn() {
         // console.log("clicked!");
 
         toast.success("Login successful!");
-        if (user.profile_setup === 0) {
+        if (user.profile_setup == 0) {
           router.push("/auth/profile-setup/vendor");
         } else {
           router.push("/");

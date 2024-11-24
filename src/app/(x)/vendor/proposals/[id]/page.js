@@ -1,68 +1,84 @@
 import React from "react";
 import styles from "./ServiceDetails.module.css";
 import serviceImage from "@/assets/images/vendor/service-request.png";
-import clientImage from "@/assets/images/vendor/client-image.png";
-
 import { Divider } from "@nextui-org/react";
+import { fetchData } from "@/context/apiHelper";
 
-export default function ServiceDetails() {
+export default async function ServiceDetails({ params }) {
+  const { id } = params;
+
+  // Fetch the data asynchronously
+  const response = await fetchData(`vendors/proposals/${id}`);
+
+  // Ensure the response contains valid data
+  if (!response || !response.success || !response.data) {
+    return <div>Proposal not found or an error occurred.</div>;
+  }
+
+  const proposal = response.data;
+  const {
+    service_request: serviceRequest,
+    vendor: {
+      user: vendorUser,
+      user: { location: vendorLocation },
+    },
+    payment_type: proposalPaymentType,
+    price,
+    created_at: proposalCreatedAt,
+    message,
+  } = proposal;
+
   return (
     <div className={styles.container}>
-      <h2 className={styles.header}>Replace switched</h2>
+      <h2 className={styles.header}>{serviceRequest.title}</h2>
 
       {/* Description Section */}
       <section className={styles.section}>
         <h3 className={styles.subheader}>Description</h3>
-        <p className={styles.description}>
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry&apos;s standard dummy text ever
-          since the 1500s, when an unknown printer took a galley of type and
-          scrambled it to make a type specimen book. Lorem Ipsum is simply dummy
-          text of the printing and typesetting industry. Lorem Ipsum has been
-          the industry&apos;s standard dummy text ever since the 1500s, when an
-          unknown printer took a galley of type and scrambled it to make a type
-          specimen book.
-        </p>
+        <p className={styles.description}>{serviceRequest.description}</p>
         <div className={styles.detailsGrid}>
           <div>
-            <span>Category:</span> Electrician
+            <span>Category:</span> {serviceRequest.title}
           </div>
           <div>
-            <span>Payment Type:</span> Hourly-rate
+            <span>Payment Type:</span> {serviceRequest.payment_type}
           </div>
           <div>
-            <span>Flat Rate Amount:</span> N/A
+            <span>Flat Rate Amount:</span> ${serviceRequest.price}
           </div>
           <div>
-            <span>Hourly Rate:</span> $10 hourly
+            <span>Hourly Rate:</span> eeeee hourly
           </div>
           <div>
-            <span>Estimated Hours:</span> 10
+            <span>Estimated Hours:</span> {serviceRequest.estimated_hours}
           </div>
           <div>
-            <span>Start Date:</span> 2024-10-14
+            <span>Start Date:</span>{" "}
+            {new Date(serviceRequest.start_date).toLocaleDateString("en-CA")}
           </div>
           <div>
-            <span>Completion Date:</span> 2024-10-14
-          </div>
-          <div>
-            <span>Street Address:</span> Shahr-e-Quaid-e-Azam, Khoamer Khomer,
-            Gilgit, Gilgit-Baltistan
+            <span>Completion Date:</span>{" "}
+            {new Date(serviceRequest.completion_date).toLocaleDateString(
+              "en-CA"
+            )}
           </div>
           <div>
             <span>Suite Number:</span> N/A
           </div>
           <div>
-            <span>City:</span> Gilgit
+            <span>Street Address:</span> {vendorLocation.street_address}
           </div>
           <div>
-            <span>State:</span> Pakistan
+            <span>City:</span> {vendorLocation.city}
           </div>
           <div>
-            <span>Postal Code:</span> 15300
+            <span>State:</span> {vendorLocation.state}
           </div>
           <div>
-            <span>Country:</span> Pakistan
+            <span>Postal Code:</span> {vendorLocation.zip_code}
+          </div>
+          <div>
+            <span>Country:</span> {vendorLocation.country}
           </div>
         </div>
         <div className={styles.imageGrid}>
@@ -84,24 +100,23 @@ export default function ServiceDetails() {
         </div>
       </section>
       <Divider className="my-4" />
+
       {/* Client Information */}
       <section className={styles.clientInfo}>
         <img
-          src={clientImage.src}
-          alt="Client Avatar"
+          src={vendorUser.profile_photo}
+          alt={`${vendorUser.first_name} ${vendorUser.last_name}`}
           className={styles.avatar}
         />
         <div className={`${styles.clientDetails}`}>
-          <h4>Client Name</h4>
-          <Divider orientation="vertical" className="mx-4  h-16 " />
+          <h4>{`${vendorUser.first_name} ${vendorUser.last_name}`}</h4>
+          <Divider orientation="vertical" className="mx-4 h-16" />
           <p>
-            <span>Phone number:</span> 0355-354362
+            <span>Phone number:</span> {vendorUser.phone}
           </p>
-          <Divider orientation="vertical" className="mx-4  h-16" />
-
+          <Divider orientation="vertical" className="mx-4 h-16" />
           <p>
-            <span>Street Address:</span> Shahr-e-Quaid-e-Azam, Khoamer Khomer,
-            Gilgit, Gilgit-Baltistan
+            <span>Street Address:</span> {vendorLocation.street_address}
           </p>
         </div>
         <button className={styles.viewMore}>View More</button>
@@ -111,34 +126,35 @@ export default function ServiceDetails() {
       {/* Proposal Details */}
       <section className={styles.section}>
         <h3 className={styles.subheader}>Proposal Details</h3>
-        <p className={styles.description}>
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry&apos;s standard dummy text ever
-          since the 1500s, when an unknown printer took a galley of type and
-          scrambled it to make a type specimen book. Lorem Ipsum is simply dummy
-          text of the printing and typesetting industry. Lorem Ipsum has been
-          the industry&apos;s standard dummy text ever since the 1500s, when an
-          unknown printer took a galley of type and scrambled it to make a type
-          specimen book.
-        </p>
+        <p className={styles.description}>{message}</p>
         <div className={styles.detailsGrid}>
           <div>
-            <span>Payment Type:</span> Hourly-rate
+            <span>Category:</span>NA
           </div>
           <div>
-            <span>Hourly Rate:</span> $10 hourly
+            <span>Payment Type:</span> {proposalPaymentType}
           </div>
           <div>
-            <span>Estimated Hours:</span> 10
+            <span>Flat Rate Amount:</span> NA
           </div>
           <div>
-            <span>Start Date:</span> 2024-10-14
+            <span>Hourly Rate:</span> NA
           </div>
           <div>
-            <span>Completion Date:</span> 2024-10-14
+            <span>Estimated Hours:</span>NA
           </div>
+          <div>
+            <span>Start Date:</span> NA
+          </div>
+          <div>
+            <span>Completion Date:</span> NA
+          </div>
+          {/* <div>
+            <span>Created On:</span>{" "}
+            {new Date(proposalCreatedAt).toLocaleDateString("en-CA")}
+          </div> */}
           <div className={styles.status}>
-            <span>Status:</span> Pending
+            <span>Status:</span> {serviceRequest.status}
           </div>
         </div>
       </section>

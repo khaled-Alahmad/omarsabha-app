@@ -9,7 +9,7 @@ import { Button, Divider } from "@nextui-org/react";
 import { fetchData } from "@/context/apiHelper";
 
 export default async function OurVendors() {
-  const data = await fetchData("home-data");
+  const data = await fetchData("public/home-data");
 
   const vendors = await data.data.vendors;
   console.log(vendors);

@@ -9,7 +9,7 @@ import Link from "next/link";
 // }
 
 export default async function ServiceHome() {
-  const data = await fetchData("home-data");
+  const data = await fetchData("public/home-data");
   const services = data.data.services;
 
   return (

@@ -17,6 +17,38 @@
   border-radius: 4px;
   border: 1px solid #ccc;
 } */
+.noDataMessage {
+  height: 100vh;
+  text-align: center;
+  font-size: 18px;
+  margin-top: 20px;
+  color: #888;
+}
+
+/* sawdf */
+
+.skeletonImage {
+  width: 150px;
+  height: 150px;
+  border-radius: 8px;
+}
+
+.skeletonDetails {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.skeletonTitle {
+  width: 60%;
+  height: 20px;
+}
+
+.skeletonText {
+  width: 80%;
+  height: 15px;
+}
 
 .filters button {
   color: var(--Foundation-Black-Text-Color-B75, #a6a6a6);
@@ -133,7 +165,7 @@
   .requestCard {
     flex-direction: column;
   }
-  .image{
+  .image {
     width: 100%;
   }
 }
