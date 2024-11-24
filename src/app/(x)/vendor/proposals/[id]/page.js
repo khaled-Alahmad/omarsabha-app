@@ -47,7 +47,7 @@ export default async function ServiceDetails({ params }) {
             <span>Flat Rate Amount:</span> ${serviceRequest.price}
           </div>
           <div>
-            <span>Hourly Rate:</span> eeeee hourly
+            <span>Hourly Rate:</span> NA hourly
           </div>
           <div>
             <span>Estimated Hours:</span> {serviceRequest.estimated_hours}

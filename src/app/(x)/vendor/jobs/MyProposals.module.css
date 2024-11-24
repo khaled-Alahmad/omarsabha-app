@@ -5,7 +5,23 @@
   /* margin: 0 auto; */
   padding: 2rem 3rem;
 }
-
+.perPageSelector {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.noDataMessage {
+  height: 60vh;
+  text-align: center;
+  font-size: 18px;
+  margin-top: 20px;
+  color: #888;
+}
+.perPageDropdown {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
 .title {
   color: var(--Foundation-Black-Text-Color-B300, #262727);
   font-family: Poppins;

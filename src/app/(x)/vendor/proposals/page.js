@@ -21,10 +21,7 @@ export default async function MyProposals({ searchParams }) {
         <h2 className={styles.title}>My Proposals</h2>
         <Filters filters={filters} />
       </div>
-      <ProposalsList
-        proposals={data.data}
-        meta={data.meta} // Pass meta for pagination
-      />
+      <ProposalsList proposals={data.data} />
       <Pagination meta={data.meta} />
     </div>
   );

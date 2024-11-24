@@ -270,19 +270,32 @@
   font-weight: 500;
   line-height: 155%; /* 1.55rem */
 }
-.completed td {
-  color: #fe8315;
+.created {
+  color: var(--Foundation-Black-Text-Color-B300, #262727);
+  font-family: Poppins;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.25rem; /* 125% */
+}
+.completePayment {
+  color: var(--Foundation-Success-Color-S300, #0b9b4d);
+  font-family: Poppins;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.25rem; /* 125% */
 }
 .icon {
   width: 1.5rem;
   height: 1.5rem;
   /* padding: 0.5rem; */
 }
-.current td {
+.current {
   color: #fbbc05;
 }
 
-.upcoming td {
+.upcoming {
   color: #a6a6a6;
 }
 

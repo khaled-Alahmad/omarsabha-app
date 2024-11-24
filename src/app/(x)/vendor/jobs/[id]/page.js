@@ -1,18 +1,49 @@
 import React from "react";
 import styles from "./JobDetailsDetails.module.css";
-import serviceImage from "@/assets/images/vendor/service-request.png";
-import clientImage from "@/assets/images/vendor/client-image.png";
-import { FaFileAlt, FaPlay, FaCheckCircle, FaDollarSign } from "react-icons/fa"; // Icons for each step
-
+import { fetchData } from "@/context/apiHelper";
 import { Divider } from "@nextui-org/react";
 
-export default function JobDetails() {
+export default async function JobDetails({ params }) {
+  const { id } = params;
+
+  // Fetch the data asynchronously
+  const response = await fetchData(`vendors/orders/${id}`);
+
+  // Ensure the response contains valid data
+  if (!response || !response.success || !response.data) {
+    return <div>Job not found or an error occurred.</div>;
+  }
+
+  const job = response.data;
+  console.log(job);
+
+  const {
+    title,
+    description,
+    price,
+    payment_type,
+    works_hours,
+    start_date,
+    completion_date,
+    service_request: serviceRequest,
+    vendor,
+    work_location: workLocation,
+    images,
+  } = job;
+
+  const vendorUser = vendor?.user;
+  const clientUser = serviceRequest?.client?.user;
+
   const progress = [
     {
       label: "Order Created",
-      status: "completed",
-      date: "10/14/2024",
-      time: "07:20 PM",
+      status: "created",
+      date: start_date
+        ? new Date(start_date).toLocaleDateString("en-US")
+        : "N/A",
+      time: start_date
+        ? new Date(start_date).toLocaleTimeString("en-US")
+        : "N/A",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -36,8 +67,8 @@ export default function JobDetails() {
     {
       label: "Awaiting Start",
       status: "current",
-      date: "10/14/2024",
-      time: "07:20 PM",
+      date: "N/A",
+      time: "N/A",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -55,9 +86,13 @@ export default function JobDetails() {
     },
     {
       label: "Order Completed",
-      status: "upcoming",
-      date: "",
-      time: "",
+      status: "completed",
+      date: completion_date
+        ? new Date(completion_date).toLocaleDateString("en-US")
+        : "N/A",
+      time: completion_date
+        ? new Date(completion_date).toLocaleTimeString("en-US")
+        : "N/A",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -66,7 +101,7 @@ export default function JobDetails() {
           viewBox="0 0 25 25"
           fill="none"
         >
-          <g clip-path="url(#clip0_270_2380)">
+          <g clipPath="url(#clip0_270_2380)">
             <path
               d="M17.5293 7.45312L18.584 8.50781L9.80664 17.2852L5.5293 13.0078L6.58398 11.9531L9.80664 15.1758L17.5293 7.45312ZM12.0566 0.480469C13.1582 0.480469 14.2207 0.621094 15.2441 0.902344C16.2676 1.18359 17.2246 1.58594 18.1152 2.10938C19.0059 2.63281 19.8145 3.25781 20.541 3.98438C21.2676 4.71094 21.8926 5.52344 22.416 6.42188C22.9395 7.32031 23.3418 8.27734 23.623 9.29297C23.9043 10.3086 24.0488 11.3711 24.0566 12.4805C24.0566 13.582 23.916 14.6445 23.6348 15.668C23.3535 16.6914 22.9512 17.6484 22.4277 18.5391C21.9043 19.4297 21.2793 20.2383 20.5527 20.9648C19.8262 21.6914 19.0137 22.3164 18.1152 22.8398C17.2168 23.3633 16.2598 23.7656 15.2441 24.0469C14.2285 24.3281 13.166 24.4727 12.0566 24.4805C10.9551 24.4805 9.89258 24.3398 8.86914 24.0586C7.8457 23.7773 6.88867 23.375 5.99805 22.8516C5.10742 22.3281 4.29883 21.7031 3.57227 20.9766C2.8457 20.25 2.2207 19.4375 1.69727 18.5391C1.17383 17.6406 0.771484 16.6875 0.490234 15.6797C0.208984 14.6719 0.0644531 13.6055 0.0566406 12.4805C0.0566406 11.3789 0.197266 10.3164 0.478516 9.29297C0.759766 8.26953 1.16211 7.3125 1.68555 6.42188C2.20898 5.53125 2.83398 4.72266 3.56055 3.99609C4.28711 3.26953 5.09961 2.64453 5.99805 2.12109C6.89648 1.59766 7.84961 1.19531 8.85742 0.914062C9.86523 0.632812 10.9316 0.488281 12.0566 0.480469ZM12.0566 22.9805C13.0176 22.9805 13.9434 22.8555 14.834 22.6055C15.7246 22.3555 16.5605 22.0039 17.3418 21.5508C18.123 21.0977 18.834 20.5469 19.4746 19.8984C20.1152 19.25 20.6621 18.543 21.1152 17.7773C21.5684 17.0117 21.9238 16.1758 22.1816 15.2695C22.4395 14.3633 22.5645 13.4336 22.5566 12.4805C22.5566 11.5195 22.4316 10.5938 22.1816 9.70312C21.9316 8.8125 21.5801 7.97656 21.127 7.19531C20.6738 6.41406 20.123 5.70312 19.4746 5.0625C18.8262 4.42188 18.1191 3.875 17.3535 3.42188C16.5879 2.96875 15.752 2.61328 14.8457 2.35547C13.9395 2.09766 13.0098 1.97266 12.0566 1.98047C11.0957 1.98047 10.1699 2.10547 9.2793 2.35547C8.38867 2.60547 7.55273 2.95703 6.77148 3.41016C5.99023 3.86328 5.2793 4.41406 4.63867 5.0625C3.99805 5.71094 3.45117 6.41797 2.99805 7.18359C2.54492 7.94922 2.18945 8.78516 1.93164 9.69141C1.67383 10.5977 1.54883 11.5273 1.55664 12.4805C1.55664 13.4414 1.68164 14.3672 1.93164 15.2578C2.18164 16.1484 2.5332 16.9844 2.98633 17.7656C3.43945 18.5469 3.99023 19.2578 4.63867 19.8984C5.28711 20.5391 5.99414 21.0859 6.75977 21.5391C7.52539 21.9922 8.36133 22.3477 9.26758 22.6055C10.1738 22.8633 11.1035 22.9883 12.0566 22.9805Z"
               fill="#262727"
@@ -87,9 +122,13 @@ export default function JobDetails() {
     },
     {
       label: "Payment Completed",
-      status: "upcoming",
-      date: "",
-      time: "",
+      status: "complete_payment",
+      date: completion_date
+        ? new Date(completion_date).toLocaleDateString("en-US")
+        : "N/A",
+      time: completion_date
+        ? new Date(completion_date).toLocaleTimeString("en-US")
+        : "N/A",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -106,92 +145,95 @@ export default function JobDetails() {
       ),
     },
   ];
+
+  const progresse = [
+    { label: "Order Created", status: "created", percentage: 0 },
+    { label: "Awaiting Start", status: "current", percentage: 35 },
+    { label: "Order Completed", status: "completed", percentage: 65 },
+    { label: "Payment Completed", status: "complete_payment", percentage: 100 },
+  ];
+
+  // Determine the current progress percentage based on the status
+  console.log("Job Status:", job.status);
+
+  const currentProgress =
+    progresse.find((step) => step.status === job.status)?.percentage || 0;
+
+  console.log("Calculated Progress:", currentProgress);
+
   return (
     <div className={styles.container}>
-      <h2 className={styles.header}>Replace switched</h2>
+      <h2 className={styles.header}>{title || "N/A"}</h2>
 
       {/* Description Section */}
       <section className={styles.section}>
         <h3 className={styles.subheader}>Description</h3>
-        <p className={styles.description}>
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry&apos;s standard dummy text ever
-          since the 1500s, when an unknown printer took a galley of type and
-          scrambled it to make a type specimen book. Lorem Ipsum is simply dummy
-          text of the printing and typesetting industry. Lorem Ipsum has been
-          the industry&apos;s standard dummy text ever since the 1500s, when an
-          unknown printer took a galley of type and scrambled it to make a type
-          specimen book.
-        </p>
+        <p className={styles.description}>{description || "N/A"}</p>
         <div className={styles.detailsGrid}>
           <div>
-            <span>Category:</span> Electrician
+            <span>Category:</span> {serviceRequest?.title || "N/A"}
           </div>
           <div>
-            <span>Payment Type:</span> Hourly-rate
+            <span>Payment Type:</span> {payment_type || "N/A"}
           </div>
           <div>
-            <span>Flat Rate Amount:</span> N/A
+            <span>Flat Rate Amount:</span> ${price || "N/A"}
           </div>
           <div>
-            <span>Hourly Rate:</span> $10 hourly
+            <span>Work Hours:</span> {works_hours || "N/A"}
           </div>
           <div>
-            <span>Estimated Hours:</span> 10
+            <span>Start Date:</span>{" "}
+            {start_date ? new Date(start_date).toLocaleDateString() : "N/A"}
           </div>
           <div>
-            <span>Start Date:</span> 2024-10-14
+            <span>Completion Date:</span>{" "}
+            {completion_date
+              ? new Date(completion_date).toLocaleDateString()
+              : "N/A"}
           </div>
           <div>
-            <span>Completion Date:</span> 2024-10-14
+            <span>Street Address:</span> {workLocation?.street_address || "N/A"}
           </div>
           <div>
-            <span>Street Address:</span> Shahr-e-Quaid-e-Azam, Khoamer Khomer,
-            Gilgit, Gilgit-Baltistan
+            <span>City:</span> {workLocation?.city || "N/A"}
           </div>
           <div>
-            <span>Suite Number:</span> N/A
+            <span>State:</span> {workLocation?.state || "N/A"}
           </div>
           <div>
-            <span>City:</span> Gilgit
+            <span>Postal Code:</span> {workLocation?.zip_code || "N/A"}
           </div>
           <div>
-            <span>State:</span> Pakistan
-          </div>
-          <div>
-            <span>Postal Code:</span> 15300
-          </div>
-          <div>
-            <span>Country:</span> Pakistan
+            <span>Country:</span> {workLocation?.country || "N/A"}
           </div>
         </div>
         <div className={styles.imageGrid}>
-          <img
-            src={serviceImage.src}
-            alt="Service Image"
-            className={styles.image}
-          />
-          <img
-            src={serviceImage.src}
-            alt="Service Image"
-            className={styles.image}
-          />
-          <img
-            src={serviceImage.src}
-            alt="Service Image"
-            className={styles.image}
-          />
+          {images?.length > 0 ? (
+            images.map((image) => (
+              <img
+                key={image.id}
+                src={image.path}
+                alt={`Service Image ${image.id}`}
+                className={styles.image}
+              />
+            ))
+          ) : (
+            <p>No images available</p>
+          )}
         </div>
       </section>
       <Divider className="my-4" />
-      {/* Client Information */}
-      <section className={styles.bottomJob}>
-        <h2>Order Tracking Update:</h2>
 
-        {/* Progress Bar */}
+      {/* Progress Section */}
+      <section className={styles.bottomJob}>
+        <h2>Order Tracking Update</h2>
         <div className={styles.progressContainer}>
           <div className={styles.progressBar}>
-            <div className={styles.completedBar} style={{ width: "35%" }}></div>
+            <div
+              className={styles.completedBar}
+              style={{ width: `${currentProgress}%` }}
+            ></div>
           </div>
           <div className={styles.progressLabels}>
             {progress.map((step, index) => (
@@ -199,15 +241,17 @@ export default function JobDetails() {
                 key={index}
                 className={`${styles.progressLabel} ${
                   step.status === "completed" ? styles.completed : ""
-                } ${step.status === "current" ? styles.current : ""}`}
+                } ${step.status === "current" ? styles.current : ""} ${
+                  step.status === "complete_payment"
+                    ? styles.completePayment
+                    : ""
+                } ${step.status === "created" ? styles.created : ""}`}
               >
                 {step.label}
               </span>
             ))}
           </div>
         </div>
-
-        {/* Status Table */}
         <table className={styles.statusTable}>
           <thead>
             <tr>
@@ -218,31 +262,25 @@ export default function JobDetails() {
           </thead>
           <tbody>
             {progress.map((step, index) => (
-              <tr key={index} className={styles[step.status]}>
+              <tr key={index}>
                 <td className="flex align-middle">
-                  <span className={`${styles.icon} me-2`}> {step.icon} </span>
-                  <div className="flex flex-col">
-                    <p className={styles.stepsLabel}>{step.label}</p>
-                    <p className={styles.stepDescription}>
-                      {index === 0
-                        ? "You placed a proposal to this Request"
-                        : "Lorem Ipsum is simply dummy text"}
-                    </p>
-                  </div>
+                  <span className={`${styles.icon} me-2`}>{step.icon}</span>{" "}
+                  {step.label}
                 </td>
-                <td className={styles.date}>{step.date}</td>
-                <td className={styles.date}>{step.time}</td>
+                <td>{step.date}</td>
+                <td>{step.time}</td>
               </tr>
             ))}
           </tbody>
         </table>
-
-        {/* Action Buttons */}
-        <div className={styles.buttonGroup}>
-          <button className={styles.backButton}>Back</button>
-          <button className={styles.startOrderButton}>Start Order</button>
-        </div>
       </section>
+      <Divider className="my-4" />
+
+      {/* Action Buttons */}
+      <div className={styles.buttonGroup}>
+        <button className={styles.backButton}>Back</button>
+        <button className={styles.startOrderButton}>Start Order</button>
+      </div>
     </div>
   );
 }
