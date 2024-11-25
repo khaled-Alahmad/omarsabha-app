@@ -83,6 +83,13 @@
   font-weight: 600;
   line-height: 2rem; /* 177.778% */
 }
+.noDataMessage {
+  height: 60vh;
+  text-align: center;
+  font-size: 18px;
+  margin-top: 20px;
+  color: #888;
+}
 .nameAvatar {
   color: var(--Foundation-Black-Text-Color-B300, #262727);
   font-family: Poppins;
@@ -285,7 +292,7 @@
   flex-direction: column;
   align-items: center;
   gap: 1rem;
-
+  width: 100%;
   padding: 2rem 3rem;
   background: var(--Foundation-Secondary-color-S50, #fff);
 }

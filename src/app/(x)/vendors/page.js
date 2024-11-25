@@ -39,7 +39,7 @@ export default function VendorHome() {
     const fetchVendors = async () => {
       setLoading(true);
       try {
-        const data = await fetchData("vendors", filters);
+        const data = await fetchData("public/vendors", filters);
         setVendors(data.data || []);
       } catch (error) {
         console.error("Error fetching vendors:", error);
@@ -121,18 +121,20 @@ export default function VendorHome() {
           </div>
         </div>
         <div className={`${styles.servicesItems} grid my-8 gap-4 grid-cols-12`}>
-          {loading
-            ? Array.from({ length: 4 }, (_, index) => (
-                <Card
-                  className={`${styles.VendorItemsCard} w-[320px] lg:col-span-3 col-span-12`}
-                  key={index}
-                >
-                  <Skeleton className="rounded-lg w-full h-40 mb-2" />
-                  <Skeleton className="rounded-lg w-3/4 h-5 mb-2" />
-                  <Skeleton className="rounded-lg w-1/2 h-5" />
-                </Card>
-              ))
-            : vendors.map((vendor) => (
+          {loading ? (
+            Array.from({ length: 4 }, (_, index) => (
+              <Card
+                className={`${styles.VendorItemsCard} w-[320px] lg:col-span-3 col-span-12`}
+                key={index}
+              >
+                <Skeleton className="rounded-lg w-full h-40 mb-2" />
+                <Skeleton className="rounded-lg w-3/4 h-5 mb-2" />
+                <Skeleton className="rounded-lg w-1/2 h-5" />
+              </Card>
+            ))
+          ) : (
+            <>
+              {vendors.map((vendor) => (
                 <div
                   key={vendor.id}
                   className={`${styles.VendorItemsCard} lg:col-span-3 col-span-12`}
@@ -173,6 +175,13 @@ export default function VendorHome() {
                   </div>
                 </div>
               ))}
+              {vendors.length === 0 && (
+                <div className="col-span-12">
+                  <p className={styles.noDataMessage}>Data not found!</p>
+                </div>
+              )}
+            </>
+          )}
         </div>
       </section>
       <StepGetService />

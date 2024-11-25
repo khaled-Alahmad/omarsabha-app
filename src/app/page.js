@@ -6,10 +6,10 @@ import { VendorSingUp } from "./(x)/website/@home/vendor-sign-up/page";
 import ServiceHome from "./(x)/website/@home/services/page";
 import GetTheApp from "./(x)/website/@home/get-the-app/page";
 import OurVendors from "./(x)/website/@home/our-vendors/page";
-import TestimonialsSection from "./(x)/website/@home/testimonials/page";
-import FaqSection from "./(x)/website/@home/faq/page";
 import HeroSection from "./(x)/website/@home/hero/page";
 import FloatingButtonWrapper from "./(x)/website/@home/floating-button-wrapper/page";
+import Faq from "./(x)/website/@home/faq/page";
+import Testimonials from "./(x)/website/@home/testimonials/page";
 
 // The main Home component
 export default async function Home() {
@@ -31,9 +31,9 @@ export default async function Home() {
         <GetTheApp />
         <section className={styles.cutSection}></section>
         <OurVendors />
-        <TestimonialsSection />
+        <Testimonials />
 
-        <FaqSection />
+        <Faq />
 
         {/* <FloatingButton onClick={toggleChat} />
         {isChatOpen && (

@@ -1,18 +1,63 @@
-import React from "react";
+"use client"; 
+import React, { useEffect, useRef } from "react";
 import styles from "../ServiceRequestList.module.css";
+import { Loader } from "@googlemaps/js-api-loader";
 
-export default function MapComponents() {
-  return (
-    <div className={styles.map}>
-      {/* You can embed a Google Map iframe here */}
-      <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.835434509162!2d144.9537353153189!3d-37.81627974202105!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad65d43f1f1aaff%3A0xb1f27d54c8e47874!2sFederation+Square!5e0!3m2!1sen!2sau!4v1612517782675!5m2!1sen!2sau"
-        width="100%"
-        height="100%"
-        allowFullScreen=""
-        loading="lazy"
-        className={styles.mapIframe}
-      ></iframe>
-    </div>
-  );
+export default function MapComponents({ locations }) {
+  const mapRef = useRef(null);
+
+  useEffect(() => {
+    const loader = new Loader({
+      apiKey: "YOUR_GOOGLE_MAPS_API_KEY", // Replace with your API key
+      version: "weekly",
+    });
+
+    loader.load().then(() => {
+      if (!mapRef.current) return;
+
+      // Initialize the map
+      const map = new google.maps.Map(mapRef.current, {
+        center: {
+          lat: locations?.[0]?.latitude || 37.7749,
+          lng: locations?.[0]?.longitude || -122.4194,
+        }, // Default to San Francisco if no locations
+        zoom: 10,
+      });
+
+      // Add markers
+      if (locations && locations.length > 0) {
+        locations.forEach((location) => {
+          if (location.latitude && location.longitude) {
+            const marker = new google.maps.Marker({
+              position: {
+                lat: location.latitude,
+                lng: location.longitude,
+              },
+              map,
+              title: location.title || "Untitled",
+            });
+
+            // Add an info window
+            const infoWindow = new google.maps.InfoWindow({
+              content: `
+                <div>
+                  <strong>${location.title || "No Title"}</strong><br />
+                  ${location.street_address || "N/A"}<br />
+                  ${location.city || "N/A"}, ${location.state || "N/A"} ${
+                location.zip_code || "N/A"
+              }
+                </div>
+              `,
+            });
+
+            marker.addListener("click", () => {
+              infoWindow.open(map, marker);
+            });
+          }
+        });
+      }
+    });
+  }, [locations]);
+
+  return <div ref={mapRef} className={styles.map}></div>;
 }

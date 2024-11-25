@@ -1,70 +1,17 @@
-"use client";
-import React, { useState } from "react";
+import React from "react";
 import styles from "@/assets/css/styles.module.css"; // Import CSS module
 import { Button, Input } from "@nextui-org/react";
 import imageLogin from "@/assets/images/auth/login-image.png";
+import HelpSection from "./HelpSection";
+import { fetchData } from "@/context/apiHelper";
 
-const HelpSupport = () => {
-  const [activeIndex, setActiveIndex] = useState(null);
-
-  const handleToggle = (index) => {
-    setActiveIndex(activeIndex === index ? null : index);
-  };
-
-  const faqData = [
-    {
-      question: "How does InstaHandi work?",
-      answer:
-        "InstaHandi connects homeowners with skilled professionals for various home services. Simply create a project, receive bids from pre-vetted service providers, and choose the best option based on your needs and budget.",
-    },
-    {
-      question: "Are the service providers on InstaHandi verified?",
-      answer:
-        "Yes, all service providers are pre-vetted and verified before they can offer their services on InstaHandi.",
-    },
-    {
-      question: "How do I get quotes for my project?",
-      answer:
-        "You can create a project on InstaHandi, and service providers will send you their bids based on your requirements.",
-    },
-    {
-      question: "Is there a fee to use InstaHandi?",
-      answer:
-        "InstaHandi is free for homeowners to use. You only pay for the services you hire.",
-    },
-    {
-      question: "What if I’m not satisfied with the service provided?",
-      answer:
-        "If you’re not satisfied, you can communicate with the service provider directly, and InstaHandi will assist in finding a resolution if needed.",
-    },
-  ];
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-  };
+export default async function HelpSupport() {
+  const data = await fetchData("public/home-data");
+  const faqs = data.data.faqs || [];
 
   return (
     <div className={styles.container}>
-      <section className={styles.faqSection} style={{ padding: "2rem 0rem" }}>
-        <h2 className={styles.faqTitle}>Help & support</h2>
-        <div className={styles.faqList}>
-          {faqData.map((item, index) => (
-            <div key={index} className={styles.faqItem}>
-              <div
-                className={styles.faqQuestion}
-                onClick={() => handleToggle(index)}
-              >
-                {item.question}
-                <span className={styles.toggleIcon}>
-                  {activeIndex === index ? "−" : "+"}
-                </span>
-              </div>
-              {activeIndex === index && (
-                <div className={styles.faqAnswer}>{item.answer}</div>
-              )}
-            </div>
-          ))}
-        </div>
-      </section>
+      <HelpSection faqs={faqs} />
       <section className={styles.contactForm}>
         <div className={styles.imageSection}>
           <img src={imageLogin.src} alt="Home Image" className={styles.image} />
@@ -74,7 +21,7 @@ const HelpSupport = () => {
           <h2 className={styles.title}>Contact Foam</h2>
           {/* <p className={styles.subtitle}>Enter detail to Sign in</p> */}
 
-          <form className={styles.form} onSubmit={handleSubmit}>
+          <form className={styles.form}>
             <Input
               isClearable
               variant="bordered"
@@ -144,6 +91,4 @@ const HelpSupport = () => {
       </section>
     </div>
   );
-};
-
-export default HelpSupport;
+}
