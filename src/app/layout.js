@@ -21,8 +21,10 @@ export default function RootLayout({ children }) {
       </head>
       <body className="antialiased">
         <NextUIProvider>
-          {children}
-          <Toaster position="top-right" reverseOrder={false} />
+          <main className="purple-dark text-foreground bg-background">
+            {children}
+            <Toaster position="top-right" reverseOrder={false} />
+          </main>
         </NextUIProvider>
       </body>
     </html>

@@ -30,15 +30,15 @@ export function middleware(request) {
     pathname.startsWith("/profile");
 
   if (!authToken && isProtectedRoute) {
-    return NextResponse.redirect(new URL("/auth/login", request.url));
+    return NextResponse.redirect(new URL("/auth/sign-in/vendor", request.url));
   }
 
   if (isVendorRoute && userRole !== "vendor") {
-    return NextResponse.redirect(new URL("/unauthorized", request.url));
+    return NextResponse.redirect(new URL("/", request.url));
   }
 
   if (clientPattern.test(request.url) && userRole !== "client") {
-    return NextResponse.redirect(new URL("/unauthorized", request.url));
+    return NextResponse.redirect(new URL("/", request.url));
   }
 
   return NextResponse.next();
@@ -52,6 +52,6 @@ export const config = {
     "/dashboard",
     "/profile",
     "/auth/:path*",
-    "/request-service", // تمت إضافة هذا المسار
+    "/request-service",
   ],
 };

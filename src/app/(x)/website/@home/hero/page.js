@@ -12,7 +12,11 @@ import styles from "@/assets/css/styles.module.css"; // Import CSS module
 
 import { Button } from "@nextui-org/react";
 import Image from "next/image";
+import ServiceRequestForm from "@/components/vendor/service-request/ServiceRequestForm";
+import { useState } from "react";
 export default function HeroSection() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <section
       className={styles.hero}
@@ -38,7 +42,12 @@ export default function HeroSection() {
             Best deal guarantee.
           </li>
         </ul>
-        <Button as={Link} href="#" className={styles.ctaButton}>
+        <Button
+          // as={Link}
+          // href="#"
+          className={styles.ctaButton}
+          onPress={() => setIsModalOpen(true)}
+        >
           Request Service Now
         </Button>
       </div>
@@ -56,6 +65,10 @@ export default function HeroSection() {
           // objectFit="cover"
         />
       </div>
+      <ServiceRequestForm
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </section>
   );
 }

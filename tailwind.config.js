@@ -14,6 +14,7 @@ module.exports = {
         background: "var(--background)",
         foreground: "var(--foreground)",
         primary: {
+          DEFAULT: "#FE8315",
           50: "#FFF3E8",
           75: "#FFCC9F",
           100: "#FEB777",
@@ -23,6 +24,7 @@ module.exports = {
           500: "#9B500D",
         },
         secondary: {
+          DEFAULT: "#FED700",
           50: "#FFFBE6",
           75: "#FFEF96",
           100: "#FEE86B",
@@ -32,6 +34,7 @@ module.exports = {
           500: "#9B8300",
         },
         black: {
+          DEFAULT: "#262727",
           50: "#E9E9E9",
           75: "#A6A6A6",
           100: "#818282",
@@ -41,6 +44,7 @@ module.exports = {
           500: "#171818",
         },
         white: {
+          DEFAULT: "#FFFFFF",
           50: "#FFFFFF",
           75: "#FFFFFF",
           100: "#FFFFFF",
@@ -50,6 +54,7 @@ module.exports = {
           500: "#9C9C9C",
         },
         success: {
+          DEFAULT: "#0B9B4D",
           50: "#E7F5ED",
           75: "#9BD6B6",
           100: "#71C598",
@@ -59,6 +64,7 @@ module.exports = {
           500: "#075F2F",
         },
         error: {
+          DEFAULT: "#B3000B",
           50: "#F7E6E7",
           75: "#E0969B",
           100: "#D36B71",
@@ -75,7 +81,8 @@ module.exports = {
   plugins: [
     nextui({
       theme: {
-        extend: {
+        "purple-dark": {
+          extend: "dark",
           colors: {
             background: "var(--background)",
             foreground: "var(--foreground)",

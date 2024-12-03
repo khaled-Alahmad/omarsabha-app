@@ -90,7 +90,7 @@ export default function CheckIcon({ className }) {
           width="137.259"
           height="137.259"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
           <feFlood flood-opacity="0" result="BackgroundImageFix" />
           <feColorMatrix

@@ -1,0 +1,239 @@
+.mediaUploadSection {
+  margin-top: 20px;
+}
+.backButton {
+  background-color: transparent !important;
+  color: var(--Foundation-Black-Text-Color-B75, #a6a6a6);
+  font-family: Poppins;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.25rem; /* 111.111% */
+  display: flex;
+  padding: 0.75rem 2.125rem;
+  justify-content: center;
+  align-items: center;
+  gap: 0.625rem;
+  border-radius: 0.375rem;
+  border: 1px solid var(--Foundation-Black-Text-Color-B75, #a6a6a6);
+}
+.nextButton {
+  color: var(--Foundation-White-text-color-W300, #fff);
+  font-family: Poppins;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.25rem; /* 111.111% */
+  display: flex;
+  padding: 0.75rem 2.125rem;
+  justify-content: center;
+  align-items: center;
+  gap: 0.625rem;
+  border-radius: 0.375rem;
+  background: var(--Foundation-Primary-color-P300, #fe8315);
+}
+.mediaUploadSectionTitle {
+  color: var(--Foundation-Black-Text-Color-B300, #262727);
+  font-family: Poppins;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+.mediaUploadLabel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100px;
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  cursor: pointer;
+  position: relative;
+}
+
+.mediaUploadBox {
+  text-align: center;
+  font-size: 14px;
+  color: #999;
+}
+
+.mediaUploadInput {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.progressBarContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+.progressBarContainer span {
+  color: var(--Foundation-Black-Text-Color-B100, #818282);
+  font-family: Poppins;
+  font-size: 0.875rem;
+  white-space: nowrap;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.25rem; /* 142.857% */
+}
+.mediaPreviewContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.mediaPreviewItem {
+  position: relative;
+  width: 100px;
+  height: 100px;
+}
+
+.mediaPreviewImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.removeFileButton {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 12px;
+  cursor: pointer;
+}
+.successMessage {
+  color: var(--Foundation-Primary-color-P300, #fe8315);
+  text-align: center;
+  font-family: Poppins;
+  font-size: 2.5rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.description1 {
+  color: var(--Foundation-Black-Text-Color-B300, #262727);
+  text-align: center;
+  font-family: Poppins;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-align: center;
+}
+.description2 {
+  color: var(--Foundation-Black-Text-Color-B300, #262727);
+  font-family: Poppins;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  text-align: center;
+}
+.description3 {
+  color: var(--Foundation-Black-Text-Color-B300, #262727);
+  text-align: center;
+  font-family: Poppins;
+  font-size: 1.375rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  margin-top: 2rem;
+}
+.progressContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* margin-bottom: 20px; */
+  width: 100%;
+  position: relative;
+  /* padding: 20px; */
+}
+
+.progressStep {
+  text-align: center;
+  flex: 1;
+  position: relative;
+}
+
+.stepCircle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+  color: #666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.stepNumber {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.stepLabel {
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 8px;
+  display: block;
+}
+
+.progressBar {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  right: -50%;
+  height: 4px;
+  background-color: #e0e0e0;
+  z-index: 1;
+  transition: background-color 0.3s ease;
+}
+.title {
+  color: var(--Foundation-Black-Text-Color-B300, #262727);
+  font-family: Poppins;
+  font-size: 2rem;
+  font-style: normal;
+  text-align: center;
+  font-weight: 600;
+  line-height: 145%; /* 2.9rem */
+  /* margin: 2rem 0rem; */
+}
+.stepContainer {
+  /* padding: 2rem; */
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.barActive {
+  background-color: #f97316; /* Active bar color */
+}
+
+.active .stepCircle {
+  background-color: #f97316; /* Highlight for active step */
+  color: #fff;
+}
+
+.active .stepLabel {
+  font-weight: bold;
+  color: #f97316;
+}

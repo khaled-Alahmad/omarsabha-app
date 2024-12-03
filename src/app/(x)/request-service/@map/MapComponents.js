@@ -8,7 +8,7 @@ export default function MapComponents({ locations }) {
 
   useEffect(() => {
     const loader = new Loader({
-      apiKey: "YOUR_GOOGLE_MAPS_API_KEY", // Replace with your API key
+      apiKey: "AIzaSyCkMlal5E0x_tV7q0AtwP8hLA_XJQBwSfo", // Replace with your API key
       version: "weekly",
     });
 
