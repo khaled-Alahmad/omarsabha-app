@@ -12,7 +12,7 @@ import StepContent from "./StepContent";
 import styles from "@/assets/css/ServiceRequest.module.css";
 
 export default function ServiceRequestForm({ isOpen, onClose }) {
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState({
     startDate: null,
     completionDate: null,

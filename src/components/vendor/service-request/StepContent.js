@@ -66,7 +66,7 @@ export default function StepContent({
 
   return (
     <div className={styles.stepContainer}>
-      {currentStep === 1 && (
+      {currentStep === 0 && (
         <>
           <h3 className={styles.title}>Service Details</h3>
           <Select
@@ -161,7 +161,7 @@ export default function StepContent({
                 setFormData({ ...formData, startDate: parsedDate });
               }
             }}
-            value={formData.startDate || null} // Pass a valid CalendarDate object or null
+            defaultValue={formData.startDate || null} // Pass a valid CalendarDate object or null
           />
           <DatePicker
             label="Service Completion Date"
@@ -176,7 +176,7 @@ export default function StepContent({
                 setFormData({ ...formData, completionDate: parsedDate });
               }
             }}
-            value={formData.completionDate || null} // Pass a valid CalendarDate object or null
+            defaultValue={formData.completionDate || null} // Pass a valid CalendarDate object or null
           />
           <Textarea
             placeholder="Description"
@@ -248,7 +248,7 @@ export default function StepContent({
         </>
       )}
 
-      {currentStep === 2 && (
+      {currentStep === 1 && (
         <>
           <h3 className={styles.title}>Service Location</h3>
           <Input
@@ -320,7 +320,7 @@ export default function StepContent({
         </>
       )}
 
-      {currentStep === 3 && (
+      {currentStep === 2 && (
         <>
           <div className="flex flex-col justify-center align-middle items-center">
             <h3 className={styles.title}>Review Submission</h3>
@@ -416,7 +416,7 @@ export default function StepContent({
           </div>
         </>
       )}
-      {currentStep === 4 && (
+      {currentStep === 3 && (
         <>
           <div
             className="flex flex-col align-middle items-center text-center"
