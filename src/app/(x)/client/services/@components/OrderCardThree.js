@@ -46,7 +46,7 @@ export default function OrderCardThree({ data }) {
         <h4>Reason:</h4>
         <p>
           Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry's standard dummy text ever
+          industry. Lorem Ipsum has been the industry&apos;s standard dummy text ever
           since the 1500s, er scrambled it to make a type specimen book.{" "}
         </p>
       </div>
