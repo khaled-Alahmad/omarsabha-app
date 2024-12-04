@@ -101,7 +101,8 @@ export default function NavBar() {
   const handleRoute = (key) => {
     if (key === "logout") {
       // Handle logout functionality
-      console.log("Logging out...");
+      openModalLogOutOpen();
+      // console.log("Logging out...");
       // Perform logout action, such as clearing tokens or navigating to the login page
     } else if (routes[key]) {
       router.push(routes[key]);
