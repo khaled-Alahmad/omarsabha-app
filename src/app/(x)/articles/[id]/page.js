@@ -1,7 +1,7 @@
 // app/website/contact/page.js
 "use client";
 import styles from "@/assets/css/styles.module.css";
-import articleImage from "@/assets/images/website/articel-details-first.png"; // Background image
+import articleImage from "@/assets/images/website/articel-details-first.webp"; // Background image
 import Image from "next/image";
 import left from "@/assets/icons/left-icon.png"; // Bottom wave image
 import right from "@/assets/icons/right-icon.png"; // Bottom wave image

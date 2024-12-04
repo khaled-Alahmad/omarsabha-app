@@ -2,7 +2,7 @@
 import styles from "@/assets/css/styles.module.css";
 import Image from "next/image";
 import ImageBt from "@/assets/images/website/Vector 1.png";
-import bgImage from "@/assets/images/website/bg-our-service.png";
+import bgImage from "@/assets/images/website/bg-our-service.webp";
 
 import {
   Button,

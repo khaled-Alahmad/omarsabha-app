@@ -1,10 +1,10 @@
 import Image from "next/image";
 import ImageBt from "@/assets/images/website/Vector 1.png"; // Bottom wave image
-import bgImage from "@/assets/images/website/bg-articels.png"; // Background image
+import bgImage from "@/assets/images/website/bg-articels.webp"; // Background image
 import styles from "@/assets/css/styles.module.css";
 import Link from "next/link";
 import { Button, Divider } from "@nextui-org/react";
-import articleImage from "@/assets/images/website/articel-image.png"; // Background image
+import articleImage from "@/assets/images/website/articel-image.webp"; // Background image
 import { ArrowIcon } from "@/components/ui/Icons/ArrowIcon";
 import ImageVendors from "@/assets/images/website/vendors.png"; // Bottom wave image
 import icons from "@/assets/icons/Icon.png"; // Bottom wave image
@@ -126,7 +126,6 @@ export default function ArticlesPage() {
               href="/articles/1"
               className={styles.redMoreButton}
               endcontent={<ArrowIcon />}
-              
             >
               Read More
             </Link>

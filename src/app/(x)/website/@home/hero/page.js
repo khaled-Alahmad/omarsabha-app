@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import bgImage from "@/assets/images/website/bg-02.png"; // Background image
+import bgImage from "@/assets/images/website/bg-02.webp"; // Background image
 import ImageHero from "@/assets/images/website/image 159.png"; // Hero image
 import ImageBt from "@/assets/images/website/Vector 1.png"; // Bottom wave image
 

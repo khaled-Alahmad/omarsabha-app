@@ -131,3 +131,11 @@
     text-align: RIGHT;
   }
 }
+.proposals span {
+  color: var(--Foundation-Secondary-color-S300, #fed700);
+  font-family: Poppins;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.25rem;
+}

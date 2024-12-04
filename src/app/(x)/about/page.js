@@ -1,7 +1,7 @@
 import Image from "next/image";
 import ImageBt from "@/assets/images/website/Vector 1.png"; // Bottom wave image
 import styles from "@/assets/css/styles.module.css";
-import bgImage from "@/assets/images/website/bg-about-us.png"; // Background image
+import bgImage from "@/assets/images/website/bg-about-us.webp"; // Background image
 import Image1 from "@/assets/images/website/about-us-first.png"; // Bottom wave image
 import Image2 from "@/assets/images/website/about-us-second.png"; // Bottom wave image
 import Image3 from "@/assets/images/website/about-us-third.png"; // Bottom wave image

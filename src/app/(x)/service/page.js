@@ -1,5 +1,5 @@
 import styles from "@/assets/css/styles.module.css";
-import bgImage from "@/assets/images/website/bg-our-service.png"; // Background image
+import bgImage from "@/assets/images/website/bg-our-service.webp"; // Background image
 import ImageBt from "@/assets/images/website/Vector 1.png"; // Bottom wave image
 import CardService from "@/components/CardService";
 import { Button } from "@nextui-org/react";

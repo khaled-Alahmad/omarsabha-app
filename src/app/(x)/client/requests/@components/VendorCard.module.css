@@ -1,0 +1,134 @@
+.container {
+  /* border: 1px solid #ddd;
+  border-radius: 8px; */
+  padding: 20px;
+  background-color: #fff;
+  /* box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  max-width: 700px;
+  margin: 20px auto; */
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.vendorName {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #f57c00;
+}
+
+.message {
+  margin-bottom: 20px;
+}
+
+.message h3 {
+  color: var(--Foundation-Black-Text-Color-B300, #262727);
+  font-family: Poppins;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 145%; /* 1.63125rem */
+  margin-bottom: 10px;
+}
+
+.message p {
+  color: var(--Foundation-Black-Text-Color-B100, #818282);
+  font-family: Poppins;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 2rem; /* 200% */
+}
+
+.detailsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(150px, 1fr));
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.detailsGrid div {
+  color: var(--Foundation-Black-Text-Color-B100, #818282);
+  font-family: Poppins;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.detailsGrid strong {
+  color: var(--Foundation-Black-Text-Color-B300, #262727);
+  font-family: Poppins;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  margin-right: 5px;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin: 2rem 0rem;
+}
+
+.rejectButton {
+  color: var(--Foundation-Black-Text-Color-B300, #262727);
+  font-family: Poppins;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.7875rem; /* 158.889% */
+  display: flex;
+  padding: 0.625rem 1.125rem;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  /* flex: 1 0 0; */
+  border-radius: 0.5rem;
+  border: 1px solid var(--Foundation-Black-Text-Color-B100, #818282);
+  background-color: transparent !important;
+  cursor: pointer;
+}
+
+.rejectButton:hover {
+  background-color: #818282b6;
+  /* color: #fff; */
+}
+
+.hireButton {
+  color: var(--Foundation-White-text-color-W300, #fff);
+  font-family: Poppins;
+  font-size: 1.125rem;
+  font-style: normal;
+  display: flex;
+  padding: 0.625rem 1.125rem;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.5rem;
+  background: var(--Foundation-Primary-color-P300, #fe8315);
+  gap: 0.5rem;
+  /* flex: 1 0 0; */
+  font-weight: 600;
+  line-height: 1.7875rem; /* 158.889% */
+  cursor: pointer;
+}
+
+.hireButton:hover {
+  background-color: #fe8215c1;
+  color: #fff;
+}

@@ -88,8 +88,8 @@ export default function NavBar() {
   // Routes for client
   const clientRoutes = {
     profile: "/client/profile",
-    services: "/client/my-services",
-    requests: "/client/my-requests",
+    services: "/client/services",
+    requests: "/client/requests",
     transactions: "/client/transactions",
     support: "/client/help-support",
     logout: "/logout",
@@ -450,7 +450,7 @@ export default function NavBar() {
                       </DropdownItem>
 
                       <DropdownItem
-                        key="my-requests"
+                        key="requests"
                         color="error"
                         startContent={
                           <svg
@@ -485,7 +485,7 @@ export default function NavBar() {
 
                       <DropdownItem
                         color="error"
-                        key="my-services"
+                        key="services"
                         startContent={
                           <svg
                             xmlns="http://www.w3.org/2000/svg"

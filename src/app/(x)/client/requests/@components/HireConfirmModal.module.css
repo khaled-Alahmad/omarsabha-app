@@ -1,0 +1,97 @@
+/* SuccessModal.module.css */
+
+.modalContent {
+  text-align: center;
+  padding: 3rem 4rem;
+}
+
+.iconContainer {
+  margin: 0 auto;
+  /* width: 80px;
+  height: 80px; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* background-color: #d4f4dd; */
+  border-radius: 50%;
+}
+
+.icon {
+  width: 6.25rem;
+  height: 6.25rem;
+}
+
+.successMessage {
+  color: var(--Foundation-Black-Text-Color-B300, #262727);
+  text-align: center;
+  font-family: Poppins;
+  font-size: 1.375rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  margin-top: 1rem;
+}
+
+.description {
+  color: var(--Foundation-Black-Text-Color-B300, #262727);
+  text-align: center;
+  font-family: Poppins;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-top: 0.5rem;
+}
+.footer {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  padding: 20px;
+  /* border-top: 1px solid #f0f0f0; */
+}
+.rejectButton {
+  color: var(--Foundation-Black-Text-Color-B300, #262727);
+  font-family: Poppins;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.7875rem; /* 158.889% */
+  display: flex;
+  padding: 0.625rem 1.125rem;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  /* flex: 1 0 0; */
+  border-radius: 0.5rem;
+  border: 1px solid var(--Foundation-Black-Text-Color-B100, #818282);
+  background-color: transparent !important;
+  cursor: pointer;
+}
+
+.rejectButton:hover {
+  background-color: #818282b6;
+  /* color: #fff; */
+}
+
+.hireButton {
+  color: var(--Foundation-White-text-color-W300, #fff);
+  font-family: Poppins;
+  font-size: 1.125rem;
+  font-style: normal;
+  display: flex;
+  padding: 0.625rem 1.125rem;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.5rem;
+  background: var(--Foundation-Primary-color-P300, #fe8315);
+  gap: 0.5rem;
+  /* flex: 1 0 0; */
+  font-weight: 600;
+  line-height: 1.7875rem; /* 158.889% */
+  cursor: pointer;
+}
+
+.hireButton:hover {
+  background-color: #fe8215c1;
+  color: #fff;
+}
