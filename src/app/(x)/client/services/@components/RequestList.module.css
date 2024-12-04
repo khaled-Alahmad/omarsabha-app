@@ -1,0 +1,127 @@
+.card {
+  margin-bottom: 20px;
+  padding: 20px;
+  /* border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  background-color: #fff; */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border-radius: 0.75rem;
+  border: 1px solid var(--Foundation-Black-Text-Color-B75, #a6a6a6);
+  background: var(--Foundation-White-text-color-W300, #fff);
+  box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.15);
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.description {
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 10px;
+}
+
+.title {
+  color: var(--Foundation-Black-Text-Color-B300, #262727);
+  font-family: Poppins;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 145%; /* 1.26875rem */
+  margin-bottom: 10px;
+}
+
+.detailsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-top: 10px;
+}
+.detailsGrid div {
+  color: var(--Foundation-Black-Text-Color-B100, #818282);
+  font-family: Poppins;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.detailsGrid b {
+  color: var(--Foundation-Black-Text-Color-B300, #262727);
+  font-family: Poppins;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+.vendorDetails {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.vendorAvatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+
+.vendorInfo {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  align-items: center;
+}
+.vendorDetails h4 {
+  color: var(--Foundation-Black-Text-Color-B300, #262727);
+  text-align: center;
+  font-family: Poppins;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 145%; /* 1.63125rem */
+}
+
+.vendorInfo p {
+  color: var(--Foundation-Black-Text-Color-B100, #818282);
+  font-family: Poppins;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin: 5px 0;
+}
+.vendorInfo b {
+  color: var(--Foundation-Black-Text-Color-B300, #262727);
+  font-family: Poppins;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+@media (max-width: 768px) {
+  .vendorInfo,
+  .vendorDetails {
+    flex-direction: column;
+  }
+  .detailsGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-top: 10px;
+  }
+  .vendorInfo {
+    display: grid;
+    justify-items: flex-start;
+    grid-template-columns: repeat(1, 1fr);
+    width: 100%;
+    gap: 1rem;
+  }
+  .vendorInfo > *:not(:last-child):not(:nth-child(4)) {
+    border-right: none; /* الحافة اليمنى */
+    /* padding-right: 1rem; إضافة مساحة داخلية على اليمين */
+  }
+}

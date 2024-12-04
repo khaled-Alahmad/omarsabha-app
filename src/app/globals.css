@@ -13,6 +13,15 @@
     --foreground: #333333;
   }
 }
+@media (max-width: 768px) {
+  .tabs {
+    display: flex;
+    gap: 1rem;
+    padding-bottom: 10px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
 
 body {
   /* color: var(--foreground);
