@@ -7,6 +7,7 @@ import MasterIcon from "@/assets/icons/MasterIcon";
 import PayIcon from "@/assets/icons/PayIcon";
 import StripeIcon from "@/assets/icons/StripeIcon";
 import PayPalIcon from "@/assets/icons/PayPalIcon";
+import ConfirmPaymentModal from "./ConfirmPaymentModal";
 
 const paymentMethods = [
   {
@@ -48,13 +49,26 @@ const paymentMethods = [
 
 export default function PaymentMethodSelection() {
   const [selectedMethod, setSelectedMethod] = useState(paymentMethods[0].id);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+  const paymentDetails = {
+    vendorName: "Js Brothers",
+    serviceType: "Electrician",
+    requestDate: "10/14/2024",
+    status: "Completed",
+    totalAmount: "1000",
+  };
   const handleSelection = (id) => {
     setSelectedMethod(id);
   };
 
   const handleNext = () => {
-    console.log(`Selected Payment Method ID: ${selectedMethod}`);
+    console.log("co");
+
+    setIsModalOpen(true);
   };
 
   return (
@@ -103,6 +117,11 @@ export default function PaymentMethodSelection() {
       <button className={styles.nextButton} onClick={handleNext}>
         Next
       </button>
+      <ConfirmPaymentModal
+        visible={isModalOpen}
+        onClose={handleCloseModal}
+        paymentDetails={paymentDetails}
+      />
     </div>
   );
 }
