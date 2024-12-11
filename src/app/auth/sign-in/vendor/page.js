@@ -57,14 +57,23 @@ export default function VendorSignIn() {
           expires: expiresIn7Days,
           path: "/",
         });
-
+        expiresIn7Days.setDate(expiresIn7Days.getDate() + 1);
+        setCookie("emailToConfirm", user.email, {
+          expires: expiresIn7Days,
+          path: "/",
+        });
         // Show success message before navigation
         // toast.success("Login successful!");
         // console.log("clicked!");
+        console.log(response);
 
         toast.success("Login successful!");
-        if (user.profile_setup == 0) {
+        if (!user.approve) {
+          router.push("/auth/verification");
+          return;
+        } else if (!user.profile_setup) {
           router.push("/auth/profile-setup/vendor");
+          return;
         } else {
           router.push("/");
         }
@@ -105,7 +114,7 @@ export default function VendorSignIn() {
           <Input
             isClearable
             variant="bordered"
-            label="Email or Phone Number"
+            label="Email"
             placeholder="Enter your Email"
             labelPlacement="outside"
             fullWidth

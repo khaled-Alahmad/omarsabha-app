@@ -19,13 +19,76 @@ import Image from "next/image";
 import { EyeSlashFilledIcon } from "@/components/ui/Icons/EyeSlashFilledIcon";
 import { EyeFilledIcon } from "@/components/ui/Icons/EyeFilledIcon";
 import { useEffect, useState } from "react";
-import { getCookie } from "cookies-next";
+import { getCookie, setCookie } from "cookies-next";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+import axios from "axios";
 
 export const VendorSingUp = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [isChecked, setIsChecked] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const [isSelected, setIsSelected] = useState(false);
+  const [confirmIsVisible, setConfirmIsVisible] = useState(false);
+  const router = useRouter();
 
   const toggleVisibility = () => setIsVisible(!isVisible);
+  const toggleConfirmVisibility = () => setConfirmIsVisible(!confirmIsVisible);
+
+  const handlePasswordChange = (e) => {
+    const value = e.target.value;
+    setPassword(value);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!isChecked) {
+      toast.error("please agree to the Terms and Conditions!");
+      return;
+    }
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match");
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_URL_AUTH}/register`,
+        {
+          email,
+          password,
+          password_confirmation: confirmPassword,
+          role: "vendor",
+        },
+        {
+          headers: {
+            Accept: "application/json",
+            Authorization:
+              "Bearer 2|R1O0uIFVqd3FhYl271cchP65g2jL8fuQss7F7zZma0ea5e53",
+          },
+        }
+      );
+
+      if (response.data.success) {
+        const expiresIn7Days = new Date();
+        expiresIn7Days.setDate(expiresIn7Days.getDate() + 1);
+        setCookie("emailToConfirm", email, {
+          expires: expiresIn7Days,
+          path: "/",
+        });
+        toast.success(response.data.message);
+        router.push("/auth/verification");
+      }
+    } catch (error) {
+      // console.error("Registration error:", error);
+      // alert("Failed to register. Please try again.");
+      toast.error(error.response.data.message);
+      setEmail("");
+      setConfirmPassword("");
+      setPassword("");
+    }
+  };
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const authToken = getCookie("authToken"); // Synchronously check the cookie
   useEffect(() => {
@@ -62,18 +125,26 @@ export const VendorSingUp = () => {
                 </h4>
               </CardHeader>
               <CardBody className={`${styles.customCardBody}`}>
-                <div className="mb-4">
+                <form className={styles.form} onSubmit={handleSubmit}>
                   <Input
-                    type="email"
+                    isClearable
+                    required
+                    variant="bordered"
                     label="Email"
-                    className={`${styles.inputField} custom-input`}
+                    placeholder="Enter your Email"
+                    labelPlacement="outside"
+                    fullWidth
+                    className={styles.input}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
-                </div>
-                <div className="mb-4">
+
                   <Input
                     label="Password"
-                    // placeholder="Enter your password"
-                    className={`${styles.inputField} custom-input`}
+                    required
+                    variant="bordered"
+                    placeholder="Enter your password"
+                    labelPlacement="outside"
                     endContent={
                       <button
                         className="focus:outline-none"
@@ -89,53 +160,68 @@ export const VendorSingUp = () => {
                       </button>
                     }
                     type={isVisible ? "text" : "password"}
+                    fullWidth
+                    value={password}
+                    className={styles.input}
+                    onChange={handlePasswordChange}
                   />
-                </div>
-                <div className="mb-4">
+
                   <Input
                     label="Confirm Password"
-                    // placeholder="Confirm your password"
-                    className={`${styles.inputField} custom-input`}
+                    variant="bordered"
+                    placeholder="Confirm your password"
+                    required
+                    labelPlacement="outside"
                     endContent={
                       <button
                         className="focus:outline-none"
                         type="button"
-                        onClick={toggleVisibility}
-                        aria-label="toggle password visibility"
+                        onClick={toggleConfirmVisibility}
+                        aria-label="toggle confirm password visibility"
                       >
-                        {isVisible ? (
+                        {confirmIsVisible ? (
                           <EyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
                         ) : (
                           <EyeFilledIcon className="text-2xl text-default-400 pointer-events-none" />
                         )}
                       </button>
                     }
-                    type={isVisible ? "text" : "password"}
+                    type={confirmIsVisible ? "text" : "password"}
+                    fullWidth
+                    className={styles.input}
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
                   />
-                </div>
-                <div className="mb-4">
+
                   <Checkbox
-                    color="warning"
-                    isSelected={isSelected} // This will control whether the checkbox is checked
-                    onValueChange={setIsSelected} // This will update the state when the checkbox is clicked
+                    color="primary"
+                    className={styles.checkbox}
+                    isSelected={isChecked}
+                    onChange={() => setIsChecked(!isChecked)}
                   >
                     I agree to the Terms and Conditions
                   </Checkbox>
-                </div>
-                <div className="mb-4">
-                  <Button className={styles.signUpButton}>Sign Up</Button>
-                </div>
-                <div className="mb-4">
-                  <p className={styles.bottomTextCard}>
-                    Already a member?
-                    <Link
-                      href="/auth/sign-in/vendor"
-                      className={styles.bottomTextCardT}
-                    >
-                      Sign In
-                    </Link>
-                  </p>
-                </div>
+                  <Button
+                    type="submit"
+                    variant="solid"
+                    color="primary"
+                    className={styles.signUpButton}
+                  >
+                    Sign Up
+                  </Button>
+
+                  <div className="mb-4">
+                    <p className={styles.bottomTextCard}>
+                      Already a member?
+                      <Link
+                        href="/auth/sign-in/vendor"
+                        className={styles.bottomTextCardT}
+                      >
+                        Sign In
+                      </Link>
+                    </p>
+                  </div>
+                </form>
               </CardBody>
             </Card>
           </>

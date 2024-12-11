@@ -38,11 +38,12 @@ export default function VendorProfileSetup() {
     const url = `${process.env.NEXT_PUBLIC_URL}/vendors/setup-profile`;
     const fullFormData = new FormData();
     Object.keys(formData).forEach((key) => {
-      if (key === "mediaFiles") {
+      if (key === "additional_images") {
         formData[key].forEach((file) => {
           fullFormData.append("additional_images[]", file);
         });
-      } else {
+      } 
+      else {
         fullFormData.append(key, formData[key]);
       }
     });

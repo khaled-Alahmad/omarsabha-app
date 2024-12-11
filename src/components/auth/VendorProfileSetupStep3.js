@@ -9,22 +9,25 @@ export default function VendorProfileSetupStep3({ onBack, onNext }) {
   const [logoPreview, setLogoPreview] = useState(null);
   const [mediaPreviews, setMediaPreviews] = useState([]);
 
-  // رفع الصور وعرض المعاينة
-  const handleImageUpload = (event, setPreview, setFile) => {
+  // Handle single image upload and preview
+  const handleLogoUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setPreview(reader.result);
+        setLogoPreview(reader.result);
       };
       reader.readAsDataURL(file);
-      setFile(file);
+      setLogoFile(file);
     }
   };
 
-  const handleMultipleImageUpload = (event) => {
+  // Handle multiple image upload and preview
+  const handleMediaUpload = (event) => {
     const files = Array.from(event.target.files);
     const newPreviews = [];
+    const newFiles = [];
+
     files.forEach((file) => {
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -32,38 +35,52 @@ export default function VendorProfileSetupStep3({ onBack, onNext }) {
         setMediaPreviews((prev) => [...prev, ...newPreviews]);
       };
       reader.readAsDataURL(file);
+      newFiles.push(file);
     });
-    setMediaFiles((prev) => [...prev, ...files]);
+
+    setMediaFiles((prev) => [...prev, ...newFiles]);
   };
 
-  // حذف الصورة من المعاينة
-  const handleDeleteImage = (index, setPreview, setFile) => {
-    setPreview((prev) => prev.filter((_, i) => i !== index));
-    setFile(null);
+  // Delete single image
+  const handleDeleteLogo = () => {
+    setLogoPreview(null);
+    setLogoFile(null);
+  };
+
+  // Delete media image
+  const handleDeleteMedia = (index) => {
+    setMediaPreviews((prev) => prev.filter((_, i) => i !== index));
+    setMediaFiles((prev) => prev.filter((_, i) => i !== index));
   };
 
   const handleSave = () => {
+    if (!logoFile) {
+      alert("Profile photo is required.");
+      return;
+    }
+
     const formData = new FormData();
-    formData.append("logo", logoFile);
+    formData.append("profile_photo", logoFile);
+
     mediaFiles.forEach((file, index) => {
-      formData.append(`mediaFiles[${index}]`, file);
+      formData.append(`additional_images[${index}]`, file);
     });
 
-    onNext(formData); // تمرير البيانات للمكون الرئيسي
+    onNext(formData); // Pass data to the main component
   };
 
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Vendor Profile Setup</h2>
 
-      {/* رفع شعار الشركة */}
+      {/* Upload Logo */}
       <div className={styles.uploadSection}>
         <p className={styles.uploadLabel}>Upload Company Logo</p>
         <div className={styles.uploadBox}>
           <input
             type="file"
             accept="image/*"
-            onChange={(e) => handleImageUpload(e, setLogoPreview, setLogoFile)}
+            onChange={handleLogoUpload}
             style={{ display: "none" }}
             id="logo-upload"
           />
@@ -77,9 +94,7 @@ export default function VendorProfileSetupStep3({ onBack, onNext }) {
                 />
                 <button
                   type="button"
-                  onClick={() =>
-                    handleDeleteImage(0, setLogoPreview, setLogoFile)
-                  }
+                  onClick={handleDeleteLogo}
                   className={styles.deleteButton}
                   aria-label="Delete logo image"
                 >
@@ -95,49 +110,48 @@ export default function VendorProfileSetupStep3({ onBack, onNext }) {
         </div>
       </div>
 
-      {/* رفع ملفات متعددة */}
+      {/* Upload Media Files */}
       <div className={styles.uploadSection}>
         <p className={styles.uploadLabel}>
-          Upload Media Files (about our service)
+          Upload Media Files (about your service)
         </p>
         <div className={styles.uploadBox}>
           <input
             type="file"
             accept="image/*"
             multiple
-            onChange={handleMultipleImageUpload}
+            onChange={handleMediaUpload}
             style={{ display: "none" }}
             id="media-upload"
           />
           <label htmlFor="media-upload" className={styles.uploadBoxLabel}>
-            {mediaPreviews.length > 0 ? (
-              mediaPreviews.map((preview, index) => (
-                <div key={index} className={styles.imageContainer}>
-                  <img
-                    src={preview}
-                    alt="Media File Preview"
-                    className={styles.imagePreview}
-                  />
-                  <button
-                    type="button"
-                    onClick={() =>
-                      handleDeleteImage(index, setMediaPreviews, setMediaFiles)
-                    }
-                    className={styles.deleteButton}
-                    aria-label="Delete media image"
-                  >
-                    X
-                  </button>
-                </div>
-              ))
-            ) : (
-              <p className={styles.descImage}>Click to upload media files</p>
-            )}
+            <p className={styles.descImage}>Click to upload media files</p>
           </label>
+        </div>
+
+        {/* Media Previews */}
+        <div className={styles.mediaPreviewContainer}>
+          {mediaPreviews.map((preview, index) => (
+            <div key={index} className={styles.imageContainer}>
+              <img
+                src={preview}
+                alt={`Media ${index + 1}`}
+                className={styles.imagePreview}
+              />
+              <button
+                type="button"
+                onClick={() => handleDeleteMedia(index)}
+                className={styles.deleteButton}
+                aria-label="Delete media image"
+              >
+                X
+              </button>
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* أزرار الإجراءات */}
+      {/* Action Buttons */}
       <div className={styles.buttonGroup}>
         <Button
           bordered
@@ -145,7 +159,7 @@ export default function VendorProfileSetupStep3({ onBack, onNext }) {
           color="default"
           onClick={onBack}
         >
-          Skip
+          Back
         </Button>
         <Button
           color="primary"

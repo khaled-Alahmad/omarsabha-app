@@ -13,11 +13,11 @@ import styles from "./VendorProfileSetup.module.css";
 
 export default function VendorProfileSetupStep1({ onNext, setVendorType }) {
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    vendorType: "Individual",
-    serviceCategory: "",
-    yearsInBusiness: "",
+    first_name: "",
+    last_name: "",
+    vendor_type: "Individual",
+    service_category: "",
+    years_experience: "",
     description: "",
   });
 
@@ -45,8 +45,8 @@ export default function VendorProfileSetupStep1({ onNext, setVendorType }) {
             variant="bordered"
             placeholder="Enter first name"
             fullWidth
-            value={formData.firstName}
-            onChange={(e) => handleInputChange("firstName", e.target.value)}
+            value={formData.first_name}
+            onChange={(e) => handleInputChange("first_name", e.target.value)}
           />
         </div>
         <div className={styles.halfInput}>
@@ -56,8 +56,8 @@ export default function VendorProfileSetupStep1({ onNext, setVendorType }) {
             labelPlacement="outside"
             placeholder="Enter last name"
             fullWidth
-            value={formData.lastName}
-            onChange={(e) => handleInputChange("lastName", e.target.value)}
+            value={formData.last_name}
+            onChange={(e) => handleInputChange("last_name", e.target.value)}
           />
         </div>
       </div>
@@ -67,8 +67,8 @@ export default function VendorProfileSetupStep1({ onNext, setVendorType }) {
           orientation="vertical"
           label="Vendor Type"
           color="warning"
-          value={formData.vendorType}
-          onValueChange={(value) => handleInputChange("vendorType", value)}
+          value={formData.vendor_type}
+          onValueChange={(value) => handleInputChange("vendor_type", value)}
           className={styles.radioGroup}
         >
           <Radio value="Individual">Individual</Radio>
@@ -83,8 +83,8 @@ export default function VendorProfileSetupStep1({ onNext, setVendorType }) {
           variant="bordered"
           labelPlacement="outside"
           fullWidth
-          value={formData.serviceCategory}
-          onChange={(e) => handleInputChange("serviceCategory", e.target.value)}
+          value={formData.service_category}
+          onChange={(e) => handleInputChange("service_category", e.target.value)}
         >
           <SelectItem value="electrician">Electrician</SelectItem>
           <SelectItem value="plumber">Plumber</SelectItem>
@@ -99,8 +99,8 @@ export default function VendorProfileSetupStep1({ onNext, setVendorType }) {
           variant="bordered"
           labelPlacement="outside"
           fullWidth
-          value={formData.yearsInBusiness}
-          onChange={(e) => handleInputChange("yearsInBusiness", e.target.value)}
+          value={formData.years_experience}
+          onChange={(e) => handleInputChange("years_experience", e.target.value)}
         >
           <SelectItem value="1-2">1-2 years</SelectItem>
           <SelectItem value="2-4">2-4 years</SelectItem>

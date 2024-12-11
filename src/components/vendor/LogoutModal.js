@@ -9,14 +9,26 @@ import {
   Divider,
 } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
-import { deleteCookie } from "cookies-next"; // Ensure this library is installed
+import { deleteCookie, getCookie } from "cookies-next"; // Ensure this library is installed
 import toast from "react-hot-toast";
+import axios from "axios";
 
 export default function LogoutModal({ isOpen, onClose }) {
   const router = useRouter();
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     // Clear cookies
+    const token = getCookie("authToken");
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_URL_AUTH}/logout`,
+      {},
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     deleteCookie("authToken");
     deleteCookie("userRole");
     toast.success("Logout successful!");

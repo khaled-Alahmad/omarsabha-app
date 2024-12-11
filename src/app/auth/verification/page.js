@@ -3,9 +3,15 @@ import { useState } from "react";
 import styles from "./VerificationCode.module.css";
 import imageVerification from "@/assets/images/auth/verification-illustration.png";
 import toast from "react-hot-toast";
+import { getCookie, setCookie } from "cookies-next";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 export default function VerificationCode() {
   const [code, setCode] = useState(["", "", "", ""]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const email = getCookie("emailToConfirm");
+  // console.log(email);
+  const router = useRouter();
 
   const handleChange = (value, index) => {
     if (!/^\d*$/.test(value)) return; // Allow only numbers
@@ -28,16 +34,64 @@ export default function VerificationCode() {
     setIsSubmitting(true);
     console.log("Sending verification code:", verificationCode);
     // Add your API call here
-    setTimeout(() => {
-      toast.success(
-        `Verification code "${verificationCode}" sent successfully!`
-      );
-      setIsSubmitting(false);
-    }, 1000);
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_URL_AUTH}/verify-code`,
+      {
+        email,
+        verify_code: verificationCode,
+      },
+      {
+        headers: {
+          Accept: "application/json",
+        },
+      }
+    );
+    console.log(response);
+    toast.success(response.data.message);
+    if (response.data.success) {
+      const expiresIn7Days = new Date();
+      expiresIn7Days.setDate(expiresIn7Days.getDate() + 7);
+
+      // Store token and role in cookies
+      setCookie("authToken", response.data.access_token, {
+        expires: expiresIn7Days,
+        path: "/",
+      });
+      setCookie("userRole", response.data.role, {
+        expires: expiresIn7Days,
+        path: "/",
+      });
+
+      if (!response.data.user.profile_setup && response.data.role == "vendor") {
+        router.push("/auth/profile-setup/vendor");
+      }
+      if (!response.data.user.profile_setup && response.data.role == "client") {
+        router.push("/auth/profile-setup/client");
+      }
+    }
+    // setTimeout(() => {
+    //   toast.success(
+    //     `Verification code "${verificationCode}" sent successfully!`
+    //   );
+    //   setIsSubmitting(false);
+    // }, 1000);
   };
 
-  const handleResend = () => {
-    console.log("Resend code");
+  const handleResend = async () => {
+    const token = getCookie("authToken");
+
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_URL_AUTH}/send-code`,
+      {
+        email,
+      },
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     toast.success("Verification code resent!");
   };
 

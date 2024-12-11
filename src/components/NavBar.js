@@ -50,6 +50,7 @@ export default function NavBar() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const currentPath = usePathname();
   const activeSegment = useSelectedLayoutSegment();
+  const userRole = getCookie("userRole");
   // console.log(role);
 
   const menuItems = [
@@ -60,6 +61,7 @@ export default function NavBar() {
       title: "Our Services - InstaHandi",
     },
     { name: "About Us", path: "/about", title: "About Us - InstaHandi" },
+
     {
       name: "Requests open for bidding",
       path: "/request-service",
@@ -142,26 +144,34 @@ export default function NavBar() {
         </NavbarContent>
 
         <NavbarContent className="hidden sm:flex flex-1 justify-center gap-6">
-          {menuItems.map((item) => (
-            <NavbarItem key={item.name}>
-              <Link
-                href={
-                  item.path === "/request-service" && !isAuthenticated
-                    ? "#"
-                    : item.path
-                }
-                className={`item-navbar ${
-                  isActive(item.path)
-                    ? "active-link underline underline-offset-4"
-                    : "text-black"
-                }`}
-                aria-current={isActive(item.path) ? "page" : undefined}
-                onClick={() => handleClick(item.title, item.path)}
-              >
-                {item.name}
-              </Link>
-            </NavbarItem>
-          ))}
+          {menuItems
+            .filter((item) => {
+              // Exclude 'request-service' if the user's role is 'client'
+              if (item.path === "/request-service" && userRole === "client") {
+                return false;
+              }
+              return true;
+            })
+            .map((item) => (
+              <NavbarItem key={item.name}>
+                <Link
+                  href={
+                    item.path === "/request-service" && !isAuthenticated
+                      ? "#"
+                      : item.path
+                  }
+                  className={`item-navbar ${
+                    isActive(item.path)
+                      ? "active-link underline underline-offset-4"
+                      : "text-black"
+                  }`}
+                  aria-current={isActive(item.path) ? "page" : undefined}
+                  onClick={() => handleClick(item.title, item.path)}
+                >
+                  {item.name}
+                </Link>
+              </NavbarItem>
+            ))}
         </NavbarContent>
         <NavbarContent
           className="sm:hidden justify-between w-full"

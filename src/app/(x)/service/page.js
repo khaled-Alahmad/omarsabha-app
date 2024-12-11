@@ -191,14 +191,14 @@ export default async function ServicesPage() {
           </p>
         </div>
         <div className={styles.sellButton}>
-          <Button
-            as={Link}
-            href="#"
+          <Link
+            // as={Link}
+            href="/auth/sign-up/vendor"
             className={`${styles.ctaButton} mb-2`}
             // style={{ flex: "1" }}
           >
             Sign Up as Vendor
-          </Button>
+          </Link>
         </div>
       </section>
       <section className={styles.cutSectionTow}></section>

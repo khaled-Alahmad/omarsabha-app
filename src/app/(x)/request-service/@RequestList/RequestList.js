@@ -17,7 +17,7 @@ export default function RequestList({ data }) {
       {data.map((item, i) => (
         <div key={i} className={styles.requestCard}>
           <img
-            src={serviceImage.src}
+            src={item.images[0] || "https://placehold.co/600x400"}
             alt="Service Request"
             className={styles.image}
           />
@@ -25,14 +25,38 @@ export default function RequestList({ data }) {
             <h3>{item.title}</h3>
             <p>{item.description}</p>
             <div className={styles.requestDetailsSection}>
-              <p>
+              {item.payment_type === "hourly_rate" ? (
+                <>
+                  {" "}
+                  <p>
+                    <strong>Payment Type: </strong>
+                    Hourly Rate
+                  </p>
+                  <p>
+                    <strong>Hourly Rate: </strong>
+                    {item.price}$
+                  </p>
+                </>
+              ) : (
+                <>
+                  <p>
+                    <strong>Payment Type: </strong>
+                    Flat Rate
+                  </p>
+                  <p>
+                    <strong>Flat Rate: </strong>
+                    {item.price}$
+                  </p>
+                </>
+              )}
+              {/* <p>
                 <strong>Payment Type: </strong>
                 {item.payment_type}
               </p>
               <p>
                 <strong>Hourly Rate: </strong>
                 {item.price}$
-              </p>
+              </p> */}
               <p>
                 <strong>Desired start date:</strong>{" "}
                 {new Date(item.start_date).toLocaleDateString("en-CA")}

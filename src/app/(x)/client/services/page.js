@@ -17,9 +17,9 @@ export default async function RequestsPage({ searchParams }) {
   };
 
   // Fetch data based on query params
-  const activeRequests = await fetchData(`clients/service-requests`, filters);
+  const activeRequests = await fetchData(`clients/orders`, filters);
   const cancelledRequests = await fetchData(
-    `clients/service-requests`,
+    `clients/orders`,
     filters
   );
 

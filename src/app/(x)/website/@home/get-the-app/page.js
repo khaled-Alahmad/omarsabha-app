@@ -27,9 +27,7 @@ export default function GetTheApp() {
           <Image src={google1} alt="Frame Image" className="mb-2" />
           <Image src={google2} alt="Frame Image" className="mb-2" />
         </div>
-        <Button as={Link} href="#" className={`${styles.ctaButton} mb-2`}>
-          Download App
-        </Button>
+        <Button className={`${styles.ctaButton} mb-2`}>Download App</Button>
       </div>
       <div className="flex-1 ">
         <Image

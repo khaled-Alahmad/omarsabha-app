@@ -63,7 +63,7 @@ export async function addData(endpoint, data) {
 }
 
 export async function updateData(endpoint, data) {
-  return await apiRequest(endpoint, "PUT", data);
+  return await apiRequest(endpoint, "POST", data);
 }
 
 export async function deleteData(endpoint) {

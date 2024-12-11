@@ -13,17 +13,17 @@ import styles from "./VendorProfileSetup.module.css";
 
 export default function VendorProfileSetupStep2({ onNext, onBack }) {
   const [formData, setFormData] = useState({
-    companyName: "",
-    contactName: "",
-    phoneNumber: "",
-    streetAddress: "",
+    company_name: "",
+    contact_name: "",
+    phone: "",
+    street_address: "",
     city: "",
     state: "",
     country: "",
-    postalCode: "",
-    businessInsurance: "yes",
-    hasCrew: false,
-    crewMembers: [],
+    postal_code: "",
+    business_insurance: "yes",
+    has_crew: false,
+    crew_members: [],
   });
 
   const [crewMember, setCrewMember] = useState({ name: "", title: "" });
@@ -38,7 +38,7 @@ export default function VendorProfileSetupStep2({ onNext, onBack }) {
   const handleAddCrewMember = () => {
     setFormData((prevData) => ({
       ...prevData,
-      crewMembers: [...prevData.crewMembers, crewMember],
+      crewMembers: [...prevData.crew_members, crewMember],
     }));
     setCrewMember({ name: "", title: "" });
   };
@@ -58,8 +58,8 @@ export default function VendorProfileSetupStep2({ onNext, onBack }) {
           variant="bordered"
           labelPlacement="outside"
           fullWidth
-          value={formData.companyName}
-          onChange={(e) => handleInputChange("companyName", e.target.value)}
+          value={formData.company_name}
+          onChange={(e) => handleInputChange("company_name", e.target.value)}
         />
       </div>
 
@@ -70,8 +70,8 @@ export default function VendorProfileSetupStep2({ onNext, onBack }) {
           variant="bordered"
           labelPlacement="outside"
           fullWidth
-          value={formData.contactName}
-          onChange={(e) => handleInputChange("contactName", e.target.value)}
+          value={formData.contact_name}
+          onChange={(e) => handleInputChange("contact_name", e.target.value)}
         />
       </div>
 
@@ -82,8 +82,8 @@ export default function VendorProfileSetupStep2({ onNext, onBack }) {
           variant="bordered"
           labelPlacement="outside"
           fullWidth
-          value={formData.phoneNumber}
-          onChange={(e) => handleInputChange("phoneNumber", e.target.value)}
+          value={formData.phone}
+          onChange={(e) => handleInputChange("phone", e.target.value)}
         />
       </div>
 
@@ -94,8 +94,8 @@ export default function VendorProfileSetupStep2({ onNext, onBack }) {
           placeholder="Street Address"
           variant="bordered"
           fullWidth
-          value={formData.streetAddress}
-          onChange={(e) => handleInputChange("streetAddress", e.target.value)}
+          value={formData.street_address}
+          onChange={(e) => handleInputChange("street_address", e.target.value)}
         />
       </div>
 
@@ -143,8 +143,8 @@ export default function VendorProfileSetupStep2({ onNext, onBack }) {
             labelPlacement="outside"
             variant="bordered"
             fullWidth
-            value={formData.postalCode}
-            onChange={(e) => handleInputChange("postalCode", e.target.value)}
+            value={formData.postal_code}
+            onChange={(e) => handleInputChange("postal_code", e.target.value)}
           />
         </div>
       </div>
@@ -154,9 +154,9 @@ export default function VendorProfileSetupStep2({ onNext, onBack }) {
         <RadioGroup
           orientation="vertical"
           color="warning"
-          value={formData.businessInsurance}
+          value={formData.business_insurance}
           onValueChange={(value) =>
-            handleInputChange("businessInsurance", value)
+            handleInputChange("business_insurance", value)
           }
         >
           <Radio value="yes">Yes</Radio>
@@ -167,14 +167,14 @@ export default function VendorProfileSetupStep2({ onNext, onBack }) {
       <div className={styles.formGroup}>
         <Checkbox
           color="primary"
-          isSelected={formData.hasCrew}
-          onChange={() => handleInputChange("hasCrew", !formData.hasCrew)}
+          isSelected={formData.has_crew}
+          onChange={() => handleInputChange("has_crew", !formData.has_crew)}
         >
           Has Crew?
         </Checkbox>
       </div>
 
-      {formData.hasCrew && (
+      {formData.has_crew && (
         <>
           <div className={styles.formGroup}>
             <Input
