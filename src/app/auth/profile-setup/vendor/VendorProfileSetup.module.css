@@ -71,74 +71,78 @@
   color: white;
 }
 /* إعداد عام لشريط التقدم */
-.setupContainer {
-  /* max-width: 700px; */
-  margin: auto;
-  padding: 2rem;
-}
-.progressBar {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  margin-bottom: 2rem;
-  padding: 0 1rem;
-}
 
-.step {
+.progressContainer {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
+  /* margin-bottom: 20px; */
+  width: 100%;
   position: relative;
-  color: #a6a6a6; /* لون النص */
-  font-size: 0.875rem;
+  /* padding: 20px; */
 }
 
-.stepNumber {
+.progressStep {
+  text-align: center;
+  flex: 1;
+  position: relative;
+}
+
+.stepCircle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+  color: #666;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  background-color: #a6a6a6; /* لون الخلفية عند عدم النشاط */
-  color: #fff;
-  font-weight: 600;
-  font-size: 1rem;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.active .stepNumber {
-  background-color: #fe8315; /* لون الخلفية عند النشاط */
-  color: white;
+.stepNumber {
+  font-size: 1rem;
+  font-weight: bold;
 }
 
 .stepLabel {
-  margin-top: 0.5rem;
-  color: #a6a6a6;
-  font-family: Poppins, sans-serif;
-  font-size: 0.875rem;
-  font-weight: 600;
-  text-align: center;
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 8px;
+  display: block;
 }
 
-.step::before {
-  content: "";
+.progressBar {
   position: absolute;
-  top: 28%;
-  left: 275%;
-  transform: translate(-50%, -50%);
+  top: 20px;
+  left: 50%;
+  right: -50%;
   height: 4px;
-  width: 352px;
-  background-color: #a6a6a6;
-  z-index: -1;
+  background-color: #e0e0e0;
+  z-index: 1;
+  transition: background-color 0.3s ease;
+}
+.stepContainer {
+  /* padding: 2rem; */
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.barActive {
+  background-color: #f97316; /* Active bar color */
 }
 
-.step.active::before {
-  background-color: #fe8315; /* لون الشريط عند النشاط */
+.active .stepCircle {
+  background-color: #f97316; /* Highlight for active step */
+  color: #fff;
 }
 
-/* عدم عرض الخط الأخير */
-.step:last-child::before {
-  display: none;
+.active .stepLabel {
+  font-weight: bold;
+  color: #f97316;
 }
 
 /* إعدادات الاستجابة للجوال */

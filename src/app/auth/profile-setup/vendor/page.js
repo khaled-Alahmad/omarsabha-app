@@ -8,12 +8,14 @@ import VendorProfileSetupStep3 from "@/components/auth/VendorProfileSetupStep3";
 import styles from "@/app/auth/profile-setup/vendor/VendorProfileSetup.module.css";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import Loading from "@/app/loading";
 
 export default function VendorProfileSetup() {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({});
   const [vendorType, setVendorType] = useState("Individual");
+  const [loading, setLoading] = useState(false);
 
   const authToken = getCookie("authToken");
 
@@ -24,58 +26,78 @@ export default function VendorProfileSetup() {
   }, [authToken, router]);
 
   const handleNext = (newData, finalStep = false) => {
-    setFormData({ ...formData, ...newData });
+    setFormData((prev) => ({ ...prev, ...newData }));
     if (finalStep) {
-      submitForm();
+      // setFormData((prev) => ({ ...prev, ...newData }));
+
+      submitForm(newData);
     } else {
-      setCurrentStep(currentStep + 1);
+      if (vendorType === "Individual") {
+      } else {
+        setCurrentStep((prev) => prev + 1);
+      }
     }
   };
 
-  const handleBack = () => setCurrentStep(currentStep - 1);
+  const handleBack = () => setCurrentStep((prev) => prev - 1);
 
-  const submitForm = async () => {
+  const submitForm = async (newData) => {
     const url = `${process.env.NEXT_PUBLIC_URL}/vendors/setup-profile`;
     const fullFormData = new FormData();
-    Object.keys(formData).forEach((key) => {
-      if (key === "additional_images") {
-        formData[key].forEach((file) => {
-          fullFormData.append("additional_images[]", file);
-        });
-      } 
-      else {
-        fullFormData.append(key, formData[key]);
+
+    const finalData = { ...formData, ...newData };
+
+    Object.entries(finalData).forEach(([key, value]) => {
+      if (key === "additional_images" && Array.isArray(value)) {
+        value.forEach((file) =>
+          fullFormData.append("additional_images[]", file)
+        );
+      } else if (value) {
+        fullFormData.append(key, value);
       }
     });
-    console.log(formData);
+    console.log("Submitting FormData:");
+    for (const [key, value] of fullFormData.entries()) {
+      console.log(`${key}:`, value);
+    }
+    setLoading(true);
 
     try {
+      console.log("response");
+
       const response = await axios.post(url, fullFormData, {
         headers: {
           Authorization: `Bearer ${authToken}`,
           "Content-Type": "multipart/form-data",
         },
       });
+
+      console.log(response);
+
       if (response.status === 200) {
         toast.success("Profile setup complete!");
         router.push("/dashboard");
-      } else if (response.status === 403) {
-        toast.error(response.data.message);
-        // router.push("/dashboard");
       } else {
         toast.error("Failed to submit form. Please try again.");
       }
     } catch (error) {
       const errorMessage =
-        error.response?.data?.message || "An unexpected error occurred";
+        error.response?.data?.message || "An unexpected error occurred.";
       toast.error(`Error setting up profile: ${errorMessage}`);
       console.error("Profile setup error:", error);
+    } finally {
+      // Set loading state to false after submission
+      setLoading(false);
     }
   };
+  if (loading) {
+    return <Loading />;
+  }
+  const steps = ["Basic Details", "Business Details", "File Upload"];
 
   return (
     <div className={styles.setupContainer}>
-      <div className={styles.progressBar}>
+      {/* <div className={styles.progressBar}>
         {Array.from({ length: 3 }, (_, i) => (
           <div
             key={i}
@@ -89,8 +111,29 @@ export default function VendorProfileSetup() {
             </p>
           </div>
         ))}
+      </div> */}
+      <div className={styles.progressContainer}>
+        {steps.map((step, index) => (
+          <div
+            key={index}
+            className={`${styles.progressStep} ${
+              index + 1 <= currentStep ? styles.active : ""
+            }`}
+          >
+            <div className={styles.stepCircle}>
+              <span className={styles.stepNumber}>{index + 1}</span>
+            </div>
+            <span className={styles.stepLabel}>{step}</span>
+            {index < steps.length - 1 && (
+              <div
+                className={`${styles.progressBar} ${
+                  index + 1 < currentStep ? styles.barActive : ""
+                }`}
+              ></div>
+            )}
+          </div>
+        ))}
       </div>
-
       {currentStep === 1 && (
         <VendorProfileSetupStep1
           onNext={handleNext}

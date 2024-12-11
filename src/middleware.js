@@ -3,52 +3,104 @@ import { NextResponse } from "next/server";
 export function middleware(request) {
   const authToken = request.cookies.get("authToken")?.value;
   const userRole = request.cookies.get("userRole")?.value;
-
-  console.log("Middleware Triggered for URL:", request.url);
-  console.log("Auth Token:", authToken);
+  const profileSetupVendor = request.cookies.get("profileSetupVendor")?.value;
+  const approveVendor = request.cookies.get("approveVendor")?.value;
 
   const pathname = new URL(request.url).pathname;
 
-  // Patterns for different route categories
-  const vendorPattern = new URLPattern({ pathname: "/vendor/:path*" });
-  const clientPattern = new URLPattern({ pathname: "/client/:path*" });
-  const requestServicePattern = new URLPattern({
-    pathname: "/request-service",
-  });
+  console.log("Middleware Triggered for URL:", request.url);
+  console.log("Auth Token:", authToken);
+  console.log("Profile Setup Vendor (Value):", profileSetupVendor);
+  console.log("Approve Vendor:", approveVendor);
 
-  const authPattern = new URLPattern({ pathname: "/auth/:path*" });
+  // Define route patterns
+  const patterns = {
+    vendor: new URLPattern({ pathname: "/vendor/:path*" }),
+    client: new URLPattern({ pathname: "/client/:path*" }),
+    requestService: new URLPattern({ pathname: "/request-service" }),
+    auth: new URLPattern({ pathname: "/auth/:path*" }),
+    profileSetupVendor: "/auth/profile-setup/vendor",
+    dashboard: "/dashboard",
+    profile: "/profile",
+  };
 
-  const isVendorRoute =
-    vendorPattern.test(request.url) || requestServicePattern.test(request.url);
+  // Helper functions
+  const isRoute = (pattern) =>
+    typeof pattern === "string"
+      ? pathname.startsWith(pattern)
+      : pattern.test(request.url);
 
   const isProtectedRoute =
-    isVendorRoute ||
-    clientPattern.test(request.url) ||
-    pathname.startsWith("/dashboard") ||
-    pathname.startsWith("/profile");
+    isRoute(patterns.vendor) ||
+    isRoute(patterns.client) ||
+    isRoute(patterns.requestService) ||
+    isRoute(patterns.dashboard) ||
+    isRoute(patterns.profile);
 
-  // Allow access to auth routes if not authenticated
-  if (authPattern.test(request.url) && !authToken) {
-    return NextResponse.next();
-  }
+  const isVendorRoute =
+    isRoute(patterns.vendor) || isRoute(patterns.requestService);
 
-  // Redirect authenticated users accessing /auth routes to the homepage
-  if (authToken && authPattern.test(request.url)) {
-    return NextResponse.redirect(new URL("/", request.url));
-  }
+  // Rules
+  const rules = [
+    {
+      // Redirect to verification if vendor is not approved
+      condition: () =>
+        authToken &&
+        approveVendor === "false" &&
+        pathname !== patterns.profileSetupVendor,
+      redirectTo: "/auth/verification",
+    },
+    {
+      // Redirect to profile setup if profile is incomplete
+      condition: () =>
+        authToken &&
+        profileSetupVendor === "false" &&
+        pathname !== patterns.profileSetupVendor,
+      redirectTo: "/auth/profile-setup/vendor",
+    },
+    {
+      // Allow access to /auth/profile-setup/vendor even if authenticated
+      condition: () =>
+        authToken &&
+        isRoute(patterns.auth) &&
+        pathname === patterns.profileSetupVendor,
+      action: () => NextResponse.next(),
+    },
+    {
+      // Allow access to /auth routes if not authenticated
+      condition: () => isRoute(patterns.auth) && !authToken,
+      action: () => NextResponse.next(),
+    },
+    {
+      // Redirect authenticated users trying to access /auth routes to the homepage
+      condition: () =>
+        authToken && isRoute(patterns.auth) && pathname !== patterns.profileSetupVendor,
+      redirectTo: "/",
+    },
+    {
+      // Redirect unauthenticated users from protected routes to /auth/sign-in/vendor
+      condition: () => !authToken && isProtectedRoute,
+      redirectTo: "/auth/sign-in/vendor",
+    },
+    {
+      // Redirect users with incorrect roles
+      condition: () => isVendorRoute && userRole !== "vendor",
+      redirectTo: "/",
+    },
+    {
+      condition: () => isRoute(patterns.client) && userRole !== "client",
+      redirectTo: "/",
+    },
+  ];
 
-  // Redirect unauthenticated users from protected routes to /auth/sign-in/vendor
-  if (!authToken && isProtectedRoute) {
-    return NextResponse.redirect(new URL("/auth/sign-in/vendor", request.url));
-  }
-
-  // Redirect users with incorrect roles
-  if (isVendorRoute && userRole !== "vendor") {
-    return NextResponse.redirect(new URL("/", request.url));
-  }
-
-  if (clientPattern.test(request.url) && userRole !== "client") {
-    return NextResponse.redirect(new URL("/", request.url));
+  // Process rules
+  for (const rule of rules) {
+    if (rule.condition()) {
+      console.log(`Redirecting to: ${rule.redirectTo || "NextResponse.next()"}`);
+      return rule.redirectTo
+        ? NextResponse.redirect(new URL(rule.redirectTo, request.url))
+        : rule.action();
+    }
   }
 
   return NextResponse.next();

@@ -58,6 +58,7 @@ export default function VendorProfileSetupStep2({ onNext, onBack }) {
           variant="bordered"
           labelPlacement="outside"
           fullWidth
+          required
           value={formData.company_name}
           onChange={(e) => handleInputChange("company_name", e.target.value)}
         />
@@ -69,6 +70,7 @@ export default function VendorProfileSetupStep2({ onNext, onBack }) {
           placeholder="Contact Name"
           variant="bordered"
           labelPlacement="outside"
+          required
           fullWidth
           value={formData.contact_name}
           onChange={(e) => handleInputChange("contact_name", e.target.value)}
@@ -78,6 +80,7 @@ export default function VendorProfileSetupStep2({ onNext, onBack }) {
       <div className={styles.formGroup}>
         <Input
           label="Company Phone Number"
+          required
           placeholder="+92 333 *******"
           variant="bordered"
           labelPlacement="outside"
@@ -91,6 +94,7 @@ export default function VendorProfileSetupStep2({ onNext, onBack }) {
         <Input
           label="Street Address"
           labelPlacement="outside"
+          required
           placeholder="Street Address"
           variant="bordered"
           fullWidth
@@ -103,6 +107,7 @@ export default function VendorProfileSetupStep2({ onNext, onBack }) {
         <div className={styles.halfInput}>
           <Input
             label="City"
+            required
             placeholder="City name"
             labelPlacement="outside"
             variant="bordered"
@@ -114,6 +119,7 @@ export default function VendorProfileSetupStep2({ onNext, onBack }) {
         <div className={styles.halfInput}>
           <Input
             label="State"
+            required
             placeholder="State name"
             labelPlacement="outside"
             variant="bordered"
@@ -130,6 +136,7 @@ export default function VendorProfileSetupStep2({ onNext, onBack }) {
             label="Country"
             placeholder="Country"
             labelPlacement="outside"
+            required
             variant="bordered"
             fullWidth
             value={formData.country}
@@ -144,6 +151,7 @@ export default function VendorProfileSetupStep2({ onNext, onBack }) {
             variant="bordered"
             fullWidth
             value={formData.postal_code}
+            required
             onChange={(e) => handleInputChange("postal_code", e.target.value)}
           />
         </div>
@@ -154,6 +162,7 @@ export default function VendorProfileSetupStep2({ onNext, onBack }) {
         <RadioGroup
           orientation="vertical"
           color="warning"
+          required
           value={formData.business_insurance}
           onValueChange={(value) =>
             handleInputChange("business_insurance", value)

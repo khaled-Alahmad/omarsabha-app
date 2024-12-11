@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Input,
   Button,
@@ -11,15 +11,36 @@ import {
 } from "@nextui-org/react";
 import styles from "./VendorProfileSetup.module.css";
 
+import { fetchData } from "@/context/apiHelper";
+
 export default function VendorProfileSetupStep1({ onNext, setVendorType }) {
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
-    vendor_type: "Individual",
-    service_category: "",
+    account_type: "Individual",
+    service_ids: [],
     years_experience: "",
     description: "",
   });
+  const [services, setServices] = useState([]);
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const response = await fetchData(`admin/services`);
+
+        // if (response.status === 200) {
+        setServices(response.data.data); // Assuming API returns an array of services
+        // } else {
+        //   toast.error("Failed to fetch services.");
+        // }
+      } catch (error) {
+        console.error("Error fetching services:", error);
+        toast.error("Failed to fetch services.");
+      }
+    };
+
+    fetchServices();
+  }, []);
 
   const handleInputChange = (field, value) => {
     setFormData((prevData) => ({
@@ -29,7 +50,7 @@ export default function VendorProfileSetupStep1({ onNext, setVendorType }) {
   };
 
   const handleNext = () => {
-    setVendorType(formData.vendorType);
+    setVendorType(formData.vendor_type);
     onNext(formData); // تمرير البيانات إلى الخطوة التالية
   };
 
@@ -42,6 +63,7 @@ export default function VendorProfileSetupStep1({ onNext, setVendorType }) {
           <Input
             label="First Name"
             labelPlacement="outside"
+            required
             variant="bordered"
             placeholder="Enter first name"
             fullWidth
@@ -53,6 +75,7 @@ export default function VendorProfileSetupStep1({ onNext, setVendorType }) {
           <Input
             label="Last Name"
             variant="bordered"
+            required
             labelPlacement="outside"
             placeholder="Enter last name"
             fullWidth
@@ -66,52 +89,75 @@ export default function VendorProfileSetupStep1({ onNext, setVendorType }) {
         <RadioGroup
           orientation="vertical"
           label="Vendor Type"
+          required
           color="warning"
-          value={formData.vendor_type}
-          onValueChange={(value) => handleInputChange("vendor_type", value)}
+          value={formData.account_type}
+          onValueChange={(value) => handleInputChange("account_type", value)}
           className={styles.radioGroup}
         >
           <Radio value="Individual">Individual</Radio>
-          <Radio value="Business">Business</Radio>
+          <Radio value="Company">Business</Radio>
         </RadioGroup>
       </div>
 
       <div className={styles.formGroup}>
+        <label>Service Categories</label>
         <Select
-          label="Service Category"
-          placeholder="Select category"
+          label="Service Categories"
+          placeholder="Select categories"
           variant="bordered"
           labelPlacement="outside"
           fullWidth
-          value={formData.service_category}
-          onChange={(e) => handleInputChange("service_category", e.target.value)}
+          value={formData.service_ids}
+          onChange={(e) => handleInputChange("service_ids", e.target.value)}
+          multiple
         >
-          <SelectItem value="electrician">Electrician</SelectItem>
-          <SelectItem value="plumber">Plumber</SelectItem>
-          <SelectItem value="cleaning">Cleaning Services</SelectItem>
+          {services.map((service) => (
+            <SelectItem key={service.id} value={service.id}>
+              {service.name}
+            </SelectItem>
+          ))}
         </Select>
       </div>
 
       <div className={styles.formGroup}>
-        <Select
+        <Input
+          label="Years in Business"
+          placeholder="Enter years"
+          variant="bordered"
+          required
+          labelPlacement="outside"
+          // placeholder="Enter last name"
+          fullWidth
+          type="number"
+          value={formData.years_experience}
+          onChange={(e) =>
+            handleInputChange("years_experience", e.target.value)
+          }
+        />
+        {/* <Select
           label="Years in Business"
           placeholder="Select years"
           variant="bordered"
           labelPlacement="outside"
+          required
           fullWidth
           value={formData.years_experience}
-          onChange={(e) => handleInputChange("years_experience", e.target.value)}
+          onChange={(e) =>
+            handleInputChange("years_experience", e.target.value)
+          }
         >
           <SelectItem value="1-2">1-2 years</SelectItem>
           <SelectItem value="2-4">2-4 years</SelectItem>
           <SelectItem value="4-6">4-6 years</SelectItem>
-        </Select>
+        </Select> */}
       </div>
 
       <div className={styles.formGroup}>
         <Textarea
           label="Description"
           placeholder="Start from here"
+          required
           variant="bordered"
           labelPlacement="outside"
           fullWidth

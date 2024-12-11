@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { Button } from "@nextui-org/react";
 import styles from "./VendorProfileSetup.module.css";
+import toast from "react-hot-toast";
 
 export default function VendorProfileSetupStep3({ onBack, onNext }) {
   const [logoFile, setLogoFile] = useState(null);
@@ -52,21 +53,19 @@ export default function VendorProfileSetupStep3({ onBack, onNext }) {
     setMediaPreviews((prev) => prev.filter((_, i) => i !== index));
     setMediaFiles((prev) => prev.filter((_, i) => i !== index));
   };
-
   const handleSave = () => {
     if (!logoFile) {
-      alert("Profile photo is required.");
+      toast.error("Profile photo is required.");
       return;
     }
 
-    const formData = new FormData();
-    formData.append("profile_photo", logoFile);
-
-    mediaFiles.forEach((file, index) => {
-      formData.append(`additional_images[${index}]`, file);
-    });
-
-    onNext(formData); // Pass data to the main component
+    const data = {
+      profile_photo: logoFile, // Ensure profile photo is included
+      additional_images: mediaFiles, // Include all additional images
+    };
+    if (logoFile && mediaFiles) {
+      onNext(data, true); // Mark as final step and pass data
+    }
   };
 
   return (

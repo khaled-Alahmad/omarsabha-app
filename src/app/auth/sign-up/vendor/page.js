@@ -99,141 +99,149 @@ export default function VendorSignUp() {
       </div>
 
       <div className={styles.formSection}>
-        <h2 className={styles.title}>Vendor Sign Up</h2>
-        <p className={styles.subtitle}>Enter details to create your account</p>
-
-        <form className={styles.form} onSubmit={handleSubmit}>
-          <Input
-            isClearable
-            variant="bordered"
-            label="Email or Phone Number"
-            placeholder="Enter your Email"
-            labelPlacement="outside"
-            fullWidth
-            className={styles.input}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-
-          <Input
-            label="Password"
-            variant="bordered"
-            placeholder="Enter your password"
-            labelPlacement="outside"
-            endContent={
-              <button
-                className="focus:outline-none"
-                type="button"
-                onClick={toggleVisibility}
-                aria-label="toggle password visibility"
-              >
-                {isVisible ? (
-                  <EyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
-                ) : (
-                  <EyeFilledIcon className="text-2xl text-default-400 pointer-events-none" />
-                )}
-              </button>
-            }
-            type={isVisible ? "text" : "password"}
-            fullWidth
-            value={password}
-            className={styles.input}
-            onChange={handlePasswordChange}
-          />
-
-          <ul className={styles.requirements}>
-            <li className={requirements.length ? styles.valid : styles.invalid}>
-              Password must be at least 8 characters long
-            </li>
-            <li
-              className={requirements.hasNumber ? styles.valid : styles.invalid}
-            >
-              It is recommended to include a letter, a number, or a special
-              character.
-            </li>
-          </ul>
-
-          <Input
-            label="Confirm Password"
-            variant="bordered"
-            placeholder="Confirm your password"
-            labelPlacement="outside"
-            endContent={
-              <button
-                className="focus:outline-none"
-                type="button"
-                onClick={toggleConfirmVisibility}
-                aria-label="toggle confirm password visibility"
-              >
-                {confirmIsVisible ? (
-                  <EyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
-                ) : (
-                  <EyeFilledIcon className="text-2xl text-default-400 pointer-events-none" />
-                )}
-              </button>
-            }
-            type={confirmIsVisible ? "text" : "password"}
-            fullWidth
-            className={styles.input}
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
-
-          <Checkbox
-            color="warning"
-            className={styles.checkbox}
-            isSelected={isChecked}
-            onChange={() => setIsChecked(!isChecked)}
-          >
-            I agree to the Terms and Conditions
-          </Checkbox>
-          <Button
-            type="submit"
-            variant="solid"
-            color="primary"
-            className={styles.signUpButton}
-          >
-            Sign Up
-          </Button>
-
-          <div className={styles.dividerContainer}>
-            <Divider className={styles.divider} />
-            <span className={styles.dividerText}>Or</span>
-            <Divider className={styles.divider} />
-          </div>
-
-          <Button
-            variant="bordered"
-            color="primary"
-            startContent={
-              <img
-                src={facebookIcon.src}
-                alt="Facebook Icon"
-                className={styles.icon}
-              />
-            }
-            className={styles.socialButton}
-          >
-            Sign up with Facebook
-          </Button>
-          <Button
-            variant="bordered"
-            color="error"
-            startContent={
-              <img
-                src={googleIcon.src}
-                alt="Google Icon"
-                className={styles.icon}
-              />
-            }
-            className={styles.socialButton}
-          >
-            Sign up with Google
-          </Button>
-          <p className={styles.signInText}>
-            Already a member? <a href="/auth/sign-in/vendor">Sign In</a>
+        <div className={styles.formSectionAS}>
+          <h2 className={styles.title}>Vendor Sign Up</h2>
+          <p className={styles.subtitle}>
+            Enter details to create your account
           </p>
-        </form>
+
+          <form className={styles.form} onSubmit={handleSubmit}>
+            <Input
+              isClearable
+              variant="bordered"
+              label="Email or Phone Number"
+              placeholder="Enter your Email"
+              labelPlacement="outside"
+              fullWidth
+              className={styles.input}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+
+            <Input
+              label="Password"
+              variant="bordered"
+              placeholder="Enter your password"
+              labelPlacement="outside"
+              endContent={
+                <button
+                  className="focus:outline-none"
+                  type="button"
+                  onClick={toggleVisibility}
+                  aria-label="toggle password visibility"
+                >
+                  {isVisible ? (
+                    <EyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
+                  ) : (
+                    <EyeFilledIcon className="text-2xl text-default-400 pointer-events-none" />
+                  )}
+                </button>
+              }
+              type={isVisible ? "text" : "password"}
+              fullWidth
+              value={password}
+              className={styles.input}
+              onChange={handlePasswordChange}
+            />
+
+            <ul className={styles.requirements}>
+              <li
+                className={requirements.length ? styles.valid : styles.invalid}
+              >
+                Password must be at least 8 characters long
+              </li>
+              <li
+                className={
+                  requirements.hasNumber ? styles.valid : styles.invalid
+                }
+              >
+                It is recommended to include a letter, a number, or a special
+                character.
+              </li>
+            </ul>
+
+            <Input
+              label="Confirm Password"
+              variant="bordered"
+              placeholder="Confirm your password"
+              labelPlacement="outside"
+              endContent={
+                <button
+                  className="focus:outline-none"
+                  type="button"
+                  onClick={toggleConfirmVisibility}
+                  aria-label="toggle confirm password visibility"
+                >
+                  {confirmIsVisible ? (
+                    <EyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
+                  ) : (
+                    <EyeFilledIcon className="text-2xl text-default-400 pointer-events-none" />
+                  )}
+                </button>
+              }
+              type={confirmIsVisible ? "text" : "password"}
+              fullWidth
+              className={styles.input}
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+
+            <Checkbox
+              color="primary"
+              className={styles.checkbox}
+              isSelected={isChecked}
+              onChange={() => setIsChecked(!isChecked)}
+            >
+              I agree to the Terms and Conditions
+            </Checkbox>
+            <Button
+              type="submit"
+              variant="solid"
+              color="primary"
+              className={styles.signUpButton}
+            >
+              Sign Up
+            </Button>
+
+            <div className={styles.dividerContainer}>
+              <Divider className={styles.divider} />
+              <span className={styles.dividerText}>Or</span>
+              <Divider className={styles.divider} />
+            </div>
+
+            <Button
+              variant="bordered"
+              color="error"
+              startContent={
+                <img
+                  src={facebookIcon.src}
+                  alt="Facebook Icon"
+                  className={styles.icon}
+                />
+              }
+              className={styles.socialButton}
+            >
+              Sign up with Facebook
+            </Button>
+            <Button
+              variant="bordered"
+              color="error"
+              startContent={
+                <img
+                  src={googleIcon.src}
+                  alt="Google Icon"
+                  className={styles.icon}
+                />
+              }
+              className={styles.socialButton}
+            >
+              Sign up with Google
+            </Button>
+            <p className={styles.signInText}>
+              Already a member? <a href="/auth/sign-in/vendor">Sign In</a>
+            </p>
+          </form>
+        </div>
       </div>
     </div>
   );

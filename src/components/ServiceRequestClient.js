@@ -75,7 +75,7 @@ export default function ServiceRequestClient({ isOpen, onOpen, onOpenChange }) {
                     <Button
                       as={Link}
                       onPress={onClose}
-                      href="#"
+                      href="/auth/sign-in/vendor"
                       className={`${styles.ctaButton} `}
                       // style={{ flex: "1" }}
                     >
@@ -84,7 +84,7 @@ export default function ServiceRequestClient({ isOpen, onOpen, onOpenChange }) {
                     <Button
                       as={Link}
                       onPress={onClose}
-                      href="#"
+                      href="/auth/sign-up/vendor"
                       className={`${styles.ctaButton}`}
                       // style={{ flex: "1" }}
                     >
