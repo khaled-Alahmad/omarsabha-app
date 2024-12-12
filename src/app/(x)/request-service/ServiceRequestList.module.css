@@ -73,6 +73,9 @@
 .requestList {
   display: flex;
   flex-direction: column;
+  height: 100vh;
+  overflow: auto;
+  scroll-behavior: smooth;
   gap: 1rem;
 }
 

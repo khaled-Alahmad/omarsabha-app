@@ -2,6 +2,7 @@ import React from "react";
 import styles from "../ServiceRequestList.module.css";
 import serviceImage from "@/assets/images/vendor/service-request.png";
 import { Skeleton, Card, Text, CardBody } from "@nextui-org/react";
+import Link from "next/link";
 
 export default function RequestList({ data }) {
   console.log("RequestList ", data);
@@ -15,41 +16,42 @@ export default function RequestList({ data }) {
   return (
     <div className={styles.requestList}>
       {data.map((item, i) => (
-        <div key={i} className={styles.requestCard}>
-          <img
-            src={item.images[0] || "https://placehold.co/600x400"}
-            alt="Service Request"
-            className={styles.image}
-          />
-          <div className={styles.requestDetails}>
-            <h3>{item.title}</h3>
-            <p>{item.description}</p>
-            <div className={styles.requestDetailsSection}>
-              {item.payment_type === "hourly_rate" ? (
-                <>
-                  {" "}
-                  <p>
-                    <strong>Payment Type: </strong>
-                    Hourly Rate
-                  </p>
-                  <p>
-                    <strong>Hourly Rate: </strong>
-                    {item.price}$
-                  </p>
-                </>
-              ) : (
-                <>
-                  <p>
-                    <strong>Payment Type: </strong>
-                    Flat Rate
-                  </p>
-                  <p>
-                    <strong>Flat Rate: </strong>
-                    {item.price}$
-                  </p>
-                </>
-              )}
-              {/* <p>
+        <Link key={i} href={`/request-service/${item.id}`} >
+          <div className={styles.requestCard} >
+            <img
+              src={item.images[0] || "https://placehold.co/600x400"}
+              alt="Service Request"
+              className={styles.image}
+            />
+            <div className={styles.requestDetails}>
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+              <div className={styles.requestDetailsSection}>
+                {item.payment_type === "hourly_rate" ? (
+                  <>
+                    {" "}
+                    <p>
+                      <strong>Payment Type: </strong>
+                      Hourly Rate
+                    </p>
+                    <p>
+                      <strong>Hourly Rate: </strong>
+                      {item.price}$
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <p>
+                      <strong>Payment Type: </strong>
+                      Flat Rate
+                    </p>
+                    <p>
+                      <strong>Flat Rate: </strong>
+                      {item.price}$
+                    </p>
+                  </>
+                )}
+                {/* <p>
                 <strong>Payment Type: </strong>
                 {item.payment_type}
               </p>
@@ -57,21 +59,22 @@ export default function RequestList({ data }) {
                 <strong>Hourly Rate: </strong>
                 {item.price}$
               </p> */}
-              <p>
-                <strong>Desired start date:</strong>{" "}
-                {new Date(item.start_date).toLocaleDateString("en-CA")}
-              </p>
-              <p>
-                <strong>Complete Date:</strong>{" "}
-                {new Date(item.completion_date).toLocaleDateString("en-CA")}
-              </p>
-              <p>
-                <strong>Location:</strong> {item.location?.city},{" "}
-                {item.location?.country}, {item.location?.state}
-              </p>
+                <p>
+                  <strong>Desired start date:</strong>{" "}
+                  {new Date(item.start_date).toLocaleDateString("en-CA")}
+                </p>
+                <p>
+                  <strong>Complete Date:</strong>{" "}
+                  {new Date(item.completion_date).toLocaleDateString("en-CA")}
+                </p>
+                <p>
+                  <strong>Location:</strong> {item.location?.city},{" "}
+                  {item.location?.country}, {item.location?.state}
+                </p>
+              </div>
             </div>
           </div>
-        </div>
+        </Link>
       ))}
     </div>
   );

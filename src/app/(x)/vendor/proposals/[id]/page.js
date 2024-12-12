@@ -24,9 +24,12 @@ export default async function ServiceDetails({ params }) {
     },
     payment_type: proposalPaymentType,
     price,
+    service_name,
+    estimated_hours,
     created_at: proposalCreatedAt,
     message,
   } = proposal;
+  console.log("vendorUser:", vendorUser);
 
   return (
     <div className={styles.container}>
@@ -119,7 +122,7 @@ export default async function ServiceDetails({ params }) {
             <span>Street Address:</span> {vendorLocation.street_address}
           </p>
         </div>
-        <button className={styles.viewMore}>View More</button>
+        {/* <button className={styles.viewMore}>View More</button> */}
       </section>
       <Divider className="my-4" />
 
@@ -129,25 +132,40 @@ export default async function ServiceDetails({ params }) {
         <p className={styles.description}>{message}</p>
         <div className={styles.detailsGrid}>
           <div>
-            <span>Category:</span>NA
+            <span>Category:</span>{service_name || "N/A"}
           </div>
           <div>
             <span>Payment Type:</span> {proposalPaymentType}
           </div>
+          {proposalPaymentType === "flat_rate" ?
+            <>
+              <div>
+                <span>Flat Rate Amount:</span> {price}$
+              </div>
+              <div>
+                <span>Hourly Rate:</span> N/A
+              </div>
+              <div>
+                <span>Estimated Hours:</span>N/A
+              </div>
+            </> :
+            <>
+
+              <div>
+                <span>Flat Rate Amount:</span> N/A
+              </div>
+              <div>
+                <span>Hourly Rate:</span> {price}$
+              </div>
+              <div>
+                <span>Estimated Hours:</span>{estimated_hours || "N/A"}
+              </div>
+            </>}
           <div>
-            <span>Flat Rate Amount:</span> NA
+            <span>Start Date:</span> {new Date(proposalCreatedAt).toLocaleDateString("en-US")}
           </div>
           <div>
-            <span>Hourly Rate:</span> NA
-          </div>
-          <div>
-            <span>Estimated Hours:</span>NA
-          </div>
-          <div>
-            <span>Start Date:</span> NA
-          </div>
-          <div>
-            <span>Completion Date:</span> NA
+            <span>Completion Date:</span> {new Date(serviceRequest.completion_date).toLocaleDateString("en-US")}
           </div>
           {/* <div>
             <span>Created On:</span>{" "}

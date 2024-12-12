@@ -33,20 +33,37 @@ export default function ProposalsList({ proposals }) {
             <p className={styles.itemsProposal}>
               <span>
                 <strong>Payment Type:</strong>
-                {proposal.service_request.payment_type}{" "}
+                {proposal.payment_type}{" "}
               </span>
-              <span>
-                {" "}
-                <strong>Flat Rate Amount:</strong> {proposal.flatRateAmount}{" "}
-              </span>
-              <span>
-                {" "}
-                <strong>Hourly Rate:</strong> {proposal.hourlyRate}{" "}
-              </span>
-              <span>
-                {" "}
-                <strong>Estimated Hours:</strong> {proposal.estimatedHours}
-              </span>
+              {proposal.payment_type === "flat_rate" ? <>
+                <span>
+
+                  <strong>Flat Rate Amount:</strong> {proposal.price}$
+                </span>
+                <span>
+
+                  <strong>Hourly Rate:</strong> N/A
+                </span>
+                <span>
+                  <strong>Estimated Hours:</strong> N/A
+                </span>
+              </> : <>
+                <span>
+
+                  <strong>Flat Rate Amount:</strong> N/A
+                </span>
+                <span>
+
+                  <strong>Hourly Rate:</strong> {proposal.price}$
+                </span>
+                <span>
+                  <strong>Estimated Hours:</strong> {proposal.estimatedHours}
+                </span>
+              </>}
+
+
+
+
             </p>
           </div>
         </Link>

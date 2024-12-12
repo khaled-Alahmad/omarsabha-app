@@ -9,6 +9,7 @@ import styles from "@/app/auth/profile-setup/vendor/VendorProfileSetup.module.cs
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import Loading from "@/app/loading";
+import { addData } from "@/context/apiHelper";
 
 export default function VendorProfileSetup() {
   const router = useRouter();
@@ -42,9 +43,7 @@ export default function VendorProfileSetup() {
   const handleBack = () => setCurrentStep((prev) => prev - 1);
 
   const submitForm = async (newData) => {
-    const url = `${process.env.NEXT_PUBLIC_URL}/vendors/setup-profile`;
     const fullFormData = new FormData();
-
     const finalData = { ...formData, ...newData };
 
     Object.entries(finalData).forEach(([key, value]) => {
@@ -52,27 +51,24 @@ export default function VendorProfileSetup() {
         value.forEach((file) =>
           fullFormData.append("additional_images[]", file)
         );
-      } else if (value) {
+      } else if (key === "service_ids" && Array.isArray(value)) {
+        fullFormData.append("service_ids", JSON.stringify(value)); // Send as JSON array
+      } else if (value !== null && value !== undefined) {
         fullFormData.append(key, value);
       }
     });
+
     console.log("Submitting FormData:");
     for (const [key, value] of fullFormData.entries()) {
       console.log(`${key}:`, value);
     }
+
     setLoading(true);
-
+    const header = {
+      "Content-Type": "multipart/form-data",
+    }
     try {
-      console.log("response");
-
-      const response = await axios.post(url, fullFormData, {
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-          "Content-Type": "multipart/form-data",
-        },
-      });
-
-      console.log(response);
+      const response = await addData("vendors/setup-profile", fullFormData, header);
 
       if (response.status === 200) {
         toast.success("Profile setup complete!");
@@ -86,10 +82,10 @@ export default function VendorProfileSetup() {
       toast.error(`Error setting up profile: ${errorMessage}`);
       console.error("Profile setup error:", error);
     } finally {
-      // Set loading state to false after submission
       setLoading(false);
     }
   };
+
   if (loading) {
     return <Loading />;
   }
@@ -116,9 +112,8 @@ export default function VendorProfileSetup() {
         {steps.map((step, index) => (
           <div
             key={index}
-            className={`${styles.progressStep} ${
-              index + 1 <= currentStep ? styles.active : ""
-            }`}
+            className={`${styles.progressStep} ${index + 1 <= currentStep ? styles.active : ""
+              }`}
           >
             <div className={styles.stepCircle}>
               <span className={styles.stepNumber}>{index + 1}</span>
@@ -126,9 +121,8 @@ export default function VendorProfileSetup() {
             <span className={styles.stepLabel}>{step}</span>
             {index < steps.length - 1 && (
               <div
-                className={`${styles.progressBar} ${
-                  index + 1 < currentStep ? styles.barActive : ""
-                }`}
+                className={`${styles.progressBar} ${index + 1 < currentStep ? styles.barActive : ""
+                  }`}
               ></div>
             )}
           </div>

@@ -45,8 +45,12 @@ export default function VendorSignUp() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!isChecked) {
+      toast.error("please agree to the Terms and Conditions!");
+      return;
+    }
     if (password !== confirmPassword) {
-      alert("Passwords do not match");
+      toast.error("Passwords do not match");
       return;
     }
 
@@ -68,19 +72,23 @@ export default function VendorSignUp() {
         }
       );
 
-      if (response.data && response.data.access_token) {
+      if (response.data.success) {
         const expiresIn7Days = new Date();
-        expiresIn7Days.setDate(expiresIn7Days.getDate() + 7);
-        setCookie("authToken", response.data.access_token, {
+        expiresIn7Days.setDate(expiresIn7Days.getDate() + 1);
+        setCookie("emailToConfirm", email, {
           expires: expiresIn7Days,
           path: "/",
         });
-        toast.success("Registration successful!");
-        router.push("/auth/profile-setup/vendor");
+        toast.success(response.data.message);
+        router.push("/auth/verification");
       }
     } catch (error) {
-      console.error("Registration error:", error);
-      alert("Failed to register. Please try again.");
+      // console.error("Registration error:", error);
+      // alert("Failed to register. Please try again.");
+      toast.error(error.response.data.message);
+      setEmail("");
+      setConfirmPassword("");
+      setPassword("");
     }
   };
 

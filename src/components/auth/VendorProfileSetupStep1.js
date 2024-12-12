@@ -11,6 +11,8 @@ import {
 } from "@nextui-org/react";
 import styles from "./VendorProfileSetup.module.css";
 
+import axios from "axios";
+import Loading from "@/app/loading";
 import { fetchData } from "@/context/apiHelper";
 
 export default function VendorProfileSetupStep1({ onNext, setVendorType }) {
@@ -26,19 +28,14 @@ export default function VendorProfileSetupStep1({ onNext, setVendorType }) {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await fetchData(`admin/services`);
+        const response = await fetchData(`public/services`);
+        console.log(response);
 
-        // if (response.status === 200) {
-        setServices(response.data.data); // Assuming API returns an array of services
-        // } else {
-        //   toast.error("Failed to fetch services.");
-        // }
+        setServices(response.data || []);
       } catch (error) {
         console.error("Error fetching services:", error);
-        toast.error("Failed to fetch services.");
       }
     };
-
     fetchServices();
   }, []);
 
@@ -48,7 +45,9 @@ export default function VendorProfileSetupStep1({ onNext, setVendorType }) {
       [field]: value,
     }));
   };
-
+  if (services.length <= 0) {
+    return <Loading />;
+  }
   const handleNext = () => {
     setVendorType(formData.vendor_type);
     onNext(formData); // تمرير البيانات إلى الخطوة التالية
@@ -108,9 +107,12 @@ export default function VendorProfileSetupStep1({ onNext, setVendorType }) {
           variant="bordered"
           labelPlacement="outside"
           fullWidth
-          value={formData.service_ids}
-          onChange={(e) => handleInputChange("service_ids", e.target.value)}
-          multiple
+          selectionMode="multiple"
+          selectedKeys={formData.service_ids} // Selected values as an array
+          onSelectionChange={(selected) => {
+            const selectedArray = Array.from(selected); // Convert Set to Array
+            handleInputChange("service_ids", selectedArray);
+          }}
         >
           {services.map((service) => (
             <SelectItem key={service.id} value={service.id}>

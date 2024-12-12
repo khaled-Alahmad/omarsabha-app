@@ -14,18 +14,27 @@ import {
   ModalContent,
 } from "@nextui-org/react";
 import SuccessModal from "./SuccessModal";
+import { getCookie } from "cookies-next";
+import toast from "react-hot-toast";
+import { addData } from "@/context/apiHelper";
+import { useRouter } from "next/navigation";
 
-export default function ProposeChangeModal({ isOpen, onClose }) {
+export default function ProposeChangeModal({ isOpen, onClose, serviceRequestId }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const router = useRouter()
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
-  const [paymentType, setPaymentType] = useState("hourly");
+
+  const [paymentType, setPaymentType] = useState("flat_rate");
+  const vendorID = parseInt(getCookie("userID")); // Ensure vendorID is an integer
   const [formData, setFormData] = useState({
-    hourlyRate: "",
-    estimatedHours: "",
-    startDate: "",
-    completionDate: "",
+    price: "",
+    service_request_id: parseInt(serviceRequestId), // Convert to integer
+    payment_type: paymentType,
+    estimated_hours: "",
+    vendor_id: vendorID, // Ensure it's an integer
+    start_date: "",
+    completion_date: "",
     message: "",
   });
 
@@ -36,11 +45,53 @@ export default function ProposeChangeModal({ isOpen, onClose }) {
       [name]: value,
     }));
   };
+  const handleSubmit = async () => {
+    const finalData = {
+      ...formData,
+      vendor_id: parseInt(formData.vendor_id),
+      service_request_id: parseInt(formData.service_request_id),
+    };
 
-  const handleSubmit = () => {
-    console.log(formData);
-    onClose();
+    console.log("Final Data Sent to API:", finalData);
+    // const header = {
+    //   "Content-Type": "multipart/form-data",
+    // }
+    const header = {
+      "Content-Type": "application/json",
+    }
+    try {
+      const response = await addData("vendors/proposals", finalData, header);
+      console.log(response);
+
+      if (response.success) {
+        toast.success(response.message);
+        router.push("/request-service");
+      } else {
+        toast.error("Failed to submit form. Please try again.");
+      }
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.message || "An unexpected error occurred.";
+      toast.error(`Error setting up profile: ${errorMessage}`);
+      console.error("Profile setup error:", error);
+    }
+    finally {
+      openModal()
+      onClose()
+      setFormData({
+        price: "",
+        service_request_id: parseInt(serviceRequestId), // Convert to integer
+        payment_type: paymentType,
+        estimated_hours: "",
+        vendor_id: vendorID, // Ensure it's an integer
+        start_date: "",
+        completion_date: "",
+        message: "",
+      });
+    }
   };
+
+
 
   return (
     <Modal
@@ -61,47 +112,67 @@ export default function ProposeChangeModal({ isOpen, onClose }) {
               value={paymentType}
               onChange={(e) => setPaymentType(e.target.value)}
               orientation="vertical"
-              color="warning"
+              color="primary"
               style={radioGroupStyle}
             >
-              <Radio value="flat" size="sm">
+              <Radio value="flat_rate" size="sm">
                 Flat Rate
               </Radio>
-              <Radio value="hourly" size="sm">
+              <Radio value="hourly_rate" size="sm">
                 Hourly Rate
               </Radio>
             </RadioGroup>
 
-            {paymentType === "hourly" && (
+            {paymentType === "hourly_rate" && (
+              <>
+                <Input
+                  label="Hourly Rate"
+                  placeholder="$100"
+                  labelPlacement="outside"
+                  variant="bordered"
+                  fullWidth
+                  name="price"
+                  onChange={handleInputChange}
+                  value={formData.price}
+                  style={inputStyle}
+                />
+                <Select
+                  label="Estimated Hours"
+                  placeholder="Select estimated hours"
+                  labelPlacement="outside"
+                  variant="bordered"
+                  fullWidth
+                  name="estimated_hours"
+                  onChange={(value) => {
+                    setFormData((prevData) => ({
+                      ...prevData,
+                      estimated_hours: value.target.value, // Directly set the value
+                    }));
+                  }}
+                  style={inputStyle}
+                >
+                  <SelectItem value="1_2">1-2 hours</SelectItem>
+                  <SelectItem value="2_4">2-4 hours</SelectItem>
+                  <SelectItem value="4_6">4-6 hours</SelectItem>
+                </Select>
+
+              </>
+            )}
+
+            {paymentType === "flat_rate" && (
+
               <Input
-                label="Hourly Rate"
+                label="Flat Rate"
                 placeholder="$100"
                 labelPlacement="outside"
                 variant="bordered"
                 fullWidth
-                name="hourlyRate"
+                name="price"
                 onChange={handleInputChange}
-                value={formData.hourlyRate}
+                value={formData.price}
                 style={inputStyle}
               />
             )}
-
-            <Select
-              label="Estimated Hours"
-              placeholder="Select estimated hours"
-              labelPlacement="outside"
-              variant="bordered"
-              fullWidth
-              name="estimatedHours"
-              onChange={(value) =>
-                handleInputChange({ target: { name: "estimatedHours", value } })
-              }
-              style={inputStyle}
-            >
-              <SelectItem value="1-2">1-2 hours</SelectItem>
-              <SelectItem value="2-4">2-4 hours</SelectItem>
-              <SelectItem value="4-6">4-6 hours</SelectItem>
-            </Select>
 
             <Input
               label="Service Start Date*"
@@ -109,9 +180,9 @@ export default function ProposeChangeModal({ isOpen, onClose }) {
               fullWidth
               variant="bordered"
               labelPlacement="outside"
-              name="startDate"
+              name="start_date"
               onChange={handleInputChange}
-              value={formData.startDate}
+              value={formData.start_date}
               style={inputStyle}
             />
             <Input
@@ -119,11 +190,11 @@ export default function ProposeChangeModal({ isOpen, onClose }) {
               type="date"
               fullWidth
               variant="bordered"
-              name="completionDate"
+              name="completion_date"
               placeholder="mm/dd/yy"
               labelPlacement="outside"
               onChange={handleInputChange}
-              value={formData.completionDate}
+              value={formData.completion_date}
               style={inputStyle}
             />
 
@@ -145,7 +216,7 @@ export default function ProposeChangeModal({ isOpen, onClose }) {
           <Button flat color="error" onClick={onClose} style={buttonStyle}>
             Back
           </Button>
-          <Button color="primary" onClick={openModal} style={submitButtonStyle}>
+          <Button color="primary" onClick={handleSubmit} style={submitButtonStyle}>
             Submit Proposal
           </Button>
         </ModalFooter>

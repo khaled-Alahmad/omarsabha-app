@@ -70,6 +70,10 @@ export default function VendorSignIn() {
           expires: expiresIn7Days,
           path: "/",
         });
+        setCookie("userID", user.id, {
+          // expires: expiresIn7Days,
+          path: "/",
+        });
         setCookie("profileSetupVendor", user.profile_setup, {
           expires: expiresIn7Days,
           path: "/",

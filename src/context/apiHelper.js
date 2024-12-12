@@ -2,7 +2,7 @@ import { getCookie as getClientCookie } from "cookies-next";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_URL;
 
-async function apiRequest(endpoint, method = "GET", data = null, filters = {}) {
+async function apiRequest(endpoint, method = "GET", data = null, filters = {}, headers = {}) {
   try {
     let token;
 
@@ -14,9 +14,7 @@ async function apiRequest(endpoint, method = "GET", data = null, filters = {}) {
       // نحن على العميل
       token = getClientCookie("authToken");
     }
-    const headers = {
-      "Content-Type": "application/json",
-    };
+
     console.log("Token:", token);
 
     if (token) {
@@ -58,8 +56,8 @@ export async function fetchData(endpoint, filters = {}) {
   return await apiRequest(endpoint, "GET", null, filters);
 }
 
-export async function addData(endpoint, data) {
-  return await apiRequest(endpoint, "POST", data);
+export async function addData(endpoint, data, heder) {
+  return await apiRequest(endpoint, "POST", data, {}, heder);
 }
 
 export async function updateData(endpoint, data) {
