@@ -1,8 +1,9 @@
 import React from "react";
 import styles from "./ServiceDetails.module.css";
 import serviceImage from "@/assets/images/vendor/service-request.png";
-import { Divider } from "@nextui-org/react";
+import { Button, Divider } from "@nextui-org/react";
 import { fetchData } from "@/context/apiHelper";
+import Link from "next/link";
 
 export default async function ServiceDetails({ params }) {
   const { id } = params;
@@ -176,6 +177,20 @@ export default async function ServiceDetails({ params }) {
           </div>
         </div>
       </section>
+      <div className={styles.buttonGroup}>
+        <Button
+          className={styles.proposeButton}
+          color="default"
+          as={Link}
+          href="/vendor/proposals"
+        // onClick={openModal}
+        >
+          Cancel
+        </Button>
+        <Button className={styles.bidButton} color="primary">
+          Withdraw Proposal
+        </Button>
+      </div>
     </div>
   );
 }

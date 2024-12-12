@@ -71,12 +71,12 @@ export default function Filters({ filters }) {
             "!cursor-text",
           ],
         }}
-        placeholder="Search by names"
+        placeholder="Search..."
         startContent={
           <SearchIcon className="text-black/50 mb-0.5 dark:text-white/90 text-slate-400 pointer-events-none flex-shrink-0" />
         }
       />
-      <Select
+      {/* <Select
         placeholder="Filter by Services"
         size="lg"
         className=" lg:max-w-xs  "
@@ -94,7 +94,7 @@ export default function Filters({ filters }) {
             {animal.label}
           </SelectItem>
         ))}
-      </Select>
+      </Select> */}
     </div>
   );
 }

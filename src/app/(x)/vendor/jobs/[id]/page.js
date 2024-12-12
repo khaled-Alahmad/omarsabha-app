@@ -1,7 +1,11 @@
 import React from "react";
 import styles from "./JobDetailsDetails.module.css";
-import { fetchData } from "@/context/apiHelper";
-import { Divider } from "@nextui-org/react";
+import { addData, fetchData } from "@/context/apiHelper";
+import { Button, Divider } from "@nextui-org/react";
+import Link from "next/link";
+import toast from "react-hot-toast";
+import StartOrderButton from "./StartOrderButton";
+import CompletedOrderButton from "./CompletedOrderButton";
 
 export default async function JobDetails({ params }) {
   const { id } = params;
@@ -13,6 +17,10 @@ export default async function JobDetails({ params }) {
   if (!response || !response.success || !response.data) {
     return <div>Job not found or an error occurred.</div>;
   }
+  const header = {
+    "Content-Type": "application/json",
+  }
+
 
   const job = response.data;
   console.log(job);
@@ -27,6 +35,7 @@ export default async function JobDetails({ params }) {
     completion_date,
     service_request: serviceRequest,
     vendor,
+    updated_at,
     work_location: workLocation,
     images,
   } = job;
@@ -66,9 +75,13 @@ export default async function JobDetails({ params }) {
     },
     {
       label: "Awaiting Start",
-      status: "current",
-      date: "N/A",
-      time: "N/A",
+      status: "execute",
+      date: updated_at
+        ? new Date(updated_at).toLocaleDateString("en-US")
+        : "N/A",
+      time: updated_at
+        ? new Date(updated_at).toLocaleTimeString("en-US")
+        : "N/A",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -148,7 +161,7 @@ export default async function JobDetails({ params }) {
 
   const progresse = [
     { label: "Order Created", status: "created", percentage: 0 },
-    { label: "Awaiting Start", status: "current", percentage: 35 },
+    { label: "Awaiting Start", status: "execute", percentage: 35 },
     { label: "Order Completed", status: "completed", percentage: 65 },
     { label: "Payment Completed", status: "complete_payment", percentage: 100 },
   ];
@@ -171,7 +184,7 @@ export default async function JobDetails({ params }) {
         <p className={styles.description}>{description || "N/A"}</p>
         <div className={styles.detailsGrid}>
           <div>
-            <span>Category:</span> {serviceRequest?.title || "N/A"}
+            <span>Category:</span> {serviceRequest?.service?.name || "N/A"}
           </div>
           <div>
             <span>Payment Type:</span> {payment_type || "N/A"}
@@ -180,7 +193,7 @@ export default async function JobDetails({ params }) {
             <span>Flat Rate Amount:</span> ${price || "N/A"}
           </div>
           <div>
-            <span>Work Hours:</span> {works_hours || "N/A"}
+            <span>Work Hours:</span> {works_hours || "0"}
           </div>
           <div>
             <span>Start Date:</span>{" "}
@@ -239,13 +252,11 @@ export default async function JobDetails({ params }) {
             {progress.map((step, index) => (
               <span
                 key={index}
-                className={`${styles.progressLabel} ${
-                  step.status === "completed" ? styles.completed : ""
-                } ${step.status === "current" ? styles.current : ""} ${
-                  step.status === "complete_payment"
+                className={`${styles.progressLabel} ${step.status === "completed" ? styles.completed : ""
+                  } ${step.status === "current" ? styles.current : ""} ${step.status === "complete_payment"
                     ? styles.completePayment
                     : ""
-                } ${step.status === "created" ? styles.created : ""}`}
+                  } ${step.status === "created" ? styles.created : ""}`}
               >
                 {step.label}
               </span>
@@ -278,8 +289,15 @@ export default async function JobDetails({ params }) {
 
       {/* Action Buttons */}
       <div className={styles.buttonGroup}>
-        <button className={styles.backButton}>Back</button>
-        <button className={styles.startOrderButton}>Start Order</button>
+        <Button as={Link} href="/vendor/jobs" className={styles.backButton}>Back</Button>
+        {job.status === "execute" ? <>
+
+          <CompletedOrderButton jobId={id} />
+
+        </> : job.status === "completed" ? <></> : <>
+          <StartOrderButton jobId={id} />
+
+        </>}
       </div>
     </div>
   );

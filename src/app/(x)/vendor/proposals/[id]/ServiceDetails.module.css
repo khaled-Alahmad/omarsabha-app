@@ -148,7 +148,39 @@
   cursor: pointer;
   background: transparent;
 }
+.buttonGroup {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
 
+.proposeButton {
+  background-color: #fff;
+  color: var(--Foundation-Black-Text-Color-B75, #a6a6a6);
+  font-family: Poppins;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.25rem; /* 111.111% */
+  cursor: pointer;
+  padding: 1rem;
+
+  border-radius: 0.375rem;
+  border: 1px solid var(--Foundation-Black-Text-Color-B75, #a6a6a6);
+}
+
+.bidButton {
+  border-radius: 0.375rem;
+  background: var(--Foundation-Primary-color-P300, #fe8315);
+  color: var(--Foundation-White-text-color-W300, #fff);
+  font-family: Poppins;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 600;
+  padding: 1rem 2.125rem;
+
+  line-height: 1.25rem; /* 111.111% */
+}
 @media (max-width: 768px) {
   .detailsGrid {
     grid-template-columns: 1fr;

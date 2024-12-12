@@ -14,9 +14,10 @@ import { Button } from "@nextui-org/react";
 import Image from "next/image";
 import ServiceRequestForm from "@/components/vendor/service-request/ServiceRequestForm";
 import { useState } from "react";
+import { getCookie } from "cookies-next";
 export default function HeroSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const userRole = getCookie("userRole")
   return (
     <section
       className={styles.hero}
@@ -42,14 +43,22 @@ export default function HeroSection() {
             Best deal guarantee.
           </li>
         </ul>
-        <Button
+        {userRole === "vendor" ? <>  <Button
+          as={Link}
+          href="/request-service"
+          className={styles.ctaButton}
+        // onPress={() => setIsModalOpen(true)}
+        >
+          Get Started Now
+        </Button></> : <>  <Button
           // as={Link}
           // href="#"
           className={styles.ctaButton}
           onPress={() => setIsModalOpen(true)}
         >
           Request Service Now
-        </Button>
+        </Button></>}
+
       </div>
       <div className={styles.heroImage}>
         <Image src={ImageHero} alt="Hero Image" layout="responsive" />
@@ -62,7 +71,7 @@ export default function HeroSection() {
           src={ImageBt}
           alt="Bottom Wave Image"
           layout="responsive"
-          // objectFit="cover"
+        // objectFit="cover"
         />
       </div>
       <ServiceRequestForm

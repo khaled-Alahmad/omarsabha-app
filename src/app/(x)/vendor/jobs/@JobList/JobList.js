@@ -16,7 +16,7 @@ export default function JobList({ data }) {
             <div className={styles.proposalHeader}>
               <h3>{proposal.title}</h3>
               <span className={styles.status}>
-                Status: <span> {proposal.status} </span>
+                Status: <span className={proposal.status === "pending" ? styles.statusPending : proposal.status === "execute" ? styles.statusExecute : styles.statusComplete}> {proposal.status} </span>
               </span>
             </div>
             <p className={styles.date}>
@@ -28,21 +28,35 @@ export default function JobList({ data }) {
               <span>
                 <strong>Payment Type:</strong> {proposal.payment_type}
               </span>
-              <span>
+              {proposal.payment_type === "flat_rate" ? <>       <span>
                 {" "}
                 <strong>Flat Rate Amount:</strong> {proposal.price}
                 {" $"}
               </span>
-              <span>
-                {" "}
-                <strong>Hourly Rate:</strong> {proposal.price}
-                {" $"}
-              </span>
-              <span>
-                {" "}
-                <strong>Estimated Hours:</strong> {proposal.price}
-                {" $"}
-              </span>
+                <span>
+                  {" "}
+                  <strong>Hourly Rate:</strong> N/A
+
+                </span>
+                <span>
+                  {" "}
+                  <strong>Estimated Hours:</strong> N/A
+
+                </span></> : <>       <span>
+                  {" "}
+                  <strong>Flat Rate Amount:</strong> N/A
+                </span>
+                <span>
+                  {" "}
+                  <strong>Hourly Rate:</strong> {proposal.price}
+                  {" $"}
+                </span>
+                <span>
+                  {" "}
+                  <strong>Estimated Hours:</strong> {proposal.estimated_hours | "N/A"}
+
+                </span></>}
+
             </p>
           </div>
         </Link>
