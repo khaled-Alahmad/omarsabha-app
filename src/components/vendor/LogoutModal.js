@@ -31,6 +31,13 @@ export default function LogoutModal({ isOpen, onClose }) {
     );
     deleteCookie("authToken");
     deleteCookie("userRole");
+    deleteCookie("approveVendor");
+    deleteCookie("profileSetupVendor");
+    deleteCookie("userID");
+    deleteCookie("emailToConfirm");
+
+
+
     toast.success("Logout successful!");
 
     // Redirect to home page

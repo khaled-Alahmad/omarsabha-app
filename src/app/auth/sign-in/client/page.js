@@ -42,7 +42,6 @@ export default function VendorSignIn() {
       );
 
       const { access_token, user } = response.data;
-
       if (access_token) {
         // Set expiration date for cookies (7 days)
         const expiresIn7Days = new Date();
@@ -57,14 +56,34 @@ export default function VendorSignIn() {
           expires: expiresIn7Days,
           path: "/",
         });
-
+        expiresIn7Days.setDate(expiresIn7Days.getDate() + 1);
+        setCookie("emailToConfirm", user.email, {
+          expires: expiresIn7Days,
+          path: "/",
+        });
         // Show success message before navigation
         // toast.success("Login successful!");
         // console.log("clicked!");
-
+        // console.log(response);
+        setCookie("approveVendor", user.approve, {
+          expires: expiresIn7Days,
+          path: "/",
+        });
+        setCookie("userID", user.id, {
+          // expires: expiresIn7Days,
+          path: "/",
+        });
+        setCookie("profileSetupVendor", user.profile_setup, {
+          expires: expiresIn7Days,
+          path: "/",
+        });
         toast.success("Login successful!");
-        if (user.profile_setup == 0) {
-          router.push("/auth/profile-setup/vendor");
+        if (!user.approve) {
+          router.push("/auth/verification");
+          return;
+        } else if (!user.profile_setup) {
+          router.push("/auth/profile-setup/client");
+          return;
         } else {
           router.push("/");
         }
@@ -98,100 +117,104 @@ export default function VendorSignIn() {
       </div>
 
       <div className={styles.formSection}>
-        <h2 className={styles.title}>Homeowner Sign Up</h2>
-        <p className={styles.subtitle}>Enter detail to Sign in</p>
+        <div className={styles.formSectionAS}>
 
-        <form className={styles.form} onSubmit={handleSubmit}>
-          <Input
-            isClearable
-            variant="bordered"
-            label="Email or Phone Number"
-            placeholder="Enter your Email"
-            labelPlacement="outside"
-            fullWidth
-            className={styles.input}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+          <h2 className={styles.title}>Homeowner Sign Up</h2>
+          <p className={styles.subtitle}>Enter detail to Sign in</p>
 
-          <Input
-            label="Password"
-            variant="bordered"
-            placeholder="Enter your password"
-            labelPlacement="outside"
-            endContent={
-              <button
-                className="focus:outline-none"
-                type="button"
-                onClick={toggleVisibility}
-                aria-label="toggle password visibility"
-              >
-                {isVisible ? (
-                  <EyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
-                ) : (
-                  <EyeFilledIcon className="text-2xl text-default-400 pointer-events-none" />
-                )}
-              </button>
-            }
-            type={isVisible ? "text" : "password"}
-            fullWidth
-            value={password}
-            className={styles.input}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <a
-            href="/auth/forget-password/vendor"
-            className={styles.forgetPassword}
-          >
-            Forget Password?
-          </a>
-          <Button
-            type="submit"
-            variant="solid"
-            color="primary"
-            className={styles.signUpButton}
-          >
-            Sign In
-          </Button>
+          <form className={styles.form} onSubmit={handleSubmit}>
+            <Input
+              isClearable
+              variant="bordered"
+              label="Email or Phone Number"
+              placeholder="Enter your Email"
+              labelPlacement="outside"
+              fullWidth
+              className={styles.input}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
 
-          <div className={styles.dividerContainer}>
-            <Divider className={styles.divider} />
-            <span className={styles.dividerText}>Or</span>
-            <Divider className={styles.divider} />
-          </div>
+            <Input
+              label="Password"
+              variant="bordered"
+              placeholder="Enter your password"
+              labelPlacement="outside"
+              endContent={
+                <button
+                  className="focus:outline-none"
+                  type="button"
+                  onClick={toggleVisibility}
+                  aria-label="toggle password visibility"
+                >
+                  {isVisible ? (
+                    <EyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
+                  ) : (
+                    <EyeFilledIcon className="text-2xl text-default-400 pointer-events-none" />
+                  )}
+                </button>
+              }
+              type={isVisible ? "text" : "password"}
+              fullWidth
+              value={password}
+              className={styles.input}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <a
+              href="/auth/forget-password/vendor"
+              className={styles.forgetPassword}
+            >
+              Forget Password?
+            </a>
+            <Button
+              type="submit"
+              variant="solid"
+              color="primary"
+              className={styles.signUpButton}
+            >
+              Sign In
+            </Button>
 
-          <Button
-            variant="bordered"
-            color="primary"
-            startContent={
-              <img
-                src={facebookIcon.src}
-                alt="Facebook Icon"
-                className={styles.icon}
-              />
-            }
-            className={styles.socialButton}
-          >
-            Sign in with Facebook
-          </Button>
-          <Button
-            variant="bordered"
-            color="error"
-            startContent={
-              <img
-                src={googleIcon.src}
-                alt="Google Icon"
-                className={styles.icon}
-              />
-            }
-            className={styles.socialButton}
-          >
-            Sign in with Google
-          </Button>
-          <p className={styles.signInText}>
-            Already a member? <a href="/auth/sign-up/client">Sign Up</a>
-          </p>
-        </form>
+            <div className={styles.dividerContainer}>
+              <Divider className={styles.divider} />
+              <span className={styles.dividerText}>Or</span>
+              <Divider className={styles.divider} />
+            </div>
+
+            <Button
+              variant="bordered"
+              color="error"
+
+              startContent={
+                <img
+                  src={facebookIcon.src}
+                  alt="Facebook Icon"
+                  className={styles.icon}
+                />
+              }
+              className={styles.socialButton}
+            >
+              Sign in with Facebook
+            </Button>
+            <Button
+              variant="bordered"
+              color="error"
+              startContent={
+                <img
+                  src={googleIcon.src}
+                  alt="Google Icon"
+                  className={styles.icon}
+                />
+              }
+              className={styles.socialButton}
+            >
+              Sign in with Google
+            </Button>
+            <p className={styles.signInText}>
+              Already a member? <a href="/auth/sign-up/client">Sign Up</a>
+            </p>
+          </form>
+        </div>
       </div>
     </div>
   );

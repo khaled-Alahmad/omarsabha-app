@@ -19,7 +19,7 @@ import {
   useRouter,
   useSelectedLayoutSegment,
 } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { AcmeLogo } from "./AcmeLogo";
 import ServiceRequestClient from "./ServiceRequestClient";
 import {
@@ -69,6 +69,15 @@ export default function NavBar() {
     },
     { name: "Vendors", path: "/vendors", title: "Vendors - InstaHandi" },
   ];
+  const filteredMenuItems = useMemo(() => {
+    return menuItems.filter((item) => {
+      // Exclude 'request-service' if the user's role is 'client'
+      if (item.path === "/request-service" && userRole === "client") {
+        return false;
+      }
+      return true;
+    });
+  }, [userRole]);
 
   const handleClick = (title, path) => {
     document.title = title;
@@ -144,34 +153,26 @@ export default function NavBar() {
         </NavbarContent>
 
         <NavbarContent className="hidden sm:flex flex-1 justify-center gap-6">
-          {menuItems
-            .filter((item) => {
-              // Exclude 'request-service' if the user's role is 'client'
-              if (item.path === "/request-service" && userRole === "client") {
-                return false;
-              }
-              return true;
-            })
-            .map((item) => (
-              <NavbarItem key={item.name}>
-                <Link
-                  href={
-                    item.path === "/request-service" && !isAuthenticated
-                      ? "#"
-                      : item.path
-                  }
-                  className={`item-navbar ${
-                    isActive(item.path)
-                      ? "active-link underline underline-offset-4"
-                      : "text-black"
+          {filteredMenuItems.map((item) => (
+            <NavbarItem key={item.name}>
+              <a
+                href={
+                  item.path
+                  //  === "/request-service" && !isAuthenticated
+                  //   ? "#"
+                  //   : item.path
+                }
+                className={`item-navbar ${isActive(item.path)
+                  ? "active-link underline underline-offset-4"
+                  : "text-black"
                   }`}
-                  aria-current={isActive(item.path) ? "page" : undefined}
-                  onClick={() => handleClick(item.title, item.path)}
-                >
-                  {item.name}
-                </Link>
-              </NavbarItem>
-            ))}
+                aria-current={isActive(item.path) ? "page" : undefined}
+                onClick={() => handleClick(item.title, item.path)}
+              >
+                {item.name}
+              </a>
+            </NavbarItem>
+          ))}
         </NavbarContent>
         <NavbarContent
           className="sm:hidden justify-between w-full"
@@ -190,9 +191,8 @@ export default function NavBar() {
             <NavbarMenuItem key={item.name}>
               <Link
                 href={item.path}
-                className={`item-navbar ${
-                  isActive(item.path) ? "active-link" : ""
-                }`}
+                className={`item-navbar ${isActive(item.path) ? "active-link" : ""
+                  }`}
                 onClick={() => setIsMenuOpen(false)} // Close menu on click
               >
                 {item.name}

@@ -65,6 +65,15 @@ export default function VerificationCode() {
         // expires: expiresIn7Days,
         path: "/",
       });
+      setCookie("approveVendor", response.data.user.approve, {
+        expires: expiresIn7Days,
+        path: "/",
+      });
+
+      setCookie("profileSetupVendor", response.data.user.profile_setup, {
+        expires: expiresIn7Days,
+        path: "/",
+      });
       if (!response.data.user.profile_setup && response.data.role == "vendor") {
         router.push("/auth/profile-setup/vendor");
       }

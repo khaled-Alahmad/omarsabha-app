@@ -1,16 +1,18 @@
 import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
 
-export function middleware(request) {
-  const authToken = request.cookies.get("authToken")?.value;
-  const userRole = request.cookies.get("userRole")?.value;
-  const profileSetupVendor = request.cookies.get("profileSetupVendor")?.value;
-  const approveVendor = request.cookies.get("approveVendor")?.value;
+export async function middleware(request) {
+  const authToken = cookies().get("authToken")?.value;
+  const userRole = cookies().get("userRole")?.value;
+  const profileSetupVendor = cookies().get("profileSetupVendor")?.value;
+  const approveVendor = cookies().get("approveVendor")?.value;
 
   const pathname = new URL(request.url).pathname;
 
   console.log("Middleware Triggered for URL:", request.url);
   console.log("Auth Token:", authToken);
-  console.log("Profile Setup Vendor (Value):", profileSetupVendor);
+  console.log("User Role:", userRole);
+  console.log("Profile Setup Vendor:", profileSetupVendor);
   console.log("Approve Vendor:", approveVendor);
 
   // Define route patterns
@@ -20,11 +22,12 @@ export function middleware(request) {
     requestService: new URLPattern({ pathname: "/request-service" }),
     auth: new URLPattern({ pathname: "/auth/:path*" }),
     profileSetupVendor: "/auth/profile-setup/vendor",
+    profileSetupClient: "/auth/profile-setup/client",
     dashboard: "/dashboard",
     profile: "/profile",
   };
 
-  // Helper functions
+  // Helper function to check route matches
   const isRoute = (pattern) =>
     typeof pattern === "string"
       ? pathname.startsWith(pattern)
@@ -40,45 +43,28 @@ export function middleware(request) {
   const isVendorRoute =
     isRoute(patterns.vendor) || isRoute(patterns.requestService);
 
-  // Rules
+  // Define middleware rules
   const rules = [
     {
-      // Redirect to verification if vendor is not approved
+      // Redirect vendor to profile setup if profile is incomplete
       condition: () =>
         authToken &&
-        approveVendor === "false" &&
-        pathname !== patterns.profileSetupVendor,
-      redirectTo: "/auth/verification",
-    },
-    {
-      // Redirect to profile setup if profile is incomplete
-      condition: () =>
-        authToken &&
+        userRole === "vendor" &&
         profileSetupVendor === "false" &&
         pathname !== patterns.profileSetupVendor,
       redirectTo: "/auth/profile-setup/vendor",
     },
     {
-      // Allow access to /auth/profile-setup/vendor even if authenticated
+      // Redirect client to profile setup if profile is incomplete
       condition: () =>
         authToken &&
-        isRoute(patterns.auth) &&
-        pathname === patterns.profileSetupVendor,
-      action: () => NextResponse.next(),
+        userRole === "client" &&
+        profileSetupVendor === "false" &&
+        pathname !== patterns.profileSetupClient,
+      redirectTo: "/auth/profile-setup/client",
     },
     {
-      // Allow access to /auth routes if not authenticated
-      condition: () => isRoute(patterns.auth) && !authToken,
-      action: () => NextResponse.next(),
-    },
-    {
-      // Redirect authenticated users trying to access /auth routes to the homepage
-      condition: () =>
-        authToken && isRoute(patterns.auth) && pathname !== patterns.profileSetupVendor,
-      redirectTo: "/",
-    },
-    {
-      // Redirect unauthenticated users from protected routes to /auth/sign-in/vendor
+      // Redirect unauthenticated users from protected routes
       condition: () => !authToken && isProtectedRoute,
       redirectTo: "/auth/sign-in/vendor",
     },
@@ -96,13 +82,16 @@ export function middleware(request) {
   // Process rules
   for (const rule of rules) {
     if (rule.condition()) {
-      console.log(`Redirecting to: ${rule.redirectTo || "NextResponse.next()"}`);
+      console.log(
+        `Redirecting to: ${rule.redirectTo || "NextResponse.next()"}`
+      );
       return rule.redirectTo
         ? NextResponse.redirect(new URL(rule.redirectTo, request.url))
-        : rule.action();
+        : NextResponse.next();
     }
   }
 
+  console.log("No matching rule. Proceeding to NextResponse.next().");
   return NextResponse.next();
 }
 

@@ -93,21 +93,7 @@ export default function VendorProfileSetup() {
 
   return (
     <div className={styles.setupContainer}>
-      {/* <div className={styles.progressBar}>
-        {Array.from({ length: 3 }, (_, i) => (
-          <div
-            key={i}
-            className={`${styles.step} ${
-              currentStep === i + 1 ? styles.active : ""
-            }`}
-          >
-            <span className={styles.stepNumber}>{i + 1}</span>
-            <p className={styles.stepLabel}>
-              {["Basic Details", "Business Details", "File Upload"][i]}
-            </p>
-          </div>
-        ))}
-      </div> */}
+
       <div className={styles.progressContainer}>
         {steps.map((step, index) => (
           <div

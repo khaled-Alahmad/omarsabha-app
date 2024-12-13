@@ -187,6 +187,9 @@
   font-weight: 500;
   line-height: 1.25rem;
 }
+.formSectionAS {
+  width: 70%;
+}
 @media (max-width: 768px) {
   .container {
     flex-direction: column;
@@ -196,5 +199,8 @@
     height: 100%;
     object-fit: fill;
     border-radius: 0.75rem;
+  }
+  .formSectionAS {
+    width: 100%;
   }
 }
