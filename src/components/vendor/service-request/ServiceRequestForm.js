@@ -12,14 +12,16 @@ import StepContent from "./StepContent";
 import styles from "@/assets/css/ServiceRequest.module.css";
 
 export default function ServiceRequestForm({ isOpen, onClose }) {
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
-    startDate: null,
-    completionDate: null,
+    start_date: null,
+    completion_date: null,
+    title: "test",
     description: "",
-    serviceCategory: "",
-    paymentType: "flat",
-    hourlyRate: "",
+    service_id: "",
+    payment_type: "flat_rate",
+    estimated_hours: "",
+    price: "",
     mediaFiles: [],
     uploadProgress: 0,
   });
@@ -41,9 +43,8 @@ export default function ServiceRequestForm({ isOpen, onClose }) {
             {steps.map((step, index) => (
               <div
                 key={index}
-                className={`${styles.progressStep} ${
-                  index + 1 <= currentStep ? styles.active : ""
-                }`}
+                className={`${styles.progressStep} ${index + 1 <= currentStep ? styles.active : ""
+                  }`}
               >
                 <div className={styles.stepCircle}>
                   <span className={styles.stepNumber}>{index + 1}</span>
@@ -51,9 +52,8 @@ export default function ServiceRequestForm({ isOpen, onClose }) {
                 <span className={styles.stepLabel}>{step}</span>
                 {index < steps.length - 1 && (
                   <div
-                    className={`${styles.progressBar} ${
-                      index + 1 < currentStep ? styles.barActive : ""
-                    }`}
+                    className={`${styles.progressBar} ${index + 1 < currentStep ? styles.barActive : ""
+                      }`}
                   ></div>
                 )}
               </div>

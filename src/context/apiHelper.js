@@ -7,11 +7,11 @@ async function apiRequest(endpoint, method = "GET", data = null, filters = {}, h
     let token;
 
     if (typeof window === "undefined") {
-      // نحن على الخادم
+      // Running on the server
       const { cookies } = await import("next/headers");
       token = cookies().get("authToken")?.value;
     } else {
-      // نحن على العميل
+      // Running on the client
       token = getClientCookie("authToken");
     }
 
@@ -23,9 +23,7 @@ async function apiRequest(endpoint, method = "GET", data = null, filters = {}, h
 
     const url = new URL(`${API_BASE_URL}/${endpoint}`);
     if (method === "GET" && filters && Object.keys(filters).length > 0) {
-      Object.entries(filters).forEach(([key, value]) =>
-        url.searchParams.append(key, value)
-      );
+      Object.entries(filters).forEach(([key, value]) => url.searchParams.append(key, value));
     }
 
     const options = {
@@ -33,15 +31,24 @@ async function apiRequest(endpoint, method = "GET", data = null, filters = {}, h
       headers,
     };
 
+    // Handle FormData or JSON data
     if (data) {
-      options.body = JSON.stringify(data);
+      if (data instanceof FormData) {
+        // Do not set Content-Type for FormData; fetch handles it automatically
+        options.body = data;
+      } else {
+        headers["Content-Type"] = "application/json";
+        options.body = JSON.stringify(data);
+      }
     }
 
+    console.log(`Requesting ${method} ${url} with options:`, options);
+
     const response = await fetch(url, options);
-    console.log(response);
 
     if (!response.ok) {
       const errorResponse = await response.json();
+      console.error("API Error Response:", errorResponse);
       throw new Error(errorResponse.message || `Error: ${response.status}`);
     }
 
@@ -52,16 +59,22 @@ async function apiRequest(endpoint, method = "GET", data = null, filters = {}, h
   }
 }
 
+// Optimized functions
 export async function fetchData(endpoint, filters = {}) {
   return await apiRequest(endpoint, "GET", null, filters);
 }
 
-export async function addData(endpoint, data, heder) {
-  return await apiRequest(endpoint, "POST", data, {}, heder);
+export async function addData(endpoint, data, headers = {}) {
+  try {
+    return await apiRequest(endpoint, "POST", data, {}, headers);
+  } catch (error) {
+    console.error("Submission Error:", error);
+    throw error;
+  }
 }
 
 export async function updateData(endpoint, data) {
-  return await apiRequest(endpoint, "POST", data);
+  return await apiRequest(endpoint, "PUT", data);
 }
 
 export async function deleteData(endpoint) {

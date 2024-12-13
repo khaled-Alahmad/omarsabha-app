@@ -99,7 +99,7 @@ export default function ProposeChangeModal({ isOpen, onClose, serviceRequestId }
       onClose={onClose}
       closeButton
       backdrop="opaque"
-      size="4xl"
+      size="full"
     >
       <ModalContent className="p-4">
         <ModalHeader style={headerStyle}>

@@ -20,12 +20,18 @@ import fbIcon from "@/assets/icons/Social button.svg";
 
 import tikIcon from "@/assets/icons/lineicons_tiktok.svg";
 import instaIcon from "@/assets/icons/skill-icons_instagram.svg";
+import { addData, fetchData } from "@/context/apiHelper";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import Loading from "@/app/loading";
+import axios from "axios";
+import { getCookie } from "cookies-next";
 
 export default function StepContent({
   currentStep,
   setCurrentStep,
   formData,
-  setFormData,
+  setFormData
 }) {
   const handleNext = () => {
     setCurrentStep((prev) => prev + 1);
@@ -63,42 +69,136 @@ export default function StepContent({
       mediaFiles: prev.mediaFiles.filter((file) => file.name !== fileName),
     }));
   };
+  const [services, setServices] = useState([]);
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const response = await fetchData(`public/services`);
 
+        setServices(response.data || []);
+        console.log("services", services);
+      } catch (error) {
+        console.error("Error fetching services:", error);
+      }
+    };
+    fetchServices();
+  }, []);
+  // const submitData = async () => {
+  //   const fullFormData = new FormData();
+
+  //   Object.entries(formData).forEach(([key, value]) => {
+  //     if (key === "mediaFiles" && Array.isArray(value)) {
+  //       value.forEach((file) => {
+  //         fullFormData.append("media_files[]", file);
+  //       });
+  //     } else if (value !== undefined && value !== null) {
+  //       fullFormData.append(key, value);
+  //     }
+  //   });
+
+  //   console.log("Submitting FormData:");
+  //   for (let [key, value] of fullFormData.entries()) {
+  //     console.log(`${key}:`, value);
+  //   }
+  //   const token = getCookie("authToken");
+
+  //   try {
+  //     const response = await axios.post("https://backend.instahandi.com/api/clients/service-requests", fullFormData, {
+  //       headers: {
+  //         "Authorization": `Bearer ${token}`
+
+  //       }
+  //     });
+
+  //     if (response?.status === 200 || response?.success) {
+  //       toast.success("Service request submitted successfully!");
+  //       setCurrentStep(3); // Move to the next step
+  //     } else {
+  //       const errorMessage =
+  //         response?.message || "Failed to submit the service request.";
+  //       toast.error(`Error: ${errorMessage}`);
+  //       console.error("Server Response:", response);
+  //     }
+  //   } catch (error) {
+  //     const errorMessage =
+  //       error.response?.data?.message || "An unexpected error occurred.";
+  //     toast.error(`Error: ${errorMessage}`);
+  //     console.error("Submission Error:", error);
+  //   }
+  // };
+  const submitData = async () => {
+    const fullFormData = new FormData();
+
+    Object.entries(formData).forEach(([key, value]) => {
+      if (key === "mediaFiles" && Array.isArray(value)) {
+        value.forEach((file) => fullFormData.append("media_files[]", file));
+      } else if (value !== undefined && value !== null) {
+        fullFormData.append(key, value);
+      }
+    });
+
+    console.log("Submitting FormData:");
+    for (let [key, value] of fullFormData.entries()) {
+      console.log(`${key}:`, value);
+    }
+
+    try {
+      const response = await addData("clients/service-requests", fullFormData);
+
+      if (response?.success) {
+        toast.success("Service request submitted successfully!");
+        setCurrentStep(4); // Move to the next step
+      }
+      // toast.success("Service request submitted successfully!");
+    } catch (error) {
+      toast.error(`Error: ${error.message}`);
+    } finally {
+      setFormData({});
+    }
+  };
+
+  if (!services) {
+    return <Loading />
+  }
   return (
     <div className={styles.stepContainer}>
-      {currentStep === 0 && (
+      {currentStep === 1 && (
         <>
           <h3 className={styles.title}>Service Details</h3>
           <Select
-            placeholder="Service Category"
-            label="Service Category"
-            labelPlacement="outside"
+            label="Service Categories"
+            placeholder="Select a category"
             variant="bordered"
-            size="lg"
-            radius="md"
-            onChange={(value) =>
-              setFormData({ ...formData, serviceCategory: value })
-            }
-            value={formData.serviceCategory || ""}
+            labelPlacement="outside"
+            fullWidth
+            value={formData.service_id}
+            onChange={(selectedValue) => {
+              console.log("Selected Value: ", selectedValue.target.value);
+              setFormData({ ...formData, service_id: selectedValue.target.value });
+            }}
           >
-            <SelectItem value="electrician">Electrician</SelectItem>
-            <SelectItem value="plumber">Plumber</SelectItem>
+            {services.map((service) => (
+              <SelectItem key={service.id} value={service.id}>
+                {service.name}
+              </SelectItem>
+            ))}
           </Select>
+
           <RadioGroup
             orientation="vertical"
             label="Select Payment type"
             labelPlacement="outside"
             variant="bordered"
             color="primary"
-            value={formData.paymentType || ""}
+            value={formData.payment_type || ""}
             onChange={(e) => {
-              setFormData({ ...formData, paymentType: e.target.value });
+              setFormData({ ...formData, payment_type: e.target.value });
             }}
           >
-            <Radio value="flat">Flat Rate</Radio>
-            <Radio value="hourly">Hourly Rate</Radio>
+            <Radio value="flat_rate">Flat Rate</Radio>
+            <Radio value="hourly_rate">Hourly Rate</Radio>
           </RadioGroup>
-          {formData.paymentType === "hourly" && (
+          {formData.payment_type === "hourly_rate" && (
             <>
               <Input
                 placeholder="Hourly Rate"
@@ -109,9 +209,9 @@ export default function StepContent({
                 size="lg"
                 radius="md"
                 onChange={(e) =>
-                  setFormData({ ...formData, hourlyRate: e.target.value })
+                  setFormData({ ...formData, price: e.target.value })
                 }
-                value={formData.hourlyRate || ""}
+                value={formData.price || ""}
               />
               <Select
                 placeholder="Estimated Hours"
@@ -121,9 +221,9 @@ export default function StepContent({
                 size="lg"
                 radius="md"
                 onChange={(value) =>
-                  setFormData({ ...formData, estimatedHours: value })
+                  setFormData({ ...formData, estimated_hours: value.target.value })
                 }
-                value={formData.estimatedHours || ""}
+                value={formData.estimated_hours || ""}
               >
                 <SelectItem value="1-2">1-2 Hours</SelectItem>
                 <SelectItem value="2-4">2-4 Hours</SelectItem>
@@ -131,7 +231,7 @@ export default function StepContent({
               </Select>
             </>
           )}
-          {formData.paymentType === "flat" && (
+          {formData.payment_type === "flat_rate" && (
             <Input
               placeholder="Flat Rate"
               label="Flat Rate"
@@ -141,9 +241,9 @@ export default function StepContent({
               size="lg"
               radius="md"
               onChange={(e) =>
-                setFormData({ ...formData, flatRate: e.target.value })
+                setFormData({ ...formData, price: e.target.value })
               }
-              value={formData.flatRate || ""}
+              value={formData.price || ""}
             />
           )}
 
@@ -158,10 +258,10 @@ export default function StepContent({
               // Parse the selected date to a `CalendarDate` object
               if (value) {
                 const parsedDate = parseDate(value.toString());
-                setFormData({ ...formData, startDate: parsedDate });
+                setFormData({ ...formData, start_date: parsedDate });
               }
             }}
-            defaultValue={formData.startDate || null} // Pass a valid CalendarDate object or null
+            defaultValue={formData.start_date || null} // Pass a valid CalendarDate object or null
           />
           <DatePicker
             label="Service Completion Date"
@@ -173,10 +273,10 @@ export default function StepContent({
             onChange={(value) => {
               if (value) {
                 const parsedDate = parseDate(value.toString());
-                setFormData({ ...formData, completionDate: parsedDate });
+                setFormData({ ...formData, completion_date: parsedDate });
               }
             }}
-            defaultValue={formData.completionDate || null} // Pass a valid CalendarDate object or null
+            defaultValue={formData.completion_date || null} // Pass a valid CalendarDate object or null
           />
           <Textarea
             placeholder="Description"
@@ -191,6 +291,19 @@ export default function StepContent({
               setFormData({ ...formData, description: e.target.value })
             }
             value={formData.description || ""} // Use defaultValue for uncontrolled behavior
+          />
+          <Input
+            placeholder="Title"
+            label="Title"
+            labelPlacement="outside"
+            variant="bordered"
+            // type="number"
+            size="lg"
+            radius="md"
+            onChange={(e) =>
+              setFormData({ ...formData, title: e.target.value })
+            }
+            value={formData.title || ""}
           />
           {/* Media Upload Section */}
           <div className={styles.mediaUploadSection}>
@@ -248,7 +361,7 @@ export default function StepContent({
         </>
       )}
 
-      {currentStep === 1 && (
+      {currentStep === 2 && (
         <>
           <h3 className={styles.title}>Service Location</h3>
           <Input
@@ -259,9 +372,9 @@ export default function StepContent({
             size="lg"
             radius="md"
             onChange={(e) =>
-              setFormData({ ...formData, streetAddress: e.target.value })
+              setFormData({ ...formData, street_address: e.target.value })
             }
-            value={formData.streetAddress || ""}
+            value={formData.street_address || ""}
           />
           <Input
             placeholder="City"
@@ -293,9 +406,9 @@ export default function StepContent({
             variant="bordered"
             radius="md"
             onChange={(e) =>
-              setFormData({ ...formData, postalCode: e.target.value })
+              setFormData({ ...formData, zip_code: e.target.value })
             }
-            value={formData.postalCode || ""}
+            value={formData.zip_code || ""}
           />
           <Input
             placeholder="Country"
@@ -309,6 +422,7 @@ export default function StepContent({
             }
             value={formData.country || ""}
           />
+
           <div className="flex justify-around items-center mt-4">
             <Button className={styles.backButton} onPress={handleBack}>
               Back
@@ -320,7 +434,7 @@ export default function StepContent({
         </>
       )}
 
-      {currentStep === 2 && (
+      {currentStep === 3 && (
         <>
           <div className="flex flex-col justify-center align-middle items-center">
             <h3 className={styles.title}>Review Submission</h3>
@@ -410,13 +524,13 @@ export default function StepContent({
             <Button className={styles.backButton} onPress={handleBack}>
               Back
             </Button>
-            <Button className={styles.nextButton} onPress={handleNext}>
+            <Button className={styles.nextButton} onClick={submitData}>
               Submit
             </Button>
           </div>
         </>
       )}
-      {currentStep === 3 && (
+      {currentStep === 4 && (
         <>
           <div
             className="flex flex-col align-middle items-center text-center"
