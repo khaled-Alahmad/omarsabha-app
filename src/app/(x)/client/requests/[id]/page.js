@@ -13,7 +13,8 @@ export default async function ServiceDetails({ params }) {
     return <div>No service details found.</div>;
   }
 
-  const { proposals } = response.data;
+  const proposals = response.data;
+  console.log("proposals", proposals);
 
   return (
     <div className={styles.container}>

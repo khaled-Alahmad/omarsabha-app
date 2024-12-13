@@ -4,6 +4,7 @@ import SearchFilter from "./@components/SearchFilter";
 import { Tabs, Tab } from "./@components/Tabs";
 import styles from "./Requests.module.css";
 import Pagination from "../../vendor/proposals/@Pagination/Pagination";
+import RequestListTow from "./@components/RequestListTow";
 
 export default async function RequestsPage({ searchParams }) {
   const filters = {
@@ -14,13 +15,13 @@ export default async function RequestsPage({ searchParams }) {
   };
 
   // Fetch data based on query params
-  const activeRequests = await fetchData(`clients/service-requests`, filters);
+  const activeRequests = await fetchData(`clients/service-requests?status=pending`, filters);
   const cancelledRequests = await fetchData(
     `clients/service-requests?status=canceled`,
     filters
   );
 
-  return (
+  return (  
     <div className={styles.container}>
 
       <SearchFilter />
@@ -34,7 +35,7 @@ export default async function RequestsPage({ searchParams }) {
 
         <Tab title="Cancelled Requests" tabKey="cancelled">
           {/* Cancelled Requests List */}
-          <RequestList requests={cancelledRequests.data} />
+          <RequestListTow requests={cancelledRequests.data} />
           <Pagination meta={cancelledRequests.meta} />
         </Tab>
       </Tabs>
