@@ -65,7 +65,7 @@ export default function SearchFilter() {
           <SearchIcon className="text-black/50 mb-0.5 dark:text-white/90 text-slate-400 pointer-events-none flex-shrink-0" />
         }
       />
-      <Select
+      {/* <Select
         placeholder="Filter by Date"
         size="lg"
         className=" lg:max-w-xs  "
@@ -81,7 +81,7 @@ export default function SearchFilter() {
       >
         <SelectItem key="recent">Most Recent</SelectItem>
         <SelectItem key="oldest">Oldest</SelectItem>
-      </Select>
+      </Select> */}
       {/* <Dropdown>
         <DropdownTrigger>
           <button className={styles.filterButton}>Filter by Date</button>

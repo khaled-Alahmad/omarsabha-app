@@ -9,7 +9,9 @@ async function apiRequest(endpoint, method = "GET", data = null, filters = {}, h
     if (typeof window === "undefined") {
       // Running on the server
       const { cookies } = await import("next/headers");
-      token = cookies().get("authToken")?.value;
+      const cookieStore = await cookies();
+      const authTokenCookie = cookieStore.get("authToken"); // Await cookies() before accessing
+      token = authTokenCookie?.value || null;
     } else {
       // Running on the client
       token = getClientCookie("authToken");
@@ -23,7 +25,9 @@ async function apiRequest(endpoint, method = "GET", data = null, filters = {}, h
 
     const url = new URL(`${API_BASE_URL}/${endpoint}`);
     if (method === "GET" && filters && Object.keys(filters).length > 0) {
-      Object.entries(filters).forEach(([key, value]) => url.searchParams.append(key, value));
+      Object.entries(filters).forEach(([key, value]) =>
+        url.searchParams.append(key, value)
+      );
     }
 
     const options = {

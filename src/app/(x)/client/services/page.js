@@ -17,9 +17,17 @@ export default async function RequestsPage({ searchParams }) {
   };
 
   // Fetch data based on query params
-  const activeRequests = await fetchData(`clients/orders`, filters);
-  const cancelledRequests = await fetchData(
-    `clients/orders`,
+  const pendingRequests = await fetchData(`clients/orders?status=pending`, filters);
+  const executeRequests = await fetchData(
+    `clients/orders?status=execute`,
+    filters
+  );
+  const completedRequests = await fetchData(
+    `clients/orders?status=completed`,
+    filters
+  );
+  const canceledRequests = await fetchData(
+    `clients/orders?status=canceled`,
     filters
   );
 
@@ -30,24 +38,24 @@ export default async function RequestsPage({ searchParams }) {
       <Tabs>
         <Tab title="Awaiting start" tabKey="active">
           {/* Active Requests List */}
-          <RequestList requests={activeRequests.data} />
-          <Pagination meta={activeRequests.meta} />
+          <RequestList requests={pendingRequests.data} />
+          <Pagination meta={pendingRequests.meta} />
         </Tab>
 
         <Tab title="Ongoing services" tabKey="ongoing">
           {/* Cancelled Requests List */}
-          <RequestListTow requests={cancelledRequests.data} />
-          <Pagination meta={cancelledRequests.meta} />
+          <RequestListTow requests={executeRequests.data} />
+          <Pagination meta={executeRequests.meta} />
         </Tab>
         <Tab title="Completed" tabKey="completed">
           {/* Cancelled Requests List */}
-          <RequestListThree requests={cancelledRequests.data} />
-          <Pagination meta={cancelledRequests.meta} />
+          <RequestListThree requests={completedRequests.data} />
+          <Pagination meta={completedRequests.meta} />
         </Tab>
         <Tab title="Cancelled services" tabKey="cancelled">
           {/* Cancelled Requests List */}
-          <RequestListFour requests={cancelledRequests.data} />
-          <Pagination meta={cancelledRequests.meta} />
+          <RequestListFour requests={canceledRequests.data} />
+          <Pagination meta={canceledRequests.meta} />
         </Tab>
       </Tabs>
     </div>

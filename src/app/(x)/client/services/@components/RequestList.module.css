@@ -5,6 +5,7 @@
   border: 1px solid #e5e7eb;
   background-color: #fff; */
   display: flex;
+  width: 100%;
   flex-direction: column;
   gap: 20px;
   border-radius: 0.75rem;

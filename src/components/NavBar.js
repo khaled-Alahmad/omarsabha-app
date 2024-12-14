@@ -18,25 +18,21 @@ import {
   usePathname,
   useRouter,
   useSelectedLayoutSegment,
+  // useSelectedLayoutSegment,
 } from "next/navigation";
 import { useState, useEffect, useMemo } from "react";
 import { AcmeLogo } from "./AcmeLogo";
 import ServiceRequestClient from "./ServiceRequestClient";
-import {
-  FaUser,
-  FaFileAlt,
-  FaBriefcase,
-  FaDollarSign,
-  FaQuestionCircle,
-  FaSignOutAlt,
-} from "react-icons/fa";
-import { getCookie } from "cookies-next";
 
 import avatarImage from "@/assets/icons/avatar.png";
 import notificationIcon from "@/assets/icons/notification.svg";
 import LogoutModal from "./vendor/LogoutModal";
 
-export default function NavBar() {
+export default function NavBar({ userRole, authToken }) {
+  console.log("userRole:", userRole);
+  console.log("authToken:", authToken);
+
+
   const router = useRouter();
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -47,10 +43,11 @@ export default function NavBar() {
   const closeModalLogOutOpen = () => setIsModalLogOutOpen(false);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  // const [isAuthenticated, setIsAuthenticated] = useState(false);
   const currentPath = usePathname();
+
   const activeSegment = useSelectedLayoutSegment();
-  const userRole = getCookie("userRole");
+  // const userRole = getCookie("userRole");
   // console.log(role);
 
   const menuItems = [
@@ -82,9 +79,9 @@ export default function NavBar() {
   const handleClick = (title, path) => {
     document.title = title;
     setIsMenuOpen(false);
-    if (path === "/request-service" && !isAuthenticated) setIsModalOpen(true);
+    if (path === "/request-service" && !authToken) setIsModalOpen(true);
   };
-  const role = getCookie("userRole");
+  // const role = getCookie("userRole");
 
   // Routes for vendor
   const vendorRoutes = {
@@ -107,7 +104,7 @@ export default function NavBar() {
   };
 
   // Determine which routes to use based on role
-  const routes = role === "vendor" ? vendorRoutes : clientRoutes;
+  const routes = userRole === "vendor" ? vendorRoutes : clientRoutes;
 
   const handleRoute = (key) => {
     if (key === "logout") {
@@ -126,14 +123,14 @@ export default function NavBar() {
     const activeItem = menuItems.find((item) => item.path === currentPath);
     if (activeItem) document.title = activeItem.title;
   }, [currentPath]);
-  const authToken = getCookie("authToken"); // Synchronously check the cookie
-  useEffect(() => {
-    if (authToken) {
-      setIsAuthenticated(true);
-    } else {
-      setIsAuthenticated(false);
-    }
-  }, [authToken]);
+  // const authToken = getCookie("authToken"); // Synchronously check the cookie
+  // useEffect(() => {
+  //   if (authToken) {
+  //     setIsAuthenticated(true);
+  //   } else {
+  //     setIsAuthenticated(false);
+  //   }
+  // }, [authToken]);
   return (
     <>
       <Navbar
@@ -202,7 +199,7 @@ export default function NavBar() {
         </NavbarMenu>
 
         <NavbarContent justify="end" className="sm:flex">
-          {isAuthenticated ? (
+          {authToken ? (
             <>
               <NavbarItem>
                 <Dropdown>
@@ -239,7 +236,7 @@ export default function NavBar() {
                       className="rounded-full w-8 h-8 cursor-pointer"
                     />
                   </DropdownTrigger>
-                  {role === "vendor" && (
+                  {userRole === "vendor" && (
                     <DropdownMenu
                       aria-label="Vendor Menu"
                       onAction={handleRoute}
@@ -425,7 +422,7 @@ export default function NavBar() {
                       </DropdownItem>
                     </DropdownMenu>
                   )}
-                  {role === "client" && (
+                  {userRole === "client" && (
                     <DropdownMenu
                       aria-label="Client Menu"
                       onAction={handleRoute}

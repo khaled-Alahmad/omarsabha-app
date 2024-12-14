@@ -90,7 +90,7 @@ export default async function ServicesPage() {
               src={ImageBt}
               alt="Bottom Wave Image"
               layout="responsive"
-              // objectFit="cover"
+            // objectFit="cover"
             />
           </div>
         </div>
@@ -116,7 +116,7 @@ export default async function ServicesPage() {
               <input type="text" placeholder="Search for services" />
             </div>
 
-            <Button as={Link} href="#" className={styles.searchButton}>
+            <Button className={styles.searchButton}>
               Search
             </Button>
           </div>
@@ -193,9 +193,10 @@ export default async function ServicesPage() {
         <div className={styles.sellButton}>
           <Link
             // as={Link}
-            href="/auth/sign-up/vendor"
+
+            href={"/auth/sign-up/vendor"}
             className={`${styles.ctaButton} mb-2`}
-            // style={{ flex: "1" }}
+          // style={{ flex: "1" }}
           >
             Sign Up as Vendor
           </Link>

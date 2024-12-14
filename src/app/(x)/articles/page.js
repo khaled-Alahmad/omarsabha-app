@@ -106,7 +106,7 @@ export default function ArticlesPage() {
         <h1 className={styles.recentArticleTitle}>Recent Article</h1>
         <div className={styles.recentArticleContainer}>
           <div className={styles.recentArticleImage}>
-            <Image src={articleImage} alt="Frame Image" />
+            <Image src={articleImage} alt="Frame Image" layout="responsive" />
           </div>
           <div className={styles.recentArticleContent}>
             <h2 className={styles.recentArticleContentTitle}>

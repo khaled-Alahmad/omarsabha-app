@@ -10,6 +10,7 @@ import HeroSection from "./(x)/website/@home/hero/page";
 import FloatingButtonWrapper from "./(x)/website/@home/floating-button-wrapper/page";
 import Faq from "./(x)/website/@home/faq/page";
 import Testimonials from "./(x)/website/@home/testimonials/page";
+import { cookies } from "next/headers";
 
 // The main Home component
 export default async function Home() {
@@ -17,10 +18,12 @@ export default async function Home() {
   // const toggleChat = () => {
   //   setIsChatOpen(!isChatOpen);
   // };
-
+  const cookieStore = cookies();
+  const userRole = cookieStore.get("userRole")?.value || null;
+  const authToken = cookieStore.get("authToken")?.value || null;
   return (
     <>
-      <NavBar />
+      <NavBar userRole={userRole} authToken={authToken} />
 
       <div className={styles.home}>
         <HeroSection />

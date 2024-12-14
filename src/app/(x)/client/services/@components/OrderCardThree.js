@@ -13,7 +13,7 @@ export default function OrderCardThree({ data }) {
   } = data;
 
   return (
-    <div className={styles.card}>
+    <div className={styles.card} >
       {/* Vendor and Details */}
       <div className={styles.vendorDetails}>
         <div className={styles.vendorInfo}>
