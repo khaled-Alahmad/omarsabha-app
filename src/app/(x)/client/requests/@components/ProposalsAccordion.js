@@ -11,6 +11,15 @@ export default function ProposalsAccordion({ proposals }) {
   const toggleProposal = (id) => {
     setOpenProposalId((prevId) => (prevId === id ? null : id));
   };
+  console.log(proposals);
+
+  if (proposals?.proposals?.length <= 0) {
+    return <div style={{
+      textAlign: "center",
+      height: "100vh"
+    }}>No service details found.</div>;
+  }
+
   const vendor = {
     user: {
       first_name: "JJ",
@@ -31,7 +40,7 @@ export default function ProposalsAccordion({ proposals }) {
 
   return (
     <div className={styles.container}>
-      {proposals.map((proposal) => {
+      {proposals?.proposals?.map((proposal) => {
         const isOpen = openProposalId === proposal.id;
         return (
           <div key={proposal.id} className={styles.proposal}>
@@ -42,35 +51,41 @@ export default function ProposalsAccordion({ proposals }) {
             >
               {!isOpen && (
                 <>
-                  <div className={styles.vendorInfo}>
-                    <img
-                      src={
-                        // proposal.vendor.user.profile_photo ||
-                        "https://placehold.co/600x400"
-                      }
-                      alt={`${proposal.vendor.user.first_name} ${proposal.vendor.user.last_name}`}
-                      className={styles.avatar}
-                    />
-                    <h4>
-                      {proposal.vendor.user.first_name}{" "}
-                      {proposal.vendor.user.last_name}
-                    </h4>
-                  </div>
-                  <Divider orientation="vertical" className="mx-4 h-16" />
+
+                  {/* <Divider orientation="vertical" className="mx-4 h-16" /> */}
 
                   <div className={styles.sectionCard}>
+                    <div className={styles.vendorInfo}>
+                      <img
+                        src={
+                          proposal.vendor.user.profile_photo ||
+                          "https://placehold.co/600x400"
+                        }
+                        alt={`${proposal.vendor.user.first_name} ${proposal.vendor.user.last_name}`}
+                        className={styles.avatar}
+                      />
+                      <h4>
+                        {proposal.vendor.user.first_name}{" "}
+                        {proposal.vendor.user.last_name}
+                      </h4>
+                    </div>
                     <p>
-                      <b> Payment Type:</b> {proposal.payment_type}
+                      <b> Payment Type:</b> {proposals.payment_type}
                     </p>
-                    <Divider orientation="vertical" className="mx-4 h-16" />
+                    {/* <Divider orientation="vertical" className="mx-4 h-16" /> */}
+                    {proposals.payment_type === "flat_rate" ? <>   <p>
+                      <b>Flat Rate:</b> {proposals.price}
+                    </p></> : <>   <p>
+                      <b>Hourly Rate:</b> {proposals.price}
+                    </p></>}
+
+                    {/* <p>
+                      <b>Hourly Rate:</b> {proposal.price}
+                    </p> */}
+                    {/* <Divider orientation="vertical" className="mx-4 h-16" /> */}
 
                     <p>
-                      <b>Hourly Rate:</b> {proposal.payment_type}
-                    </p>
-                    <Divider orientation="vertical" className="mx-4 h-16" />
-
-                    <p>
-                      <b>Complete Date:</b> {proposal.payment_type}
+                      <b>Complete Date:</b> {new Date(proposals.completion_date).toLocaleDateString("en-US")}
                     </p>
                   </div>
                 </>
@@ -111,32 +126,54 @@ export default function ProposalsAccordion({ proposals }) {
               <>
                 <section className={styles.section}>
                   <h3 className={styles.subheader}>Description</h3>
-                  <p className={styles.description}>{proposal.message}</p>
+                  <p className={styles.description}>{proposals.description}</p>
                   <div className={styles.detailsGrid}>
                     <div>
-                      <span>Category:</span> {proposal.title}
+                      <span>Category:</span> {proposals.service?.name}
                     </div>
                     <div>
-                      <span>Payment Type:</span> {proposal.payment_type}
+                      <span>Payment Type:</span> {proposals.payment_type}
                     </div>
-                    <div>
+                    {proposals.payment_type === "flat_rate" ? <>
+
+                      <div>
+                        <span>Flat Rate Amount:</span> ${proposals.price}
+                      </div>
+                      <div>
+                        <span>Hourly Rate Amount:</span> N/A
+                      </div>
+                      <div>
+                        <span>Estimated Hours:</span> N/A
+                      </div>
+                    </> : <>
+                      <div>
+                        <span>Flat Rate Amount:</span> N/A
+                      </div>
+                      <div>
+                        <span>Hourly Rate Amount:</span> ${proposals.price}
+                      </div>
+                      <div>
+                        <span>Estimated Hours:</span> {proposals.estimated_hours}
+                      </div>
+                    </>}
+                    {/* <div>
                       <span>Flat Rate Amount:</span> ${proposal.price}
                     </div>
                     <div>
                       <span>Hourly Rate:</span> NA hourly
-                    </div>
-                    <div>
+                    </div> */}
+                    {/* <div>
                       <span>Estimated Hours:</span> {proposal.estimated_hours}
-                    </div>
+                    </div> */}
                     <div>
                       <span>Start Date:</span>{" "}
-                      {new Date(proposal.start_date).toLocaleDateString(
+                      {new Date(proposals.start_date).toLocaleDateString(
                         "en-CA"
                       )}
                     </div>
                     <div>
                       <span>Completion Date:</span>{" "}
-                      {new Date(proposal.completion_date).toLocaleDateString(
+                      {new Date(proposals.completion_date).toLocaleDateString(
                         "en-CA"
                       )}
                     </div>
@@ -145,23 +182,23 @@ export default function ProposalsAccordion({ proposals }) {
                     </div>
                     <div>
                       <span>Street Address:</span>{" "}
-                      {proposal.vendor?.location?.street_address || "N/A"}
+                      {proposals?.location?.street_address || "N/A"}
                     </div>
                     <div>
                       <span>City:</span>{" "}
-                      {proposal.vendor?.location?.city || "N/A"}
+                      {proposals?.location?.city || "N/A"}
                     </div>
                     <div>
                       <span>State:</span>{" "}
-                      {proposal.vendor?.location?.state || "N/A"}
+                      {proposals?.location?.state || "N/A"}
                     </div>
                     <div>
                       <span>Postal Code:</span>{" "}
-                      {proposal.vendor?.location?.zip_code || "N/A"}
+                      {proposals?.location?.zip_code || "N/A"}
                     </div>
                     <div>
                       <span>Country:</span>{" "}
-                      {proposal.vendor?.location?.country || "N/A"}
+                      {proposals?.location?.country || "N/A"}
                     </div>
                   </div>
                   <div className={styles.imageGrid}>
@@ -186,7 +223,7 @@ export default function ProposalsAccordion({ proposals }) {
                   className="my-4 h-1 rounded mx-4 "
                   style={{ width: "98%" }}
                 />
-                <VendorCard vendor={vendor} />
+                <VendorCard vendor={proposal} serviceId={proposals.id} />
               </>
             )}
           </div>

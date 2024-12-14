@@ -1,8 +1,8 @@
 .sectionCard {
-  display: flex;
-  flex: 1;
-  margin: 2rem;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  width: 100%;
   align-items: center;
 }
 .sectionCard p {
@@ -33,6 +33,22 @@
   /* background-color: #f9f9f9; */
   cursor: pointer;
   transition: background-color 0.2s;
+}
+.sectionCard > *:not(:last-child):not(:nth-child(4)) {
+  border-right: 1px solid #e5e7eb; /* الحافة اليمنى */
+  /* padding-right: 1rem; إضافة مساحة داخلية على اليمين */
+}
+.sectionCard > *:not(:first-child):not(:nth-child(5)) {
+  display: flex;
+  /* height: 4rem; */
+  align-items: center;
+  justify-content: center;
+}
+.sectionCard > * {
+  /* display: flex; */
+  height: 4rem;
+  /* align-items: center; */
+  /* justify-content: center; */
 }
 
 /* .proposalHeader:hover {
@@ -174,4 +190,20 @@
   object-fit: cover;
   border-radius: 0.90519rem;
   border: 1.819px solid rgba(0, 0, 0, 0.2);
+}
+@media (max-width: 768px) {
+  .detailsGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+  .imageGrid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 1rem 0rem;
+  }
+  .image {
+    width: 100%;
+  }
 }

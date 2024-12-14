@@ -12,6 +12,8 @@ export default function RequestList({ data }) {
     return <p className={styles.noDataMessage}>Data not found!</p>;
   }
 
+  console.log("data:", data);
+
   // Render data when available
   return (
     <div className={styles.requestList}>
@@ -19,7 +21,7 @@ export default function RequestList({ data }) {
         <Link key={i} href={`/request-service/${item.id}`} >
           <div className={styles.requestCard} >
             <img
-              src={item.images[0] || "https://placehold.co/600x400"}
+              src={item.images[0]?.path || "https://placehold.co/600x400"}
               alt="Service Request"
               className={styles.image}
             />

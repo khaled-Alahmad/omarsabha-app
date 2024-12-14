@@ -11,7 +11,7 @@ import {
 import styles from "./HireConfirmModal.module.css";
 import InfoIcons from "@/assets/icons/InfoIcons";
 
-export default function HireConfirmModal({ isOpen, onClose }) {
+export default function HireConfirmModal({ isOpen, onClose, onSubmit }) {
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="3xl" closeButton>
       <ModalContent>
@@ -38,7 +38,7 @@ export default function HireConfirmModal({ isOpen, onClose }) {
           >
             Cancel
           </Button>
-          <Button className={styles.hireButton} color="success">
+          <Button className={styles.hireButton} color="success" onClick={onSubmit}>
             Confirm Hire
           </Button>
         </ModalFooter>

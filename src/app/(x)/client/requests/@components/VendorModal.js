@@ -11,23 +11,25 @@ import {
 import styles from "./VendorModal.module.css";
 import HireConfirmModal from "./HireConfirmModal";
 
-export default function VendorModal({ visible, onClose, vendor }) {
+export default function VendorModal({ visible, onClose, vendor, onSubmit }) {
   const [isVisible, setIsVisible] = useState(false);
 
   if (!vendor) return null;
 
   const {
-    user: { first_name, last_name, profile_photo },
-    message,
-    paymentType = "Hourly",
-    hourlyRate = "$10 hourly",
-    flatRate = "N/A",
-    estimatedHours = "10",
-    yearsInBusiness = "10-12 Years",
-    startDate = "2024-10-14",
-    completionDate = "2024-10-14",
-  } = vendor;
+    vendor: {
 
+      user: { first_name, last_name, profile_photo },
+    },
+    // message,
+    payment_type,
+    price,
+    estimated_hours,
+    years_experience,
+    created_at,
+    updated_at,
+  } = vendor;
+  const message = vendor.message;
   return (
     <Modal
       isOpen={visible}
@@ -39,7 +41,11 @@ export default function VendorModal({ visible, onClose, vendor }) {
       <ModalContent>
         <ModalHeader className={styles.header}>
           <img
-            src={profile_photo}
+            src={profile_photo ||
+              "https://placehold.co/600x400"
+
+
+            }
             alt={`${first_name} ${last_name}`}
             className={styles.avatar}
           />
@@ -48,7 +54,7 @@ export default function VendorModal({ visible, onClose, vendor }) {
               {`${first_name} ${last_name}`}
             </h3>
             <p className={styles.subInfo}>
-              Years in Business: {yearsInBusiness}
+              Years in Business: {years_experience}
             </p>
           </div>
         </ModalHeader>
@@ -62,22 +68,35 @@ export default function VendorModal({ visible, onClose, vendor }) {
           {/* Vendor Details */}
           <div className={styles.detailsGrid}>
             <div>
-              <strong>Payment Type:</strong> {paymentType}
+              <strong>Payment Type:</strong> {payment_type}
+            </div>
+            {payment_type == "flat_rate" ? <> <div>
+              <strong>Hourly Rate:</strong> N/A
+            </div>
+              <div>
+                <strong>Flat Rate Amount:</strong> {price}
+              </div>
+              <div>
+                <strong>Estimated Hours:</strong>N/A
+              </div> </> : <> <div>
+                <strong>Hourly Rate:</strong> {price}
+              </div>
+              <div>
+                <strong>Flat Rate Amount:</strong> N/A
+              </div>
+              <div>
+                <strong>Estimated Hours:</strong> {estimated_hours}
+              </div></>}
+
+            <div>
+              <strong>Start Date:</strong>   {new Date(created_at).toLocaleDateString(
+                "en-CA"
+              )}
             </div>
             <div>
-              <strong>Hourly Rate:</strong> {hourlyRate}
-            </div>
-            <div>
-              <strong>Flat Rate Amount:</strong> {flatRate}
-            </div>
-            <div>
-              <strong>Estimated Hours:</strong> {estimatedHours}
-            </div>
-            <div>
-              <strong>Start Date:</strong> {startDate}
-            </div>
-            <div>
-              <strong>Completion Date:</strong> {completionDate}
+              <strong>Completion Date:</strong> {new Date(updated_at).toLocaleDateString(
+                "en-CA"
+              )}
             </div>
           </div>
         </ModalBody>
@@ -101,6 +120,8 @@ export default function VendorModal({ visible, onClose, vendor }) {
           </Button>
         </ModalFooter>
         <HireConfirmModal
+          onSubmit={onSubmit}
+
           isOpen={isVisible}
           onClose={() => setIsVisible(false)}
         />

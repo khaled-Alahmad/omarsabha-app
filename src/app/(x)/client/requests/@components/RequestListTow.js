@@ -69,16 +69,16 @@ export default function RequestListTow({ requests }) {
         {requests.map((request) => (
           <Card key={request.id} className={styles.card}>
             <div className={styles.cardContent}>
-              <img
-                src={request.images[0]?.path || "https://placehold.co/600x400"}
-                alt={request.title}
-                className={styles.image}
-              />
               <div className={styles.details}>
                 <Link
                   href={`/client/requests/${request.id}`}
                   className="hover:cursor-pointer hover:text-primary-300"
                 >
+                  <img
+                    src={request.images[0]?.path || "https://placehold.co/600x400"}
+                    alt={request.title}
+                    className={styles.image}
+                  />
                   <h3 className={styles.title}>{request.title}</h3>
                 </Link>
                 <p className={styles.description}>{request.description}</p>
