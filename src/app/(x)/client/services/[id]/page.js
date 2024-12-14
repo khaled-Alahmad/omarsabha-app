@@ -8,7 +8,7 @@ export default async function JobDetails({ params }) {
   const { id } = params;
 
   // Fetch the data asynchronously
-  const response = await fetchData(`clients/service-requests/${id}`);
+  const response = await fetchData(`clients/orders/${id}`);
 
   // Ensure the response contains valid data
   if (!response || !response.success || !response.data) {
@@ -26,24 +26,24 @@ export default async function JobDetails({ params }) {
     works_hours,
     start_date,
     completion_date,
+    created_at,
+    updated_at,
     service_request: serviceRequest,
     vendor,
     work_location: workLocation,
     images,
+    status,
   } = job;
-
-  const vendorUser = vendor?.user;
-  const clientUser = serviceRequest?.client?.user;
 
   const progress = [
     {
       label: "Order Created",
       status: "created",
-      date: start_date
-        ? new Date(start_date).toLocaleDateString("en-US")
+      date: created_at
+        ? new Date(created_at).toLocaleDateString("en-US")
         : "N/A",
-      time: start_date
-        ? new Date(start_date).toLocaleTimeString("en-US")
+      time: created_at
+        ? new Date(created_at).toLocaleTimeString("en-US")
         : "N/A",
       icon: (
         <svg
@@ -67,9 +67,13 @@ export default async function JobDetails({ params }) {
     },
     {
       label: "Awaiting Start",
-      status: "current",
-      date: "N/A",
-      time: "N/A",
+      status: "pending",
+      date: updated_at
+        ? new Date(updated_at).toLocaleDateString("en-US")
+        : "N/A",
+      time: updated_at
+        ? new Date(updated_at).toLocaleTimeString("en-US")
+        : "N/A",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -87,12 +91,12 @@ export default async function JobDetails({ params }) {
     },
     {
       label: "In progress",
-      status: "completed",
-      date: completion_date
-        ? new Date(completion_date).toLocaleDateString("en-US")
+      status: "execute",
+      date: start_date
+        ? new Date(start_date).toLocaleDateString("en-US")
         : "N/A",
-      time: completion_date
-        ? new Date(completion_date).toLocaleTimeString("en-US")
+      time: start_date
+        ? new Date(start_date).toLocaleTimeString("en-US")
         : "N/A",
       icon: (
         <svg
@@ -123,7 +127,7 @@ export default async function JobDetails({ params }) {
     },
     {
       label: "Completed",
-      status: "complete_payment",
+      status: "completed",
       date: completion_date
         ? new Date(completion_date).toLocaleDateString("en-US")
         : "N/A",
@@ -149,15 +153,14 @@ export default async function JobDetails({ params }) {
 
   const progresse = [
     { label: "Create Order", status: "created", percentage: 0 },
-    { label: "Awaiting Start", status: "current", percentage: 35 },
-    { label: "In progress", status: "completed", percentage: 65 },
-    { label: "Completed", status: "complete_payment", percentage: 100 },
+    { label: "Awaiting Start", status: "pending", percentage: 35 },
+    { label: "In progress", status: "execute", percentage: 65 },
+    { label: "Completed", status: "completed", percentage: 100 },
   ];
 
-  // Determine the current progress percentage based on the status
-  console.log("Job Status:", job.status);
 
-  const currentProgress = 70;
+
+  const currentProgress = progresse.find((step) => step.status === job.status)?.percentage || 0;
   // progresse.find((step) => step.status === job.status)?.percentage || 0;
 
   console.log("Calculated Progress:", currentProgress);
@@ -166,12 +169,12 @@ export default async function JobDetails({ params }) {
     <div className={styles.container}>
       <div className={styles.header}>
         <img
-          src={"https://via.placeholder.com/80"}
+          src={vendor.user?.profile_photo || "https://via.placeholder.com/80"}
           alt={`N/A`}
           className={styles.avatar}
         />
-        <h3 className={styles.vendorName}>N/A N/A</h3>
-        <p className={styles.subInfo}>Years in Business: N/A</p>
+        <h3 className={styles.vendorName}>{vendor.user?.first_name + " " + vendor.user?.last_name}</h3>
+        <p className={styles.subInfo}>Years in Business: {vendor.years_experience}</p>
       </div>
       {/* <h2 className={styles.header}>{title || "N/A"}</h2> */}
 
@@ -249,13 +252,11 @@ export default async function JobDetails({ params }) {
             {progress.map((step, index) => (
               <span
                 key={index}
-                className={`${styles.progressLabel} ${
-                  step.status === "completed" ? styles.completed : ""
-                } ${step.status === "current" ? styles.current : ""} ${
-                  step.status === "complete_payment"
+                className={`${styles.progressLabel} ${step.status === "completed" ? styles.completed : ""
+                  } ${step.status === "current" ? styles.current : ""} ${step.status === "complete_payment"
                     ? styles.completePayment
                     : ""
-                } ${step.status === "created" ? styles.created : ""}`}
+                  } ${step.status === "created" ? styles.created : ""}`}
               >
                 {step.label}
               </span>

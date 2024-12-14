@@ -20,32 +20,37 @@ export default function OrderCardTow({ data }) {
           <div className="flex">
             {" "}
             <Avatar
-              src={data.vendorImage || "https://via.placeholder.com/80"}
-              alt={data.vendorName || "N/A"}
+              src={data.vendor?.user?.profile_photo || "https://via.placeholder.com/80"}
+              alt={data.vendor?.user?.first_name || "N/A"}
               className={styles.vendorAvatar}
             />
             <Link href={`/client/services/${data.id}`}>
-              <h4>{data.vendorName || "N/A"}</h4>
+              <h4>{data.vendor?.user?.first_name + " " + data.vendor?.user?.last_name || "N/A"}</h4>
             </Link>
           </div>
+          <p className="text-center">
+            <b>Payment Type:</b> {data.payment_type || "N/A"}
+          </p>
           {/* <Divider orientation="vertical" className="mx-4 h-16" /> */}
-          <div className="text-center">
-            <b>Payment Type:</b> {data.paymentType || "N/A"}
-          </div>
+          {data.payment_type === "flat_type" ? <> <p className="text-center">
+            <b>Flat Rate:</b> {data.price || "N/A"}$
+          </p></> : <> <p className="text-center">
+            <b>Hourly Rate:</b> {data.price || "N/A"}$
+          </p></>}
+
           {/* <Divider orientation="vertical" className="mx-4 h-16" /> */}
-          <div className="text-center">
-            <b>Hourly Rate:</b> {data.hourlyRate || "N/A"}
-          </div>
-          {/* <Divider orientation="vertical" className="mx-4 h-16" /> */}
-          <div className="text-center items-center">
-            <b>Complete Date:</b> {data.completionDate || "N/A"}
-          </div>
-          <div className="text-start">
-            <b>Complete Date:</b> {data.completionDate || "N/A"}
+
+          <p className="text-center">
+            <b>Complete Date:</b>      {new Date(data.completion_date).toLocaleDateString(
+              "en-US"
+            ) || "N/A"}
+          </p>
+          <div className="text-start flex items-center">
+            <b>Total Time:</b> {"N/A"}
           </div>{" "}
           {/* <Divider orientation="vertical" className="mx-4 h-16" /> */}
           <div className="text-center">
-            <b>Complete Date:</b> {data.completionDate || "N/A"}
+            <b>Total Cost:</b> {"N/A"}
           </div>
         </div>
       </div>
@@ -55,7 +60,7 @@ export default function OrderCardTow({ data }) {
         <div className={styles.progressBar}>
           <div
             className={styles.progress}
-            style={{ width: `${progressStatus}%` }}
+          // style={{ width: `${progressStatus}%` }}
           />
         </div>
         <div className={styles.progressLabels}>
