@@ -27,6 +27,7 @@ import ServiceRequestClient from "./ServiceRequestClient";
 import avatarImage from "@/assets/icons/avatar.png";
 import notificationIcon from "@/assets/icons/notification.svg";
 import LogoutModal from "./vendor/LogoutModal";
+import { getCookie } from "cookies-next";
 
 export default function NavBar({ userRole, authToken }) {
   console.log("userRole:", userRole);
@@ -131,6 +132,7 @@ export default function NavBar({ userRole, authToken }) {
   //     setIsAuthenticated(false);
   //   }
   // }, [authToken]);
+  const imageUser = getCookie("imageUser")
   return (
     <>
       <Navbar
@@ -231,7 +233,7 @@ export default function NavBar({ userRole, authToken }) {
                 <Dropdown>
                   <DropdownTrigger>
                     <img
-                      src={avatarImage.src}
+                      src={imageUser || "https://placehold.co/600x400"}
                       alt="Profile"
                       className="rounded-full w-8 h-8 cursor-pointer"
                     />

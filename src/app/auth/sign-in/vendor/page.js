@@ -78,6 +78,12 @@ export default function VendorSignIn() {
           expires: expiresIn7Days,
           path: "/",
         });
+
+        setCookie("imageUser", user.profile_photo, {
+          expires: expiresIn7Days,
+          path: "/",
+        });
+
         toast.success("Login successful!");
         if (!user.approve) {
           router.push("/auth/verification");
