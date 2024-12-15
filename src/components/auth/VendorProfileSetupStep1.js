@@ -100,7 +100,7 @@ export default function VendorProfileSetupStep1({ onNext, setVendorType }) {
       </div>
 
       <div className={styles.formGroup}>
-        <label>Service Categories</label>
+        {/* <label>Service Categories</label> */}
         <Select
           label="Service Categories"
           placeholder="Select categories"

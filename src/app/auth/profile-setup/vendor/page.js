@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { getCookie } from "cookies-next";
+import { getCookie, setCookie } from "cookies-next";
 import VendorProfileSetupStep1 from "@/components/auth/VendorProfileSetupStep1";
 import VendorProfileSetupStep2 from "@/components/auth/VendorProfileSetupStep2";
 import VendorProfileSetupStep3 from "@/components/auth/VendorProfileSetupStep3";
@@ -52,7 +52,13 @@ export default function VendorProfileSetup() {
           fullFormData.append("additional_images[]", file)
         );
       } else if (key === "service_ids" && Array.isArray(value)) {
-        fullFormData.append("service_ids", JSON.stringify(value)); // Send as JSON array
+        value.forEach((id) => fullFormData.append("service_ids[]", parseInt(id, 10))); // Append each ID
+      }
+      else if (key === "has_crew") {
+        fullFormData.append("has_crew", value == true ? 1 : 0); // Send as JSON array
+      }
+      else if (key === "crew_members" && Array.isArray(value)) {
+        fullFormData.append("crew_members", JSON.stringify(value)); // Send as JSON array
       } else if (value !== null && value !== undefined) {
         fullFormData.append(key, value);
       }
@@ -64,15 +70,19 @@ export default function VendorProfileSetup() {
     }
 
     setLoading(true);
-    const header = {
-      "Content-Type": "multipart/form-data",
-    }
+    // const header = {
+    //   "Content-Type": "multipart/form-data",
+    // }
     try {
-      const response = await addData("vendors/setup-profile", fullFormData, header);
+      const response = await addData("vendors/setup-profile", fullFormData, null, true);
 
-      if (response.status === 200) {
+      if (response.success) {
         toast.success("Profile setup complete!");
-        router.push("/dashboard");
+        setCookie("profileSetupVendor", true, {
+          path: "/",
+        });
+        toast.success("Profile setup complete!");
+        router.push("/request-service");
       } else {
         toast.error("Failed to submit form. Please try again.");
       }

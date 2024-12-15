@@ -20,10 +20,11 @@ export default function VendorProfileSetupStep2({ onNext, onBack }) {
     city: "",
     state: "",
     country: "",
-    postal_code: "",
+    exstra_address:"",
+    zip_code: "",
     business_insurance: "yes",
     has_crew: false,
-    crew_members: [],
+    crew_members: [{ name: "", title: "" }],
   });
 
   const [crewMember, setCrewMember] = useState({ name: "", title: "" });
@@ -38,10 +39,28 @@ export default function VendorProfileSetupStep2({ onNext, onBack }) {
   const handleAddCrewMember = () => {
     setFormData((prevData) => ({
       ...prevData,
-      crewMembers: [...prevData.crew_members, crewMember],
+      crew_members: [...prevData.crew_members, crewMember],
     }));
     setCrewMember({ name: "", title: "" });
   };
+
+  const handleDeleteCrewMember = (index) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      crew_members: prevData.crew_members.filter((_, i) => i !== index),
+    }));
+  };
+
+  const handleCrewMemberChange = (index, field, value) => {
+    const updatedCrewMembers = formData.crew_members.map((member, i) =>
+      i === index ? { ...member, [field]: value } : member
+    );
+    setFormData((prevData) => ({
+      ...prevData,
+      crew_members: updatedCrewMembers,
+    }));
+  };
+
 
   const handleNext = () => {
     onNext(formData); // تمرير البيانات إلى الخطوة التالية
@@ -102,7 +121,18 @@ export default function VendorProfileSetupStep2({ onNext, onBack }) {
           onChange={(e) => handleInputChange("street_address", e.target.value)}
         />
       </div>
-
+      <div className={styles.formGroup}>
+        <Input
+          label="Extra Address"
+          labelPlacement="outside"
+          required
+          placeholder="Extra Address"
+          variant="bordered"
+          fullWidth
+          value={formData.exstra_address}
+          onChange={(e) => handleInputChange("exstra_address", e.target.value)}
+        />
+      </div>
       <div className={styles.formGroup}>
         <div className={styles.halfInput}>
           <Input
@@ -150,9 +180,9 @@ export default function VendorProfileSetupStep2({ onNext, onBack }) {
             labelPlacement="outside"
             variant="bordered"
             fullWidth
-            value={formData.postal_code}
+            value={formData.zip_code}
             required
-            onChange={(e) => handleInputChange("postal_code", e.target.value)}
+            onChange={(e) => handleInputChange("zip_code", e.target.value)}
           />
         </div>
       </div>
@@ -173,7 +203,7 @@ export default function VendorProfileSetupStep2({ onNext, onBack }) {
         </RadioGroup>
       </div>
 
-      <div className={styles.formGroup}>
+      <div className={styles.formGroup} style={{ textAlign: "start" }}>
         <Checkbox
           color="primary"
           isSelected={formData.has_crew}
@@ -182,42 +212,58 @@ export default function VendorProfileSetupStep2({ onNext, onBack }) {
           Has Crew?
         </Checkbox>
       </div>
+      {formData.has_crew && <>
+        <div className={styles.crewList}>
+          {formData.crew_members.map((member, index) => (
+            <div key={index} className={styles.crewItem}>
+              <div className={styles.halfInput}>
+                <Input
+                  label="Crew Member Name"
+                  placeholder="Crew Member Name"
+                  labelPlacement="outside"
 
-      {formData.has_crew && (
-        <>
-          <div className={styles.formGroup}>
-            <Input
-              label="Crew Member Name"
-              placeholder="Crew Member Name"
-              variant="bordered"
-              fullWidth
-              value={crewMember.name}
-              onChange={(e) =>
-                setCrewMember({ ...crewMember, name: e.target.value })
-              }
-            />
-          </div>
-          <div className={styles.formGroup}>
-            <Input
-              label="Crew Member Title"
-              placeholder="Crew Member Title"
-              variant="bordered"
-              fullWidth
-              value={crewMember.title}
-              onChange={(e) =>
-                setCrewMember({ ...crewMember, title: e.target.value })
-              }
-            />
-          </div>
-          <Button
-            color="warning"
-            className={styles.addButton}
-            onClick={handleAddCrewMember}
-          >
-            + Add Crew Member
-          </Button>
-        </>
-      )}
+                  variant="bordered"
+                  fullWidth
+                  value={member.name}
+                  onChange={(e) =>
+                    handleCrewMemberChange(index, "name", e.target.value)
+                  }
+                />
+              </div>
+              <div className={styles.halfInput}>
+                <Input
+                  label="Crew Member Title"
+                  placeholder="Crew Member Title"
+                  labelPlacement="outside"
+
+                  variant="bordered"
+                  fullWidth
+                  value={member.title}
+                  onChange={(e) =>
+                    handleCrewMemberChange(index, "title", e.target.value)
+                  }
+                />
+              </div>
+              {formData.crew_members.length > 1 && <>
+                <button
+                  className={styles.deletedButton}
+                  onClick={() => handleDeleteCrewMember(index)}
+                >
+                  Delete
+                </button>
+              </>}
+            </div>
+          ))}
+        </div>
+
+        <Button
+          color="warning"
+          className={styles.addButton}
+          onClick={handleAddCrewMember}
+        >
+          + Add Crew Member
+        </Button>
+      </>}
 
       <div className={styles.buttonGroup}>
         <Button
