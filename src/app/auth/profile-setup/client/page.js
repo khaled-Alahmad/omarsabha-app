@@ -7,8 +7,15 @@ import Link from "next/link";
 import Loading from "@/app/loading";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import axios from "axios";
+import { getCookie, setCookie } from "cookies-next";
 
 export default function ClientProfileSetup() {
+    const [loading, setLoading] = useState(false);
+    const router = useRouter();
+
+    const [logoFile, setLogoFile] = useState(null);
+    const [logoPreview, setLogoPreview] = useState(null);
     const [formData, setFormData] = useState({
         first_name: "",
         last_name: "",
@@ -19,14 +26,10 @@ export default function ClientProfileSetup() {
         city: "",
         state: "",
         country: "",
-        postal_code: "",
-        profile_photo: null
+        zip_code: "",
+        // profile_photo: logoFile
     });
-    const [loading, setLoading] = useState(false);
-    const router = useRouter();
 
-    const [logoFile, setLogoFile] = useState(null);
-    const [logoPreview, setLogoPreview] = useState(null);
     const handleDeleteLogo = () => {
         setLogoPreview(null);
         setLogoFile(null);
@@ -51,48 +54,55 @@ export default function ClientProfileSetup() {
     };
 
     const submitForm = async () => {
-        const fullFormData = new FormData();
-        // const finalData = { ...formData, ...newData };
-
-        Object.entries(formData).forEach(([key, value]) => {
-
-            fullFormData.append(key, value);
-
-        });
-
-        console.log("Submitting FormData:");
-        for (const [key, value] of fullFormData.entries()) {
-            console.log(`${key}:`, value);
-        }
-
         setLoading(true);
-        const header = {
-            "Content-Type": "multipart/form-data",
-        }
-        try {
-            const response = await addData("clients/setup-profile", fullFormData, header);
 
-            if (response.status === 200) {
+        try {
+            const fullFormData = new FormData();
+            fullFormData.append("profile_photo", logoFile); 
+
+            Object.entries(formData).forEach(([key, value]) => {
+
+                if (value !== undefined && value !== null && value !== "") {
+                    fullFormData.append(key, value); 
+                }
+            });
+
+            console.log("Submitting FormData:");
+            for (const [key, value] of fullFormData.entries()) {
+                console.log(`${key}: ${value}`);
+            }
+
+            const response = await addData("clients/setup-profile", fullFormData);
+
+            if (response?.success) {
                 toast.success("Profile setup complete!");
+                setCookie("profileSetupVendor", true, {
+                    path: "/",
+                });
                 router.push("/");
+
             } else {
-                toast.error("Failed to submit form. Please try again.");
+                const errorMessage =
+                    response?.message || "Failed to submit the form. Please try again.";
+                toast.error(`Error: ${errorMessage}`);
             }
         } catch (error) {
             const errorMessage =
-                error.response?.data?.message || "An unexpected error occurred.";
+                error.response?.data?.message || error.message || "An unexpected error occurred.";
             toast.error(`Error setting up profile: ${errorMessage}`);
             console.error("Profile setup error:", error);
         } finally {
             setLoading(false);
         }
     };
+
+
     if (loading) {
         return <Loading />;
     }
     return (
         <div className={styles.setupContainer}>
-            <form className={styles.container}>
+            <form className={styles.container} onSubmit={submitForm}>
                 <h2 className={styles.title}>Your Profile Setup</h2>
                 <Button as={Link} href="/" className={styles.editButton}>
                     Skip
@@ -221,9 +231,9 @@ export default function ClientProfileSetup() {
                             labelPlacement="outside"
                             variant="bordered"
                             fullWidth
-                            value={formData.postal_code}
+                            value={formData.zip_code}
                             required
-                            onChange={(e) => handleInputChange("postal_code", e.target.value)}
+                            onChange={(e) => handleInputChange("zip_code", e.target.value)}
                         />
                     </div>
                 </div>
@@ -275,7 +285,7 @@ export default function ClientProfileSetup() {
                     <Button
                         color="primary"
                         type="submit"
-                        onClick={submitForm}
+                        // onClick={submitForm}
                         className={styles.saveButton}
                     // onClick={handleSave}
                     >

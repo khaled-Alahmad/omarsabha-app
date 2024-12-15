@@ -155,9 +155,9 @@ export default function NavBar({ userRole, authToken }) {
               <a
                 href={
                   item.path
-                  //  === "/request-service" && !isAuthenticated
-                  //   ? "#"
-                  //   : item.path
+                    === "/request-service" && !authToken
+                    ? "#"
+                    : item.path
                 }
                 className={`item-navbar ${isActive(item.path)
                   ? "active-link underline underline-offset-4"

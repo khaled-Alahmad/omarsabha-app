@@ -15,9 +15,14 @@ import Image from "next/image";
 import ServiceRequestForm from "@/components/vendor/service-request/ServiceRequestForm";
 import { useState } from "react";
 import { getCookie } from "cookies-next";
+import ServiceRequestClient from "@/components/ServiceRequestClient";
 export default function HeroSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpenClient, setIsModalOpenClient] = useState(false);
+
   const userRole = getCookie("userRole")
+  const authToken = getCookie("authToken")
+
   return (
     <section
       className={styles.hero}
@@ -50,11 +55,18 @@ export default function HeroSection() {
         // onPress={() => setIsModalOpen(true)}
         >
           Get Started Now
-        </Button></> : <>  <Button
+        </Button></> : userRole === "client" ? <>  <Button
           // as={Link}
           // href="#"
           className={styles.ctaButton}
           onPress={() => setIsModalOpen(true)}
+        >
+          Request Service Now
+        </Button></> : <> <Button
+          // as={Link}
+          // href="#"
+          className={styles.ctaButton}
+          onPress={() => setIsModalOpenClient(true)}
         >
           Request Service Now
         </Button></>}
@@ -74,6 +86,12 @@ export default function HeroSection() {
         // objectFit="cover"
         />
       </div>
+      <ServiceRequestClient
+        client={true}
+
+        isOpen={isModalOpenClient}
+        onOpenChange={setIsModalOpenClient}
+      />
       <ServiceRequestForm
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

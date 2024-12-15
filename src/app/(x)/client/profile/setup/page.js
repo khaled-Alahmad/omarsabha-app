@@ -7,22 +7,24 @@ import { addData, fetchData, updateData } from "@/context/apiHelper";
 import { Progress } from "@nextui-org/react";
 import Loading from "@/app/loading";
 import toast from "react-hot-toast";
+import axios from "axios";
+import { getCookie } from "cookies-next";
 
 export default function ProfileSetup() {
   //   const { id } = params; // Fetch the `id` from params
   const router = useRouter();
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    first_name: "",
+    last_name: "",
     email: "",
     description: "",
     phone: "",
-    streetAddress: "",
+    street_address: "",
     city: "",
     state: "",
     country: "",
-    postalCode: "",
-    profilePhoto: null,
+    zip_code: "",
+    profile_photo: null,
   });
 
   const [loading, setLoading] = useState(true);
@@ -68,17 +70,17 @@ export default function ProfileSetup() {
         if (response?.success) {
           const userData = response.data;
           setFormData({
-            firstName: userData.first_name || "",
-            lastName: userData.last_name || "",
+            first_name: userData.first_name || "",
+            last_name: userData.last_name || "",
             email: userData.email || "",
             description: userData.description || "",
             phone: userData.phone || "",
-            streetAddress: userData.location?.street_address || "",
+            street_address: userData.location?.street_address || "",
             city: userData.location?.city || "",
             state: userData.location?.state || "",
             country: userData.location?.country || "",
-            postalCode: userData.location?.zip_code || "",
-            profilePhoto: userData.profile_photo || null,
+            postal_code: userData.location?.zip_code || "",
+            profile_photo: userData.profile_photo || null,
           });
         }
       } catch (error) {
@@ -101,9 +103,17 @@ export default function ProfileSetup() {
     e.preventDefault();
     setLoading(true);
     console.log(formData);
+    const token = getCookie("authToken");
 
     try {
-      const response = await addData(`clients/me`, formData); // Assuming updateData is your API method
+      const response = await axios.post(`clients/me`, formData, {
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+
+        }
+
+      }); // Assuming updateData is your API method
       if (response?.success) {
         toast.success("Profile updated successfully!");
         router.push("/client/profile"); // Redirect after successful update
@@ -132,7 +142,7 @@ export default function ProfileSetup() {
           <input
             type="text"
             name="firstName"
-            value={formData.firstName}
+            value={formData.first_name}
             onChange={handleChange}
             placeholder="Enter first name"
           />
@@ -142,7 +152,7 @@ export default function ProfileSetup() {
           <input
             type="text"
             name="lastName"
-            value={formData.lastName}
+            value={formData.last_name}
             onChange={handleChange}
             placeholder="Enter last name"
           />
@@ -186,7 +196,7 @@ export default function ProfileSetup() {
         <input
           type="text"
           name="streetAddress"
-          value={formData.streetAddress}
+          value={formData.street_address}
           onChange={handleChange}
           placeholder="Enter street address"
         />
@@ -231,7 +241,7 @@ export default function ProfileSetup() {
           <input
             type="text"
             name="postalCode"
-            value={formData.postalCode}
+            value={formData.zip_code}
             onChange={handleChange}
             placeholder="Enter postal code"
           />

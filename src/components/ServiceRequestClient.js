@@ -10,7 +10,7 @@ import {
 import Link from "next/link";
 import styles from "@/assets/css/styles.module.css";
 
-export default function ServiceRequestClient({ isOpen, onOpen, onOpenChange }) {
+export default function ServiceRequestClient({ isOpen, client, onOpenChange }) {
   return (
     <>
       <Modal
@@ -75,18 +75,19 @@ export default function ServiceRequestClient({ isOpen, onOpen, onOpenChange }) {
                     <Button
                       as={Link}
                       onPress={onClose}
-                      href="/auth/sign-in/vendor"
+                      href={client ? `/auth/sign-in/client` : `/auth/sign-in/vendor`}
                       className={`${styles.ctaButton} `}
-                      // style={{ flex: "1" }}
+                    // style={{ flex: "1" }}
                     >
                       Log In
                     </Button>
                     <Button
                       as={Link}
                       onPress={onClose}
-                      href="/auth/sign-up/vendor"
+                      href={client ? `/auth/sign-up/client` : `/auth/sign-up/vendor`}
+
                       className={`${styles.ctaButton}`}
-                      // style={{ flex: "1" }}
+                    // style={{ flex: "1" }}
                     >
                       Sign Up
                     </Button>
